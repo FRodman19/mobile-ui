@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+import '../design_system_v3/badges.dart';
+import '../design_system_v3/buttons.dart';
+import '../design_system_v3/cards.dart';
+import '../design_system_v3/spacing_v3.dart';
+import '../design_system_v3/theme_v3.dart';
 
 class PerformanceScreen extends StatefulWidget {
   const PerformanceScreen({super.key});
@@ -14,19 +18,37 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? DSV3Colors.darkBackground : DSV3Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Performance',
-          style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'PERFORMANCE',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    letterSpacing: 0.5,
+                    color: isDark
+                        ? DSV3Colors.neutral300
+                        : DSV3Colors.neutral500,
+                  ),
+            ),
+            Text(
+              'Analytics',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined, size: 24),
+            icon: const Icon(Iconsax.setting_2),
             onPressed: () {},
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
@@ -36,7 +58,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             // Time filter tabs
             Container(
               height: 48,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -47,13 +71,15 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: DSV3Spacing.lg),
 
             // Net Profit Card
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: AppCard(
-                padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
+              child: DSV3Card(
+                tone: DSV3CardTone.elevated,
                 child: Row(
                   children: [
                     Expanded(
@@ -64,127 +90,112 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                             children: [
                               Text(
                                 'NET PROFIT',
-                                style: GoogleFonts.inter(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 0.5,
-                                ),
+                                style: Theme.of(context).textTheme.labelSmall
+                                    ?.copyWith(
+                                      letterSpacing: 0.5,
+                                      fontWeight: FontWeight.bold,
+                                      color: isDark
+                                          ? DSV3Colors.neutral300
+                                          : DSV3Colors.neutral500,
+                                    ),
                               ),
                               const SizedBox(width: 6),
                               Icon(
-                                Icons.info_outline,
+                                Iconsax.info_circle,
                                 size: 16,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurfaceVariant,
+                                color: isDark
+                                    ? DSV3Colors.neutral500
+                                    : DSV3Colors.neutral500,
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: DSV3Spacing.sm),
                           Text(
                             '\$8,240.50',
-                            style: GoogleFonts.inter(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.displaySmall
+                                ?.copyWith(fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1DB954).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.trending_up,
-                            size: 16,
-                            color: Color(0xFF1DB954),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '12.5%',
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: const Color(0xFF1DB954),
-                            ),
-                          ),
-                        ],
-                      ),
+                    const DSV3Badge(
+                      label: '+12.5%',
+                      variant: DSV3BadgeVariant.success,
                     ),
                   ],
                 ),
               ),
             ),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: DSV3Spacing.md),
 
             // Revenue & Spend
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: Row(
                 children: [
                   Expanded(
-                    child: AppCard(
-                      padding: const EdgeInsets.all(16),
+                    child: DSV3Card(
+                      tone: DSV3CardTone.elevated,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('💰', style: TextStyle(fontSize: 28)),
-                          const SizedBox(height: 12),
+                          const Icon(
+                            Iconsax.wallet_money,
+                            size: 28,
+                            color: DSV3Colors.teal500,
+                          ),
+                          const SizedBox(height: DSV3Spacing.sm),
                           Text(
                             'Revenue',
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  color: isDark
+                                      ? DSV3Colors.neutral300
+                                      : DSV3Colors.neutral500,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             '\$12,400',
-                            style: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: DSV3Spacing.md),
                   Expanded(
-                    child: AppCard(
-                      padding: const EdgeInsets.all(16),
+                    child: DSV3Card(
+                      tone: DSV3CardTone.elevated,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('💳', style: TextStyle(fontSize: 28)),
-                          const SizedBox(height: 12),
+                          const Icon(
+                            Iconsax.card,
+                            size: 28,
+                            color: DSV3Colors.orange500,
+                          ),
+                          const SizedBox(height: DSV3Spacing.sm),
                           Text(
                             'Spend',
-                            style: GoogleFonts.inter(
-                              fontSize: 12,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onSurfaceVariant,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  color: isDark
+                                      ? DSV3Colors.neutral300
+                                      : DSV3Colors.neutral500,
+                                ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             '\$4,159',
-                            style: GoogleFonts.inter(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.w700),
                           ),
                         ],
                       ),
@@ -194,78 +205,82 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.lg),
 
             // Quick Actions
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: Text(
                 'Quick Actions',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: DSV3Spacing.sm),
 
             SizedBox(
-              height: 80,
+              height: 60,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: DSV3Spacing.horizontalPadding,
+                ),
                 children: [
-                  _buildQuickActionButton('+ Add Entry'),
-                  _buildQuickActionButton('🚀 Create Project'),
-                  _buildQuickActionButton('📊 View Report'),
+                  _buildQuickActionButton(Iconsax.add, 'Add Entry', false),
+                  _buildQuickActionButton(
+                    Iconsax.flash,
+                    'Create Project',
+                    true,
+                  ),
+                  _buildQuickActionButton(Iconsax.chart, 'View Report', false),
                 ],
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.lg),
 
             // Top Projects
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'Top Projects',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   Text(
                     'View All',
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: const Color(0xFF1DB954),
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelLarge?.copyWith(color: DSV3Colors.teal500),
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: DSV3Spacing.sm),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: Column(
                 children: [
                   _buildProjectCard(
-                    '🚀',
+                    Iconsax.flash,
                     'NeoLaunch',
                     'SaaS Platform',
                     '+\$3,240',
                     true,
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: DSV3Spacing.sm),
                   _buildProjectCard(
-                    '🎙️',
+                    Iconsax.microphone,
                     'Podcast Pro',
                     'Media',
                     '+\$1,850',
@@ -275,49 +290,36 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.lg),
 
             // Worst Projects
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: Row(
                 children: [
                   Text(
                     'Worst Projects',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(width: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'Low ROI',
-                      style: GoogleFonts.inter(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red,
-                      ),
-                    ),
+                  const DSV3Badge(
+                    label: 'Low ROI',
+                    variant: DSV3BadgeVariant.error,
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: DSV3Spacing.sm),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               child: _buildProjectCard(
-                '📦',
+                Iconsax.box,
                 'DropStore X',
                 'E-commerce',
                 '-\$420',
@@ -325,7 +327,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.xl),
           ],
         ),
       ),
@@ -334,63 +336,30 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
 
   Widget _buildFilterChip(String label, int index) {
     final isSelected = _selectedFilter == index;
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      child: ChoiceChip(
-        label: Text(label),
-        selected: isSelected,
-        onSelected: (selected) {
-          setState(() {
-            _selectedFilter = index;
-          });
-        },
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedColor: const Color(0xFF1DB954),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: isSelected
-              ? Colors.black
-              : Theme.of(context).colorScheme.onSurface,
+    // Using a custom container since DSV3Chip is basic
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedFilter = index;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? DSV3Colors.teal500 : Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(20),
+          border: isSelected
+              ? null
+              : Border.all(color: Theme.of(context).dividerColor),
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        side: BorderSide.none,
-      ),
-    );
-  }
-
-  Widget _buildQuickActionButton(String label) {
-    // Check if this is the "Create Project" button to apply primary styling
-    final isPrimary = label.contains('Create Project');
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final backgroundColor = isPrimary
-        ? Theme.of(context).colorScheme.primary
-        : (isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5));
-
-    final textColor = isPrimary
-        ? Colors.white
-        : (isDark ? Colors.white : Colors.black);
-
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      child: Material(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: Center(
-              child: Text(
-                label,
-                style: GoogleFonts.inter(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: textColor,
-                ),
-              ),
+        child: Center(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+              color: isSelected
+                  ? Colors.white
+                  : Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
         ),
@@ -398,48 +367,78 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     );
   }
 
+  Widget _buildQuickActionButton(IconData icon, String label, bool isPrimary) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 12),
+      child: DSV3Button(
+        label: label,
+        icon: icon,
+        variant: isPrimary
+            ? DSV3ButtonVariant.primary
+            : DSV3ButtonVariant.secondary,
+        onPressed: () {},
+        size: DSV3ButtonSize.small,
+      ),
+    );
+  }
+
   Widget _buildProjectCard(
-    String icon,
+    IconData icon,
     String name,
     String category,
     String amount,
     bool isPositive,
   ) {
-    return AppCard(
-      padding: const EdgeInsets.all(14),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final accentColor = isPositive ? DSV3Colors.teal500 : DSV3Colors.premiumRed;
+
+    return DSV3Card(
       child: Row(
         children: [
-          Text(icon, style: const TextStyle(fontSize: 28)),
-          const SizedBox(width: 12),
+          Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: accentColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
+            ),
+            child: Icon(
+              icon,
+              size: 24,
+              color: accentColor,
+            ),
+          ),
+          const SizedBox(width: DSV3Spacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(height: 4),
                 Text(
                   category,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: isDark
+                            ? DSV3Colors.neutral300
+                            : DSV3Colors.neutral500,
+                      ),
                 ),
               ],
             ),
           ),
           Text(
             amount,
-            style: GoogleFonts.inter(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: isPositive ? const Color(0xFF1DB954) : Colors.red,
-            ),
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: isPositive
+                      ? DSV3Colors.premiumGreen
+                      : DSV3Colors.premiumRed,
+                  fontWeight: FontWeight.w700,
+                ),
           ),
         ],
       ),

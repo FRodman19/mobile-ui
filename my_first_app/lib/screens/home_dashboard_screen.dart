@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../design_system_v3/badges.dart';
+import '../design_system_v3/buttons.dart';
+import '../design_system_v3/cards.dart';
+import '../design_system_v3/progress.dart';
+import '../design_system_v3/spacing_v3.dart';
+import '../design_system_v3/theme_v3.dart';
 
 class HomeDashboardContent extends StatelessWidget {
   const HomeDashboardContent({super.key});
@@ -11,6 +17,7 @@ class HomeDashboardContent extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: isDark ? DSV3Colors.darkBackground : DSV3Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -19,326 +26,485 @@ class HomeDashboardContent extends StatelessWidget {
           children: [
             Text(
               'MONDAY, OCT 24',
-              style: GoogleFonts.inter(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    letterSpacing: 0.5,
+                    color: isDark
+                        ? DSV3Colors.neutral300
+                        : DSV3Colors.neutral500,
+                  ),
             ),
             Text(
               'Dashboard',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ],
         ),
         actions: [
           if (kDebugMode)
             IconButton(
-              icon: const Icon(Icons.palette_outlined),
+              icon: const Icon(Iconsax.color_swatch),
               onPressed: () {
                 Navigator.pushNamed(context, '/design-system');
               },
-              tooltip: 'Design System Gallery',
+              tooltip: 'Design System V1',
             ),
           if (kDebugMode)
             IconButton(
-              icon: const Icon(Icons.layers_outlined),
+              icon: const Icon(Iconsax.brush_2),
+              onPressed: () {
+                Navigator.pushNamed(context, '/design-system-v2');
+              },
+              tooltip: 'Design System V2',
+            ),
+          if (kDebugMode)
+            IconButton(
+              icon: const Icon(Iconsax.layer),
               onPressed: () {
                 Navigator.pushNamed(context, '/design-system-v3');
               },
               tooltip: 'Design System V3',
             ),
           IconButton(
-            icon: const Icon(Icons.brush),
-            onPressed: () {
-              Navigator.pushNamed(context, '/design-system-v2');
-            },
-            tooltip: 'Design System V2',
-          ),
-
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
+            icon: const Icon(Iconsax.notification),
             onPressed: () {},
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(DSV3Spacing.lg),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Quick Actions
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-              child: Text(
-                'Quick Actions',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+            // Stats Overview
+            Text(
+              'Overview',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: DSV3Spacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          DSV3Colors.orange500,
+                          DSV3Colors.orange600,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius:
+                          BorderRadius.circular(DSV3Spacing.cardRadius),
+                    ),
+                    padding: const EdgeInsets.all(DSV3Spacing.lg),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Iconsax.chart_success,
+                          color: DSV3Colors.white,
+                          size: 24,
+                        ),
+                        const SizedBox(height: DSV3Spacing.sm),
+                        Text(
+                          '94%',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(
+                                color: DSV3Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Weekly Score',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: DSV3Colors.white.withValues(alpha: 0.9),
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: DSV3Spacing.md),
+                Expanded(
+                  child: DSV3Card(
+                    tone: DSV3CardTone.elevated,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Iconsax.crown_1,
+                          color: DSV3Colors.teal500,
+                          size: 24,
+                        ),
+                        const SizedBox(height: DSV3Spacing.sm),
+                        Text(
+                          '12',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.w700,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Day Streak',
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: isDark
+                                        ? DSV3Colors.neutral300
+                                        : DSV3Colors.neutral500,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: DSV3Spacing.xl),
 
-            SizedBox(
-              height: 100,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+            // Quick Actions
+            Text(
+              'Quick Actions',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: DSV3Spacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: DSV3Button(
+                    label: 'New Project',
+                    icon: Iconsax.folder_add,
+                    variant: DSV3ButtonVariant.primary,
+                    onPressed: () {},
+                  ),
+                ),
+                const SizedBox(width: DSV3Spacing.sm),
+                Expanded(
+                  child: DSV3Button(
+                    label: 'Add Skill',
+                    icon: Iconsax.book,
+                    variant: DSV3ButtonVariant.secondary,
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: DSV3Spacing.sm),
+            Row(
+              children: [
+                Expanded(
+                  child: DSV3Button(
+                    label: 'Content',
+                    icon: Iconsax.document_text,
+                    variant: DSV3ButtonVariant.tertiary,
+                    onPressed: () {},
+                  ),
+                ),
+                const SizedBox(width: DSV3Spacing.sm),
+                Expanded(
+                  child: DSV3Button(
+                    label: 'Daily Entry',
+                    icon: Iconsax.note_text,
+                    variant: DSV3ButtonVariant.text,
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: DSV3Spacing.xl),
+
+            // Progress
+            Text(
+              'This Week\'s Progress',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: DSV3Spacing.md),
+            DSV3Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildQuickAction(
-                    context,
-                    Icons.rocket_launch_outlined,
-                    'New\nProject',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Projects',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const DSV3Badge(
+                        label: '3/5',
+                        variant: DSV3BadgeVariant.info,
+                      ),
+                    ],
                   ),
-                  _buildQuickAction(
-                    context,
-                    Icons.school_outlined,
-                    'New\nSkill',
+                  const SizedBox(height: DSV3Spacing.sm),
+                  const DSV3ProgressBar(value: 0.6),
+                  const SizedBox(height: DSV3Spacing.lg),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Skills',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const DSV3Badge(
+                        label: '2/3',
+                        variant: DSV3BadgeVariant.warning,
+                      ),
+                    ],
                   ),
-                  _buildQuickAction(
-                    context,
-                    Icons.edit_outlined,
-                    'New\nContent',
+                  const SizedBox(height: DSV3Spacing.sm),
+                  const DSV3ProgressBar(value: 0.67),
+                  const SizedBox(height: DSV3Spacing.lg),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Daily Entries',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      const DSV3Badge(
+                        label: '7/7',
+                        variant: DSV3BadgeVariant.success,
+                      ),
+                    ],
                   ),
-                  _buildQuickAction(context, Icons.bar_chart, 'Daily\nEntry'),
+                  const SizedBox(height: DSV3Spacing.sm),
+                  const DSV3ProgressBar(value: 1.0),
                 ],
               ),
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.xl),
 
             // Today's Focus
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Today\'s Focus',
-                    style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Today\'s Focus',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'View All',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: DSV3Colors.teal500,
+                          fontWeight: FontWeight.w600,
+                        ),
                   ),
-                  Text(
-                    'View all',
-                    style: GoogleFonts.inter(
-                      fontSize: 13,
-                      color: const Color(0xFF1DB954),
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            const SizedBox(height: DSV3Spacing.md),
+            _buildFocusTask(
+              context,
+              isDark,
+              'Complete Project Strategy',
+              'Projects',
+              'High Priority',
+              DSV3Colors.premiumRed,
+              Iconsax.folder,
+            ),
+            const SizedBox(height: DSV3Spacing.sm),
+            _buildFocusTask(
+              context,
+              isDark,
+              'Read "Clean Code" Ch. 4',
+              'Skills',
+              '30 mins',
+              DSV3Colors.orange500,
+              Iconsax.book_1,
+            ),
+            const SizedBox(height: DSV3Spacing.sm),
+            _buildFocusTask(
+              context,
+              isDark,
+              'Review Q3 Metrics',
+              'Performance',
+              'Weekly',
+              DSV3Colors.teal500,
+              Iconsax.chart,
             ),
 
-            const SizedBox(height: 12),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  _buildFocusTask(
-                    context,
-                    'Complete Project Strategy',
-                    'Projects • High Priority',
-                  ),
-                  const SizedBox(height: 8),
-                  _buildFocusTask(
-                    context,
-                    'Read "Clean Code" Ch. 4',
-                    'Skills • 30 mins',
-                  ),
-                  const SizedBox(height: 8),
-                  _buildFocusTask(
-                    context,
-                    'Review Q3 Metrics',
-                    'Performance • Weekly',
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 24),
+            const SizedBox(height: DSV3Spacing.xl),
 
             // System Overview
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'System Overview',
-                style: GoogleFonts.inter(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+            Text(
+              'System Overview',
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
-
-            const SizedBox(height: 12),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildOverviewCard(
-                          context,
-                          Icons.folder_outlined,
-                          'PROJECTS',
+            const SizedBox(height: DSV3Spacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: DSV3Card(
+                    tone: DSV3CardTone.elevated,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Iconsax.folder_2,
+                          color: DSV3Colors.teal500,
+                          size: 24,
+                        ),
+                        const SizedBox(height: DSV3Spacing.md),
+                        Text(
                           '3',
-                          'Active ventures',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildOverviewCard(
-                          context,
-                          Icons.school_outlined,
-                          'SKILLS',
+                        const SizedBox(height: 4),
+                        Text(
+                          'Active Projects',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: isDark
+                                        ? DSV3Colors.neutral300
+                                        : DSV3Colors.neutral500,
+                                  ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(width: DSV3Spacing.md),
+                Expanded(
+                  child: DSV3Card(
+                    tone: DSV3CardTone.elevated,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Iconsax.book_1,
+                          color: DSV3Colors.orange500,
+                          size: 24,
+                        ),
+                        const SizedBox(height: DSV3Spacing.md),
+                        Text(
                           '2',
-                          'In progress',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        Text(
+                          'Skills Learning',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: isDark
+                                        ? DSV3Colors.neutral300
+                                        : DSV3Colors.neutral500,
+                                  ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildOverviewCard(
-                          context,
-                          Icons.description_outlined,
-                          'CONTENT',
-                          '5',
-                          'Drafts pending',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildOverviewCard(
-                          context,
-                          Icons.bar_chart,
-                          'PERF.',
-                          '94%',
-                          'Weekly score',
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
 
-            const SizedBox(height: 80),
+            const SizedBox(height: 100),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildQuickAction(BuildContext context, IconData icon, String label) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: const Color(0xFF1DB954), size: 26),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.inter(fontSize: 10, height: 1.2),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFocusTask(BuildContext context, String title, String metadata) {
-    return AppCard(
-      padding: const EdgeInsets.all(14),
+  Widget _buildFocusTask(
+    BuildContext context,
+    bool isDark,
+    String title,
+    String category,
+    String metadata,
+    Color accentColor,
+    IconData icon,
+  ) {
+    return DSV3Card(
       child: Row(
         children: [
           Container(
-            width: 20,
-            height: 20,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Theme.of(
-                  context,
-                ).colorScheme.onSurfaceVariant.withOpacity(0.3),
-                width: 2,
-              ),
+              color: accentColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
+            ),
+            child: Icon(
+              icon,
+              color: accentColor,
+              size: 24,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: DSV3Spacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  metadata,
-                  style: GoogleFonts.inter(
-                    fontSize: 12,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      category,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: isDark
+                                ? DSV3Colors.neutral300
+                                : DSV3Colors.neutral500,
+                          ),
+                    ),
+                    Text(
+                      ' • ',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: isDark
+                                ? DSV3Colors.neutral300
+                                : DSV3Colors.neutral500,
+                          ),
+                    ),
+                    Text(
+                      metadata,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: isDark
+                                ? DSV3Colors.neutral300
+                                : DSV3Colors.neutral500,
+                          ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildOverviewCard(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String metric,
-    String subtitle,
-  ) {
-    return AppCard(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: const Color(0xFF1DB954), size: 24),
-          const SizedBox(height: 16),
-          Text(
-            metric,
-            style: GoogleFonts.inter(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            subtitle,
-            style: GoogleFonts.inter(
-              fontSize: 12,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: isDark ? DSV3Colors.neutral500 : DSV3Colors.neutral300,
+                width: 2,
+              ),
             ),
           ),
         ],

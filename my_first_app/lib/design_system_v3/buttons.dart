@@ -45,11 +45,7 @@ class DSV3Button extends StatelessWidget {
       DSV3ButtonSize.large => 52.0,
     };
 
-    final padding = switch (size) {
-      DSV3ButtonSize.small => const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      DSV3ButtonSize.medium => DSV3Spacing.buttonPadding,
-      DSV3ButtonSize.large => const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-    };
+    final padding = DSV3Spacing.buttonPadding;
 
     final colors = _colorsForState(isDark, visualState);
 

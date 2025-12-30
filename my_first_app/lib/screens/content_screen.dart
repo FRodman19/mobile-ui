@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+import '../design_system_v3/badges.dart';
+import '../design_system_v3/cards.dart';
+import '../design_system_v3/progress.dart';
+import '../design_system_v3/spacing_v3.dart';
+import '../design_system_v3/theme_v3.dart';
 
 class ContentScreen extends StatefulWidget {
   const ContentScreen({super.key});
@@ -14,22 +18,37 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: isDark ? DSV3Colors.darkBackground : DSV3Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          'Content',
-          style: GoogleFonts.inter(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'CONTENT',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    letterSpacing: 0.5,
+                    color: isDark
+                        ? DSV3Colors.neutral300
+                        : DSV3Colors.neutral500,
+                  ),
+            ),
+            Text(
+              'Pipeline',
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+          ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, size: 24),
+            icon: const Icon(Iconsax.search_normal),
             onPressed: () {},
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: Column(
@@ -37,7 +56,9 @@ class _ContentScreenState extends State<ContentScreen> {
           // Filter tabs
           Container(
             height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(
+              horizontal: DSV3Spacing.horizontalPadding,
+            ),
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
@@ -49,71 +70,90 @@ class _ContentScreenState extends State<ContentScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: DSV3Spacing.lg),
 
           // Content sections
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.horizontalPadding,
+              ),
               children: [
                 // IDEAS Section
-                _buildSectionHeader('IDEAS', 3),
-                const SizedBox(height: 12),
+                _buildSectionHeader(context, 'IDEAS', 3),
+                const SizedBox(height: DSV3Spacing.md),
                 _buildContentCard(
+                  context,
+                  isDark,
                   platform: 'YouTube',
-                  platformIcon: Icons.play_circle_outline,
+                  platformIcon: Iconsax.video,
+                  platformColor: DSV3Colors.premiumRed,
                   tag: 'Coding Skill',
                   title: 'AI Automation Video',
                   action: 'Start Outline',
-                  actionIcon: Icons.edit_outlined,
+                  actionIcon: Iconsax.edit_2,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: DSV3Spacing.sm),
                 _buildContentCard(
+                  context,
+                  isDark,
                   platform: 'TikTok',
-                  platformIcon: Icons.music_note,
+                  platformIcon: Iconsax.music,
+                  platformColor: DSV3Colors.black,
                   tag: 'Personal Brand',
                   title: 'Day in the life of a dev',
                   action: 'Brainstorm Hooks',
-                  actionIcon: Icons.lightbulb_outline,
+                  actionIcon: Iconsax.lamp_on,
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: DSV3Spacing.xl),
 
                 // SCRIPT Section
-                _buildSectionHeader('SCRIPT', 1),
-                const SizedBox(height: 12),
+                _buildSectionHeader(context, 'SCRIPT', 1),
+                const SizedBox(height: DSV3Spacing.md),
                 _buildContentCard(
+                  context,
+                  isDark,
                   platform: 'Blog',
-                  platformIcon: Icons.description_outlined,
+                  platformIcon: Iconsax.document_text,
+                  platformColor: DSV3Colors.orange500,
                   tag: 'Project Alpha',
                   title: 'Q3 Project Update: Lessons Learned',
                   action: 'Finalize Draft',
-                  actionIcon: Icons.check_circle_outline,
+                  actionIcon: Iconsax.tick_circle,
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: DSV3Spacing.xl),
 
                 // EDIT Section
-                _buildSectionHeader('EDIT', 2),
-                const SizedBox(height: 12),
+                _buildSectionHeader(context, 'EDIT', 2),
+                const SizedBox(height: DSV3Spacing.md),
                 _buildContentCard(
+                  context,
+                  isDark,
                   platform: 'YouTube',
-                  platformIcon: Icons.play_circle_outline,
+                  platformIcon: Iconsax.video,
+                  platformColor: DSV3Colors.premiumRed,
                   tag: 'Coding',
                   title: 'Building a SaaS in 24 Hours',
                   action: 'Cut A-Roll',
-                  actionIcon: Icons.content_cut,
+                  actionIcon: Iconsax.scissor,
                   progress: 0.70,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: DSV3Spacing.sm),
                 _buildContentCard(
+                  context,
+                  isDark,
                   platform: 'Facebook',
-                  platformIcon: Icons.facebook,
+                  platformIcon: Iconsax.message,
+                  platformColor: DSV3Colors.premiumBlue,
                   tag: 'Community',
                   title: 'Weekly Live Stream Promo',
                   action: 'Create Thumbnail',
-                  actionIcon: Icons.image_outlined,
+                  actionIcon: Iconsax.gallery,
                 ),
+
+                const SizedBox(height: 100),
               ],
             ),
           ),
@@ -121,84 +161,82 @@ class _ContentScreenState extends State<ContentScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: const Color(0xFF1DB954),
-        child: const Icon(Icons.add, color: Colors.black),
+        backgroundColor: DSV3Colors.teal500,
+        child: const Icon(Iconsax.add, color: DSV3Colors.white),
       ),
     );
   }
 
   Widget _buildFilterChip(String label, int index) {
     final isSelected = _selectedFilter == index;
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      child: ChoiceChip(
-        label: Text(label),
-        selected: isSelected,
-        onSelected: (selected) {
-          setState(() {
-            _selectedFilter = index;
-          });
-        },
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedColor: const Color(0xFF1DB954),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: isSelected ? Colors.black : Theme.of(context).colorScheme.onSurface,
-        ),
-        shape: RoundedRectangleBorder(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedFilter = index;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? DSV3Colors.teal500
+              : (isDark ? DSV3Colors.surfaceDark : DSV3Colors.neutral100),
           borderRadius: BorderRadius.circular(20),
+          border: isSelected
+              ? null
+              : Border.all(
+                  color: isDark ? DSV3Colors.neutral500 : DSV3Colors.neutral200,
+                ),
         ),
-        side: BorderSide.none,
+        child: Center(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: isSelected
+                      ? DSV3Colors.white
+                      : (isDark ? DSV3Colors.neutral200 : DSV3Colors.black),
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                ),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildSectionHeader(String title, int count) {
+  Widget _buildSectionHeader(BuildContext context, String title, int count) {
     return Row(
       children: [
         Text(
           title,
-          style: GoogleFonts.inter(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 0.5,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          decoration: const BoxDecoration(
-            color: Color(0xFF1DB954),
-            shape: BoxShape.circle,
-          ),
-          constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
-          child: Center(
-            child: Text(
-              count.toString(),
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                letterSpacing: 0.5,
               ),
-            ),
-          ),
+        ),
+        const SizedBox(width: DSV3Spacing.sm),
+        DSV3Badge(
+          label: count.toString(),
+          variant: DSV3BadgeVariant.info,
         ),
       ],
     );
   }
 
-  Widget _buildContentCard({
+  Widget _buildContentCard(
+    BuildContext context,
+    bool isDark, {
     required String platform,
     required IconData platformIcon,
+    required Color platformColor,
     required String tag,
     required String title,
     required String action,
     required IconData actionIcon,
     double? progress,
   }) {
-    return AppCard(
-      padding: const EdgeInsets.all(16),
+    return DSV3Card(
       child: Row(
         children: [
           Expanded(
@@ -207,92 +245,92 @@ class _ContentScreenState extends State<ContentScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(platformIcon, size: 16, color: const Color(0xFF1DB954)),
+                    Icon(
+                      platformIcon,
+                      size: 16,
+                      color: platformColor,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       platform,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF1DB954),
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: platformColor,
+                          ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       '•',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: isDark
+                                ? DSV3Colors.neutral300
+                                : DSV3Colors.neutral500,
+                          ),
                     ),
                     const SizedBox(width: 8),
                     Text(
                       tag,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: isDark
+                                ? DSV3Colors.neutral300
+                                : DSV3Colors.neutral500,
+                          ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: DSV3Spacing.sm),
                 Text(
                   title,
-                  style: GoogleFonts.inter(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: DSV3Spacing.sm),
                 Row(
                   children: [
-                    Icon(actionIcon, size: 14, color: const Color(0xFF1DB954)),
+                    Icon(
+                      actionIcon,
+                      size: 14,
+                      color: DSV3Colors.teal500,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       action,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: const Color(0xFF1DB954),
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: DSV3Colors.teal500,
+                            fontWeight: FontWeight.w600,
+                          ),
                     ),
                     if (progress != null) ...[
                       const SizedBox(width: 12),
                       Text(
                         '${(progress * 100).toInt()}%',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
                     ],
                   ],
                 ),
                 if (progress != null) ...[
-                  const SizedBox(height: 8),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(2),
-                    child: LinearProgressIndicator(
-                      value: progress,
-                      minHeight: 4,
-                      backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-                      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF1DB954)),
-                    ),
-                  ),
+                  const SizedBox(height: DSV3Spacing.sm),
+                  DSV3ProgressBar(value: progress),
                 ],
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: DSV3Spacing.md),
           Container(
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.05),
-              borderRadius: BorderRadius.circular(8),
+              color: platformColor.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
             ),
             child: Icon(
               platformIcon,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              color: platformColor,
+              size: 28,
             ),
           ),
         ],

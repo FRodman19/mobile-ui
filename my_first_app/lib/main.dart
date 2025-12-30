@@ -2,10 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/main_navigation.dart';
-import 'design_system/design_system_gallery.dart';
+import 'screens/design_system_gallery_screen.dart';
+import 'screens/grow_out_loud_gallery_screen.dart';
 import 'theme/app_theme.dart';
-import 'screens/design_system_v2_gallery_screen.dart';
-import 'screens/design_system_v3_gallery_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,10 +21,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MainNavigation(),
         if (kDebugMode)
-          '/design-system': (context) => const DesignSystemGallery(),
-        '/design-system-v2': (context) => const DesignSystemV2GalleryScreen(),
+          '/design-system': (context) => const DesignSystemGalleryScreen(),
         if (kDebugMode)
-          '/design-system-v3': (context) => const DesignSystemV3GalleryScreen(),
+          '/design-system-v3': (context) => const GrowOutLoudGalleryScreen(),
       },
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),

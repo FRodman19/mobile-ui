@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../design_system_v3/badges.dart';
-import '../design_system_v3/buttons.dart';
-import '../design_system_v3/cards.dart';
-import '../design_system_v3/chips.dart';
-import '../design_system_v3/icon_container.dart';
-import '../design_system_v3/spacing_v3.dart';
-import '../design_system_v3/theme_v3.dart';
+import '../design_system/badges.dart';
+import '../design_system/buttons.dart';
+import '../design_system/cards.dart';
+import '../design_system/chips.dart';
+import '../design_system/icon_container.dart';
+import '../design_system/spacing.dart';
+import '../design_system/theme.dart';
 
 class PerformanceScreen extends StatefulWidget {
   const PerformanceScreen({super.key});
@@ -23,7 +23,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: isDark ? DSV3Colors.darkBackground : DSV3Colors.white,
+      backgroundColor: isDark ? DSColors.darkBackground : DSColors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -35,8 +35,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     letterSpacing: 0.5,
                     color: isDark
-                        ? DSV3Colors.neutral300
-                        : DSV3Colors.neutral500,
+                        ? DSColors.neutral300
+                        : DSColors.neutral500,
                   ),
             ),
             Text(
@@ -61,22 +61,22 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             Container(
               height: 48,
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  DSV3Chip(
+                  DSChip(
                     label: 'Today',
                     isSelected: _selectedFilter == 0,
                     onTap: () => setState(() => _selectedFilter = 0),
                   ),
-                  DSV3Chip(
+                  DSChip(
                     label: 'This Week',
                     isSelected: _selectedFilter == 1,
                     onTap: () => setState(() => _selectedFilter = 1),
                   ),
-                  DSV3Chip(
+                  DSChip(
                     label: 'This Month',
                     isSelected: _selectedFilter == 2,
                     onTap: () => setState(() => _selectedFilter = 2),
@@ -85,15 +85,15 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.lg),
+            const SizedBox(height: DSSpacing.lg),
 
             // Net Profit Card
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
-              child: DSV3Card(
-                tone: DSV3CardTone.elevated,
+              child: DSCard(
+                tone: DSCardTone.elevated,
                 child: Row(
                   children: [
                     Expanded(
@@ -108,8 +108,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                                     ?.copyWith(
                                       letterSpacing: 0.5,
                                       color: isDark
-                                          ? DSV3Colors.neutral300
-                                          : DSV3Colors.neutral500,
+                                          ? DSColors.neutral300
+                                          : DSColors.neutral500,
                                     ),
                               ),
                               const SizedBox(width: 6),
@@ -117,12 +117,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                                 Iconsax.info_circle,
                                 size: 16,
                                 color: isDark
-                                    ? DSV3Colors.neutral500
-                                    : DSV3Colors.neutral500,
+                                    ? DSColors.neutral500
+                                    : DSColors.neutral500,
                               ),
                             ],
                           ),
-                          const SizedBox(height: DSV3Spacing.sm),
+                          const SizedBox(height: DSSpacing.sm),
                           Text(
                             '\$8,240.50',
                             style: Theme.of(context).textTheme.displaySmall,
@@ -130,42 +130,42 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                         ],
                       ),
                     ),
-                    const DSV3Badge(
+                    const DSBadge(
                       label: '+12.5%',
-                      variant: DSV3BadgeVariant.success,
+                      variant: DSBadgeVariant.success,
                     ),
                   ],
                 ),
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.md),
+            const SizedBox(height: DSSpacing.md),
 
             // Revenue & Spend
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: Row(
                 children: [
                   Expanded(
-                    child: DSV3Card(
-                      tone: DSV3CardTone.elevated,
+                    child: DSCard(
+                      tone: DSCardTone.elevated,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Icon(
                             Iconsax.wallet_money,
                             size: 28,
-                            color: DSV3Colors.teal500,
+                            color: DSColors.teal500,
                           ),
-                          const SizedBox(height: DSV3Spacing.sm),
+                          const SizedBox(height: DSSpacing.sm),
                           Text(
                             'Revenue',
                             style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                   color: isDark
-                                      ? DSV3Colors.neutral300
-                                      : DSV3Colors.neutral500,
+                                      ? DSColors.neutral300
+                                      : DSColors.neutral500,
                                 ),
                           ),
                           const SizedBox(height: 4),
@@ -177,25 +177,25 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: DSV3Spacing.md),
+                  const SizedBox(width: DSSpacing.md),
                   Expanded(
-                    child: DSV3Card(
-                      tone: DSV3CardTone.elevated,
+                    child: DSCard(
+                      tone: DSCardTone.elevated,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Icon(
                             Iconsax.card,
                             size: 28,
-                            color: DSV3Colors.orange500,
+                            color: DSColors.orange500,
                           ),
-                          const SizedBox(height: DSV3Spacing.sm),
+                          const SizedBox(height: DSSpacing.sm),
                           Text(
                             'Spend',
                             style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                   color: isDark
-                                      ? DSV3Colors.neutral300
-                                      : DSV3Colors.neutral500,
+                                      ? DSColors.neutral300
+                                      : DSColors.neutral500,
                                 ),
                           ),
                           const SizedBox(height: 4),
@@ -211,12 +211,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.lg),
+            const SizedBox(height: DSSpacing.lg),
 
             // Quick Actions
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: Text(
                 'Quick Actions',
@@ -224,14 +224,14 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.sm),
+            const SizedBox(height: DSSpacing.sm),
 
             SizedBox(
               height: 60,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: DSV3Spacing.horizontalPadding,
+                  horizontal: DSSpacing.horizontalPadding,
                 ),
                 children: [
                   _buildQuickActionButton(Iconsax.add, 'Add Entry', false),
@@ -245,12 +245,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.lg),
+            const SizedBox(height: DSSpacing.lg),
 
             // Top Projects
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -263,17 +263,17 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                     'View All',
                     style: Theme.of(
                       context,
-                    ).textTheme.labelLarge?.copyWith(color: DSV3Colors.teal500),
+                    ).textTheme.labelLarge?.copyWith(color: DSColors.teal500),
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.sm),
+            const SizedBox(height: DSSpacing.sm),
 
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: Column(
                 children: [
@@ -284,7 +284,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                     '+\$3,240',
                     true,
                   ),
-                  const SizedBox(height: DSV3Spacing.sm),
+                  const SizedBox(height: DSSpacing.sm),
                   _buildProjectCard(
                     Iconsax.microphone,
                     'Podcast Pro',
@@ -296,12 +296,12 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.lg),
+            const SizedBox(height: DSSpacing.lg),
 
             // Worst Projects
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: Row(
                 children: [
@@ -310,19 +310,19 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(width: 8),
-                  const DSV3Badge(
+                  const DSBadge(
                     label: 'Low ROI',
-                    variant: DSV3BadgeVariant.error,
+                    variant: DSBadgeVariant.error,
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.sm),
+            const SizedBox(height: DSSpacing.sm),
 
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: DSV3Spacing.horizontalPadding,
+                horizontal: DSSpacing.horizontalPadding,
               ),
               child: _buildProjectCard(
                 Iconsax.box,
@@ -333,7 +333,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               ),
             ),
 
-            const SizedBox(height: DSV3Spacing.xl),
+            const SizedBox(height: DSSpacing.xl),
           ],
         ),
       ),
@@ -343,14 +343,14 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
   Widget _buildQuickActionButton(IconData icon, String label, bool isPrimary) {
     return Padding(
       padding: const EdgeInsets.only(right: 12),
-      child: DSV3Button(
+      child: DSButton(
         label: label,
         icon: icon,
         variant: isPrimary
-            ? DSV3ButtonVariant.primary
-            : DSV3ButtonVariant.secondary,
+            ? DSButtonVariant.primary
+            : DSButtonVariant.secondary,
         onPressed: () {},
-        size: DSV3ButtonSize.small,
+        size: DSButtonSize.small,
       ),
     );
   }
@@ -363,16 +363,16 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     bool isPositive,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final accentColor = isPositive ? DSV3Colors.teal500 : DSV3Colors.premiumRed;
+    final accentColor = isPositive ? DSColors.teal500 : DSColors.premiumRed;
 
-    return DSV3Card(
+    return DSCard(
       child: Row(
         children: [
-          DSV3IconContainer(
+          DSIconContainer(
             icon: icon,
             color: accentColor,
           ),
-          const SizedBox(width: DSV3Spacing.md),
+          const SizedBox(width: DSSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,8 +386,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                   category,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: isDark
-                            ? DSV3Colors.neutral300
-                            : DSV3Colors.neutral500,
+                            ? DSColors.neutral300
+                            : DSColors.neutral500,
                       ),
                 ),
               ],
@@ -397,8 +397,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             amount,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: isPositive
-                      ? DSV3Colors.premiumGreen
-                      : DSV3Colors.premiumRed,
+                      ? DSColors.premiumGreen
+                      : DSColors.premiumRed,
                 ),
           ),
         ],

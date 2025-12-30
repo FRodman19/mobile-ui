@@ -80,9 +80,9 @@ class DSV3BottomSheet {
           child: SafeArea(
             top: false,
             child: Padding(
-              padding: const EdgeInsets.only(
-                top: DSV3Spacing.lg,
-                bottom: DSV3Spacing.lg,
+              padding: const EdgeInsets.symmetric(
+                horizontal: DSV3Spacing.lg,
+                vertical: DSV3Spacing.lg,
               ),
               child: content,
             ),

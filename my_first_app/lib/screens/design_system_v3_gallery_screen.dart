@@ -28,7 +28,6 @@ class DesignSystemV3GalleryScreen extends StatefulWidget {
 class _DesignSystemV3GalleryScreenState
     extends State<DesignSystemV3GalleryScreen>
     with TickerProviderStateMixin {
-  bool _isDarkMode = false;
   bool _checkboxValue = true;
   int _radioValue = 1;
   bool _switchValue = false;
@@ -54,8 +53,13 @@ class _DesignSystemV3GalleryScreenState
 
   @override
   Widget build(BuildContext context) {
+    // Use system brightness to determine dark mode
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final isDarkMode = brightness == Brightness.dark;
+
+    // Wrap the entire gallery in a Theme using DSV3Theme based on system settings
     return Theme(
-      data: _isDarkMode ? DSV3Theme.darkTheme() : DSV3Theme.lightTheme(),
+      data: isDarkMode ? DSV3Theme.darkTheme() : DSV3Theme.lightTheme(),
       child: Builder(
         builder: (context) {
           return Scaffold(
@@ -80,16 +84,25 @@ class _DesignSystemV3GalleryScreenState
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               elevation: 0,
               actions: [
-                IconButton(
-                  tooltip: 'Toggle theme',
-                  icon: Icon(
-                    _isDarkMode ? Iconsax.sun_1 : Iconsax.moon,
+                // Show current theme mode (informational only)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isDarkMode ? Iconsax.moon : Iconsax.sun_1,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          isDarkMode ? 'Dark' : 'Light',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _isDarkMode = !_isDarkMode;
-                    });
-                  },
                 ),
               ],
             ),

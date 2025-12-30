@@ -23,10 +23,10 @@ class DSV3Card extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final base = isDark ? DSV3Colors.surfaceDark : DSV3Colors.surfaceLight;
-    final elevated = isDark ? DSV3Colors.black : DSV3Colors.white;
+    final elevated = isDark ? DSV3Colors.surfaceDark : DSV3Colors.white;
     final background = tone == DSV3CardTone.elevated ? elevated : base;
 
-    return Material(
+    final widget = Material(
       color: background,
       borderRadius: BorderRadius.circular(DSV3Spacing.cardRadius),
       child: InkWell(
@@ -39,5 +39,25 @@ class DSV3Card extends StatelessWidget {
         ),
       ),
     );
+
+    if (tone == DSV3CardTone.elevated) {
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(DSV3Spacing.cardRadius),
+          boxShadow: [
+            BoxShadow(
+              color: isDark
+                  ? Colors.black.withValues(alpha: 0.3)
+                  : Colors.black.withValues(alpha: 0.08),
+              blurRadius: isDark ? 16 : 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: widget,
+      );
+    }
+
+    return widget;
   }
 }

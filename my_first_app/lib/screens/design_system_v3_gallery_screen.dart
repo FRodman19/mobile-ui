@@ -12,6 +12,7 @@ import '../design_system_v3/lists.dart';
 import '../design_system_v3/navigation.dart';
 import '../design_system_v3/overlays.dart';
 import '../design_system_v3/progress.dart';
+import '../design_system_v3/skeleton.dart';
 import '../design_system_v3/sliders.dart';
 import '../design_system_v3/spacing_v3.dart';
 import '../design_system_v3/theme_v3.dart';
@@ -129,6 +130,12 @@ class _DesignSystemV3GalleryScreenState
                   _buildOverlaysSection(context),
                   _sectionHeader('Lists & Data Display'),
                   _buildListsSection(context),
+                  _sectionHeader('Dividers'),
+                  _buildDividersSection(context),
+                  _sectionHeader('Menus'),
+                  _buildMenuSection(context),
+                  _sectionHeader('Skeleton States'),
+                  _buildSkeletonSection(context),
                   _sectionHeader('Icons'),
                   _buildIconsSection(context),
                   _sectionHeader('Animations'),
@@ -991,7 +998,7 @@ class _DesignSystemV3GalleryScreenState
                 trailing: const Icon(Iconsax.arrow_right_3, size: 16),
                 onTap: () {},
               ),
-              const DSV3Divider(length: double.infinity),
+              const DSV3Divider(),
               DSV3ListTile(
                 title: 'List item two',
                 subtitle: 'Secondary line',
@@ -1018,7 +1025,7 @@ class _DesignSystemV3GalleryScreenState
           children: [
             const Text('A'),
             const SizedBox(width: 8),
-            const DSV3Divider(vertical: true, length: 18),
+            const DSV3VerticalDivider(width: 1, indent: 4, endIndent: 4),
             const SizedBox(width: 8),
             const Text('B'),
           ],
@@ -1177,6 +1184,163 @@ class _DesignSystemV3GalleryScreenState
             SizedBox(width: 24),
             DSV3ErrorIcon(),
           ],
+        ),
+        const SizedBox(height: DSV3Spacing.xl),
+      ],
+    );
+  }
+
+  Widget _buildDividersSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Horizontal Dividers'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: Column(
+            children: [
+              const Text('Content above divider'),
+              const SizedBox(height: DSV3Spacing.md),
+              const DSV3Divider(),
+              const SizedBox(height: DSV3Spacing.md),
+              const Text('Content below divider'),
+            ],
+          ),
+        ),
+        const SizedBox(height: DSV3Spacing.lg),
+        const Text('Horizontal Divider with custom thickness'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: Column(
+            children: [
+              const Text('Thicker divider'),
+              const SizedBox(height: DSV3Spacing.md),
+              const DSV3Divider(thickness: 2),
+              const SizedBox(height: DSV3Spacing.md),
+              const Text('Below thick divider'),
+            ],
+          ),
+        ),
+        const SizedBox(height: DSV3Spacing.lg),
+        const Text('Vertical Dividers'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: SizedBox(
+            height: 80,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Expanded(
+                  child: Center(child: Text('Section A')),
+                ),
+                const DSV3VerticalDivider(thickness: 1, width: 20),
+                const Expanded(
+                  child: Center(child: Text('Section B')),
+                ),
+                const DSV3VerticalDivider(thickness: 1, width: 20),
+                const Expanded(
+                  child: Center(child: Text('Section C')),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: DSV3Spacing.lg),
+        const Text('Divider with indents'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: Column(
+            children: [
+              const Text('Full width text'),
+              const SizedBox(height: DSV3Spacing.md),
+              const DSV3Divider(indent: 16, endIndent: 16),
+              const SizedBox(height: DSV3Spacing.md),
+              const Text('Indented divider above'),
+            ],
+          ),
+        ),
+        const SizedBox(height: DSV3Spacing.xl),
+      ],
+    );
+  }
+
+  Widget _buildMenuSection(BuildContext context) {
+    const menuEntries = [
+      {'label': 'Profile', 'icon': Iconsax.user},
+      {'label': 'Settings', 'icon': Iconsax.setting_2},
+      {'label': 'Help', 'icon': Iconsax.info_circle},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Menu'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: MenuAnchor(
+            style: MenuStyle(
+              elevation: MaterialStateProperty.all(0),
+              backgroundColor: MaterialStateProperty.all(Theme.of(context).cardColor),
+            ),
+            menuChildren: menuEntries.map((entry) => MenuItemButton(
+              leadingIcon: Icon(entry['icon'] as IconData, size: 20),
+              child: Text(entry['label'] as String),
+              onPressed: () {},
+            )).toList(),
+            builder: (context, controller, child) {
+              return FilledButton.icon(
+                onPressed: controller.open,
+                icon: const Icon(Iconsax.menu),
+                label: const Text('Open Menu'),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: DSV3Spacing.lg),
+      ],
+    );
+  }
+
+  Widget _buildSkeletonSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Loading states for components:'),
+        const SizedBox(height: DSV3Spacing.md),
+        DSV3Card(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const DSV3Skeleton(width: 48, height: 48, radius: 24),
+                  const SizedBox(width: DSV3Spacing.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const DSV3Skeleton(height: 16, width: 150),
+                        const SizedBox(height: 8),
+                        const DSV3Skeleton(height: 14, width: 100),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: DSV3Spacing.md),
+              const DSV3Divider(),
+              const SizedBox(height: DSV3Spacing.md),
+              const DSV3Skeleton(height: 100, width: double.infinity),
+              const SizedBox(height: DSV3Spacing.md),
+              Row(
+                children: [
+                  const Expanded(child: DSV3Skeleton(height: 40)),
+                  const SizedBox(width: DSV3Spacing.sm),
+                  const Expanded(child: DSV3Skeleton(height: 40)),
+                ],
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: DSV3Spacing.xl),
       ],

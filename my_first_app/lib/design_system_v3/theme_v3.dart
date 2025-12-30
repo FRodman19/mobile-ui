@@ -10,7 +10,8 @@ class DSV3Colors {
   static const Color white = Color(0xFFFFFFFF);
 
   static const Color surfaceLight = Color(0xFFF6F6F4);
-  static const Color surfaceDark = Color(0xFF111111);
+  static const Color surfaceDark = Color(0xFF1E1E1E);
+  static const Color darkBackground = Color(0xFF121212);
 
   static const Color neutral100 = Color(0xFFF2F2F2);
   static const Color neutral200 = Color(0xFFE2E2E2);
@@ -141,10 +142,10 @@ class DSV3Theme {
         primary: DSV3Colors.orange500,
         secondary: DSV3Colors.teal500,
         surface: DSV3Colors.surfaceDark,
-        background: DSV3Colors.black,
+        background: DSV3Colors.darkBackground,
         error: DSV3Colors.premiumRed,
       ),
-      scaffoldBackgroundColor: DSV3Colors.black,
+      scaffoldBackgroundColor: DSV3Colors.darkBackground,
       textTheme: _textTheme(DSV3Colors.white),
       iconTheme: const IconThemeData(color: DSV3Colors.white),
       cardTheme: CardThemeData(
@@ -194,73 +195,73 @@ class DSV3Theme {
 
   static TextTheme _textTheme(Color color) {
     return TextTheme(
-      displayLarge: GoogleFonts.spaceGrotesk(
+      displayLarge: GoogleFonts.dmSans(
         fontSize: 40,
         height: 1.1,
         fontWeight: FontWeight.w700,
         color: color,
       ),
-      displayMedium: GoogleFonts.spaceGrotesk(
+      displayMedium: GoogleFonts.dmSans(
         fontSize: 32,
         height: 1.15,
         fontWeight: FontWeight.w700,
         color: color,
       ),
-      displaySmall: GoogleFonts.spaceGrotesk(
+      displaySmall: GoogleFonts.dmSans(
         fontSize: 28,
         height: 1.2,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      headlineLarge: GoogleFonts.spaceGrotesk(
+      headlineLarge: GoogleFonts.dmSans(
         fontSize: 24,
         height: 1.25,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      headlineMedium: GoogleFonts.spaceGrotesk(
+      headlineMedium: GoogleFonts.dmSans(
         fontSize: 20,
         height: 1.3,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      headlineSmall: GoogleFonts.spaceGrotesk(
+      headlineSmall: GoogleFonts.dmSans(
         fontSize: 18,
         height: 1.3,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      bodyLarge: GoogleFonts.manrope(
+      bodyLarge: GoogleFonts.lato(
         fontSize: 16,
         height: 1.45,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      bodyMedium: GoogleFonts.manrope(
+      bodyMedium: GoogleFonts.lato(
         fontSize: 14,
         height: 1.4,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      bodySmall: GoogleFonts.manrope(
+      bodySmall: GoogleFonts.lato(
         fontSize: 12,
         height: 1.35,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      labelLarge: GoogleFonts.manrope(
+      labelLarge: GoogleFonts.lato(
         fontSize: 14,
         height: 1.2,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      labelMedium: GoogleFonts.manrope(
+      labelMedium: GoogleFonts.lato(
         fontSize: 12,
         height: 1.2,
         fontWeight: FontWeight.w600,
         color: color,
       ),
-      labelSmall: GoogleFonts.manrope(
+      labelSmall: GoogleFonts.lato(
         fontSize: 11,
         height: 1.2,
         fontWeight: FontWeight.w600,

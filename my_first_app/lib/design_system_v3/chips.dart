@@ -1,45 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
-import 'spacing_v3.dart';
 import 'theme_v3.dart';
 
 class DSV3Chip extends StatelessWidget {
   const DSV3Chip({
     super.key,
     required this.label,
-    this.onDeleted,
+    required this.isSelected,
+    required this.onTap,
   });
 
   final String label;
-  final VoidCallback? onDeleted;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background = isDark ? DSV3Colors.surfaceDark : DSV3Colors.surfaceLight;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: DSV3Spacing.horizontalPadding,
-        vertical: DSV3Spacing.verticalPadding,
-      ),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label, style: Theme.of(context).textTheme.labelMedium),
-          if (onDeleted != null) ...[
-            const SizedBox(width: 8),
-            GestureDetector(
-              onTap: onDeleted,
-              child: const Icon(Iconsax.close_circle, size: 16),
-            ),
-          ],
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(right: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? DSV3Colors.teal500
+              : (isDark ? DSV3Colors.surfaceDark : DSV3Colors.neutral100),
+          borderRadius: BorderRadius.circular(20),
+          border: isSelected
+              ? null
+              : Border.all(
+                  color: isDark ? DSV3Colors.neutral500 : DSV3Colors.neutral200,
+                ),
+        ),
+        child: Center(
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: isSelected
+                      ? DSV3Colors.white
+                      : (isDark ? DSV3Colors.neutral200 : DSV3Colors.black),
+                ),
+          ),
+        ),
       ),
     );
   }

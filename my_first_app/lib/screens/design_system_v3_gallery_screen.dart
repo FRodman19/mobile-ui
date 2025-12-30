@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../design_system_v3/animations.dart';
@@ -7,6 +8,7 @@ import '../design_system_v3/buttons.dart';
 import '../design_system_v3/cards.dart';
 import '../design_system_v3/chips.dart';
 import '../design_system_v3/dividers.dart';
+import '../design_system_v3/icon_container.dart';
 import '../design_system_v3/inputs.dart';
 import '../design_system_v3/lists.dart';
 import '../design_system_v3/navigation.dart';
@@ -1013,8 +1015,8 @@ class _DesignSystemV3GalleryScreenState
           spacing: 12,
           runSpacing: 12,
           children: [
-            const DSV3Chip(label: 'Chip'),
-            DSV3Chip(label: 'Removable', onDeleted: () {}),
+            DSV3Chip(label: 'Selected', isSelected: true, onTap: () {}),
+            DSV3Chip(label: 'Unselected', isSelected: false, onTap: () {}),
             const DSV3Badge(label: 'New'),
             const DSV3Badge(label: 'Success', variant: DSV3BadgeVariant.success),
             const DSV3Badge(label: 'Error', variant: DSV3BadgeVariant.error),
@@ -1038,6 +1040,53 @@ class _DesignSystemV3GalleryScreenState
           description: 'Create your first entry to see it here.',
           icon: Iconsax.archive_1,
           action: DSV3Button(label: 'Create', onPressed: () {}),
+        ),
+        const SizedBox(height: DSV3Spacing.xl),
+        Text(
+          'Brand Icons',
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        const SizedBox(height: DSV3Spacing.md),
+        Text(
+          'Social media and brand icons using flutter_svg',
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? DSV3Colors.neutral300
+                    : DSV3Colors.neutral500,
+              ),
+        ),
+        const SizedBox(height: DSV3Spacing.md),
+        Wrap(
+          spacing: 16,
+          runSpacing: 16,
+          children: [
+            DSV3IconContainer(
+              icon: Icons.tiktok,
+              color: DSV3Colors.black,
+              size: 64,
+              iconSize: 32,
+            ),
+            Container(
+              width: 64,
+              height: 64,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: DSV3Colors.neutral100,
+                borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
+              ),
+              child: SvgPicture.asset('assets/icons/tiktok.svg'),
+            ),
+            Container(
+              width: 64,
+              height: 64,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: DSV3Colors.neutral100,
+                borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
+              ),
+              child: SvgPicture.asset('assets/icons/facebook.svg'),
+            ),
+          ],
         ),
         const SizedBox(height: DSV3Spacing.xl),
       ],

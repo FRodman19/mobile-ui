@@ -195,76 +195,80 @@ class DSV3Theme {
 
   static TextTheme _textTheme(Color color) {
     return TextTheme(
-      displayLarge: GoogleFonts.dmSans(
-        fontSize: 40,
-        height: 1.1,
-        fontWeight: FontWeight.w700,
-        color: color,
-      ),
-      displayMedium: GoogleFonts.dmSans(
-        fontSize: 32,
-        height: 1.15,
-        fontWeight: FontWeight.w700,
-        color: color,
-      ),
-      displaySmall: GoogleFonts.dmSans(
-        fontSize: 28,
+      // Use Roboto for display headings - all 24px (3 × 8)
+      displayLarge: GoogleFonts.roboto(
+        fontSize: 24, // 3 × 8
         height: 1.2,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      headlineLarge: GoogleFonts.dmSans(
-        fontSize: 24,
-        height: 1.25,
-        fontWeight: FontWeight.w600,
+      displayMedium: GoogleFonts.roboto(
+        fontSize: 24, // 3 × 8
+        height: 1.2,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      headlineMedium: GoogleFonts.dmSans(
-        fontSize: 20,
+      displaySmall: GoogleFonts.roboto(
+        fontSize: 24, // 3 × 8
         height: 1.3,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      headlineSmall: GoogleFonts.dmSans(
-        fontSize: 18,
+      // Use Roboto for headlines - simple sizing
+      headlineLarge: GoogleFonts.roboto(
+        fontSize: 24, // 3 × 8
         height: 1.3,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      bodyLarge: GoogleFonts.lato(
-        fontSize: 16,
-        height: 1.45,
+      headlineMedium: GoogleFonts.roboto(
+        fontSize: 16, // 2 × 8
+        height: 1.3,
+        fontWeight: FontWeight.w500,
+        color: color,
+      ),
+      headlineSmall: GoogleFonts.roboto(
+        fontSize: 16, // 2 × 8
+        height: 1.3,
+        fontWeight: FontWeight.w500,
+        color: color,
+      ),
+      // Use Inter for body text - all 16px (2 × 8)
+      bodyLarge: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.5,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      bodyMedium: GoogleFonts.lato(
-        fontSize: 14,
-        height: 1.4,
+      bodyMedium: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.5,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      bodySmall: GoogleFonts.lato(
-        fontSize: 12,
-        height: 1.35,
+      bodySmall: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.5,
         fontWeight: FontWeight.w400,
         color: color,
       ),
-      labelLarge: GoogleFonts.lato(
-        fontSize: 14,
-        height: 1.2,
-        fontWeight: FontWeight.w600,
+      // Use Inter for labels - all 16px (2 × 8)
+      labelLarge: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.3,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      labelMedium: GoogleFonts.lato(
-        fontSize: 12,
-        height: 1.2,
-        fontWeight: FontWeight.w600,
+      labelMedium: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.3,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
-      labelSmall: GoogleFonts.lato(
-        fontSize: 11,
-        height: 1.2,
-        fontWeight: FontWeight.w600,
+      labelSmall: GoogleFonts.inter(
+        fontSize: 16, // 2 × 8
+        height: 1.3,
+        fontWeight: FontWeight.w500,
         color: color,
       ),
     );

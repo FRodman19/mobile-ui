@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import '../design_system_v3/badges.dart';
 import '../design_system_v3/buttons.dart';
 import '../design_system_v3/cards.dart';
+import '../design_system_v3/icon_container.dart';
 import '../design_system_v3/progress.dart';
 import '../design_system_v3/spacing_v3.dart';
 import '../design_system_v3/theme_v3.dart';
@@ -87,47 +88,39 @@ class HomeDashboardContent extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          DSV3Colors.orange500,
-                          DSV3Colors.orange600,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
+                      color: DSV3Colors.orange500,
                       borderRadius:
                           BorderRadius.circular(DSV3Spacing.cardRadius),
                     ),
                     padding: const EdgeInsets.all(DSV3Spacing.lg),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Iconsax.chart_success,
-                          color: DSV3Colors.white,
-                          size: 24,
-                        ),
-                        const SizedBox(height: DSV3Spacing.sm),
-                        Text(
-                          '94%',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayMedium
-                              ?.copyWith(
-                                color: DSV3Colors.white,
-                                fontWeight: FontWeight.w700,
-                              ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Weekly Score',
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    color: DSV3Colors.white.withValues(alpha: 0.9),
-                                  ),
-                        ),
-                      ],
-                    ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Iconsax.chart_success,
+                            color: DSV3Colors.white,
+                            size: 24,
+                          ),
+                          const SizedBox(height: DSV3Spacing.sm),
+                          Text(
+                            '94%',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(
+                                  color: DSV3Colors.white,
+                                ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'Weekly Score',
+                            style:
+                                Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: DSV3Colors.white.withValues(alpha: 0.9),
+                                    ),
+                          ),
+                        ],
+                      ),
                   ),
                 ),
                 const SizedBox(width: DSV3Spacing.md),
@@ -145,12 +138,7 @@ class HomeDashboardContent extends StatelessWidget {
                         const SizedBox(height: DSV3Spacing.sm),
                         Text(
                           '12',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayMedium
-                              ?.copyWith(
-                                fontWeight: FontWeight.w700,
-                              ),
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -300,7 +288,6 @@ class HomeDashboardContent extends StatelessWidget {
                     'View All',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: DSV3Colors.teal500,
-                          fontWeight: FontWeight.w600,
                         ),
                   ),
                 ),
@@ -361,12 +348,7 @@ class HomeDashboardContent extends StatelessWidget {
                         const SizedBox(height: DSV3Spacing.md),
                         Text(
                           '3',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -397,12 +379,7 @@ class HomeDashboardContent extends StatelessWidget {
                         const SizedBox(height: DSV3Spacing.md),
                         Text(
                           '2',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displaySmall
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: Theme.of(context).textTheme.displaySmall,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -440,18 +417,9 @@ class HomeDashboardContent extends StatelessWidget {
     return DSV3Card(
       child: Row(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
-            ),
-            child: Icon(
-              icon,
-              color: accentColor,
-              size: 24,
-            ),
+          DSV3IconContainer(
+            icon: icon,
+            color: accentColor,
           ),
           const SizedBox(width: DSV3Spacing.md),
           Expanded(
@@ -460,9 +428,7 @@ class HomeDashboardContent extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 4),
                 Row(

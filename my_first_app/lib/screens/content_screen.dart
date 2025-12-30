@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../design_system_v3/badges.dart';
 import '../design_system_v3/cards.dart';
+import '../design_system_v3/chips.dart';
+import '../design_system_v3/icon_container.dart';
 import '../design_system_v3/progress.dart';
 import '../design_system_v3/spacing_v3.dart';
 import '../design_system_v3/theme_v3.dart';
@@ -62,10 +64,26 @@ class _ContentScreenState extends State<ContentScreen> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _buildFilterChip('All', 0),
-                _buildFilterChip('YouTube', 1),
-                _buildFilterChip('TikTok', 2),
-                _buildFilterChip('Blog', 3),
+                DSV3Chip(
+                  label: 'All',
+                  isSelected: _selectedFilter == 0,
+                  onTap: () => setState(() => _selectedFilter = 0),
+                ),
+                DSV3Chip(
+                  label: 'YouTube',
+                  isSelected: _selectedFilter == 1,
+                  onTap: () => setState(() => _selectedFilter = 1),
+                ),
+                DSV3Chip(
+                  label: 'TikTok',
+                  isSelected: _selectedFilter == 2,
+                  onTap: () => setState(() => _selectedFilter = 2),
+                ),
+                DSV3Chip(
+                  label: 'Blog',
+                  isSelected: _selectedFilter == 3,
+                  onTap: () => setState(() => _selectedFilter = 3),
+                ),
               ],
             ),
           ),
@@ -167,45 +185,6 @@ class _ContentScreenState extends State<ContentScreen> {
     );
   }
 
-  Widget _buildFilterChip(String label, int index) {
-    final isSelected = _selectedFilter == index;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedFilter = index;
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? DSV3Colors.teal500
-              : (isDark ? DSV3Colors.surfaceDark : DSV3Colors.neutral100),
-          borderRadius: BorderRadius.circular(20),
-          border: isSelected
-              ? null
-              : Border.all(
-                  color: isDark ? DSV3Colors.neutral500 : DSV3Colors.neutral200,
-                ),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: isSelected
-                      ? DSV3Colors.white
-                      : (isDark ? DSV3Colors.neutral200 : DSV3Colors.black),
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildSectionHeader(BuildContext context, String title, int count) {
     return Row(
       children: [
@@ -254,7 +233,6 @@ class _ContentScreenState extends State<ContentScreen> {
                     Text(
                       platform,
                       style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            fontWeight: FontWeight.w600,
                             color: platformColor,
                           ),
                     ),
@@ -281,9 +259,7 @@ class _ContentScreenState extends State<ContentScreen> {
                 const SizedBox(height: DSV3Spacing.sm),
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: DSV3Spacing.sm),
                 Row(
@@ -298,16 +274,13 @@ class _ContentScreenState extends State<ContentScreen> {
                       action,
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
                             color: DSV3Colors.teal500,
-                            fontWeight: FontWeight.w600,
                           ),
                     ),
                     if (progress != null) ...[
                       const SizedBox(width: 12),
                       Text(
                         '${(progress * 100).toInt()}%',
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],
                   ],
@@ -320,18 +293,11 @@ class _ContentScreenState extends State<ContentScreen> {
             ),
           ),
           const SizedBox(width: DSV3Spacing.md),
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: platformColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
-            ),
-            child: Icon(
-              platformIcon,
-              color: platformColor,
-              size: 28,
-            ),
+          DSV3IconContainer(
+            icon: platformIcon,
+            color: platformColor,
+            size: 64,
+            iconSize: 28,
           ),
         ],
       ),

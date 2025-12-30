@@ -3,6 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import '../design_system_v3/badges.dart';
 import '../design_system_v3/buttons.dart';
 import '../design_system_v3/cards.dart';
+import '../design_system_v3/chips.dart';
+import '../design_system_v3/icon_container.dart';
 import '../design_system_v3/spacing_v3.dart';
 import '../design_system_v3/theme_v3.dart';
 
@@ -64,9 +66,21 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  _buildFilterChip('Today', 0),
-                  _buildFilterChip('This Week', 1),
-                  _buildFilterChip('This Month', 2),
+                  DSV3Chip(
+                    label: 'Today',
+                    isSelected: _selectedFilter == 0,
+                    onTap: () => setState(() => _selectedFilter = 0),
+                  ),
+                  DSV3Chip(
+                    label: 'This Week',
+                    isSelected: _selectedFilter == 1,
+                    onTap: () => setState(() => _selectedFilter = 1),
+                  ),
+                  DSV3Chip(
+                    label: 'This Month',
+                    isSelected: _selectedFilter == 2,
+                    onTap: () => setState(() => _selectedFilter = 2),
+                  ),
                 ],
               ),
             ),
@@ -93,7 +107,6 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                                 style: Theme.of(context).textTheme.labelSmall
                                     ?.copyWith(
                                       letterSpacing: 0.5,
-                                      fontWeight: FontWeight.bold,
                                       color: isDark
                                           ? DSV3Colors.neutral300
                                           : DSV3Colors.neutral500,
@@ -112,8 +125,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                           const SizedBox(height: DSV3Spacing.sm),
                           Text(
                             '\$8,240.50',
-                            style: Theme.of(context).textTheme.displaySmall
-                                ?.copyWith(fontWeight: FontWeight.w700),
+                            style: Theme.of(context).textTheme.displaySmall,
                           ),
                         ],
                       ),
@@ -159,10 +171,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                           const SizedBox(height: 4),
                           Text(
                             '\$12,400',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.w700),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
@@ -192,10 +201,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                           const SizedBox(height: 4),
                           Text(
                             '\$4,159',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.copyWith(fontWeight: FontWeight.w700),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
@@ -334,39 +340,6 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     );
   }
 
-  Widget _buildFilterChip(String label, int index) {
-    final isSelected = _selectedFilter == index;
-    // Using a custom container since DSV3Chip is basic
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedFilter = index;
-        });
-      },
-      child: Container(
-        margin: const EdgeInsets.only(right: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? DSV3Colors.teal500 : Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(20),
-          border: isSelected
-              ? null
-              : Border.all(color: Theme.of(context).dividerColor),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
-              color: isSelected
-                  ? Colors.white
-                  : Theme.of(context).textTheme.bodyMedium?.color,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildQuickActionButton(IconData icon, String label, bool isPrimary) {
     return Padding(
       padding: const EdgeInsets.only(right: 12),
@@ -395,18 +368,9 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     return DSV3Card(
       child: Row(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(DSV3Spacing.componentRadius),
-            ),
-            child: Icon(
-              icon,
-              size: 24,
-              color: accentColor,
-            ),
+          DSV3IconContainer(
+            icon: icon,
+            color: accentColor,
           ),
           const SizedBox(width: DSV3Spacing.md),
           Expanded(
@@ -415,9 +379,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               children: [
                 Text(
                   name,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -437,7 +399,6 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
                   color: isPositive
                       ? DSV3Colors.premiumGreen
                       : DSV3Colors.premiumRed,
-                  fontWeight: FontWeight.w700,
                 ),
           ),
         ],

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/lucide.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../grow_out_loud/components/gol_badges.dart';
 import '../grow_out_loud/components/gol_buttons.dart';
 import '../grow_out_loud/components/gol_cards.dart';
 import '../grow_out_loud/components/gol_chips.dart';
 import '../grow_out_loud/components/gol_dividers.dart';
+import '../grow_out_loud/components/gol_dropdown.dart';
+import '../grow_out_loud/components/gol_grid_loader.dart';
 import '../grow_out_loud/components/gol_inputs.dart';
 import '../grow_out_loud/components/gol_lists.dart';
 import '../grow_out_loud/components/gol_navigation.dart';
@@ -36,13 +38,14 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
   double _sliderValue = 0.4;
   RangeValues _rangeValues = const RangeValues(0.2, 0.8);
   bool _animateToggle = false;
+  String _selectedWorkspace = 'workspace';
 
   late final TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -71,10 +74,8 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
                   padding: const EdgeInsets.only(right: 16),
                   child: Row(
                     children: [
-                      Iconify(
-                        brightness == Brightness.dark
-                            ? Lucide.moon
-                            : Lucide.sun,
+                      Icon(
+                        brightness == Brightness.dark ? Iconsax.moon : Iconsax.sun,
                         size: 18,
                         color: colors.textSecondary,
                       ),
@@ -95,6 +96,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
                 tabs: const [
                   Tab(text: 'Colors'),
                   Tab(text: 'Typography'),
+                  Tab(text: 'Spacing'),
                   Tab(text: 'Components'),
                   Tab(text: 'Patterns'),
                 ],
@@ -105,6 +107,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
               children: [
                 _buildColorsTab(context),
                 _buildTypographyTab(context),
+                _buildSpacingTab(context),
                 _buildComponentsTab(context),
                 _buildPatternsTab(context),
               ],
@@ -247,6 +250,133 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
     );
   }
 
+  Widget _buildSpacingTab(BuildContext context) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return ListView(
+      padding: const EdgeInsets.all(GOLSpacing.space6),
+      children: [
+        _sectionHeader(context, '8-point Grid'),
+        _spacingScaleRow(context, [
+          _SpacingToken('4px', GOLSpacing.space1),
+          _SpacingToken('8px', GOLSpacing.space2),
+          _SpacingToken('12px', GOLSpacing.space3),
+          _SpacingToken('16px', GOLSpacing.space4),
+          _SpacingToken('20px', GOLSpacing.space5),
+          _SpacingToken('24px', GOLSpacing.space6),
+          _SpacingToken('32px', GOLSpacing.space7),
+          _SpacingToken('40px', GOLSpacing.space8),
+          _SpacingToken('48px', GOLSpacing.space9),
+          _SpacingToken('56px', GOLSpacing.space10),
+          _SpacingToken('64px', GOLSpacing.space11),
+          _SpacingToken('80px', GOLSpacing.space12),
+        ]),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Screen Layout Tokens'),
+        _spacingInfoRow(
+          context,
+          label: 'Screen padding (mobile)',
+          value: '16px horizontal',
+          detail: '16px inner gutter, 56px top when app bar present',
+        ),
+        _spacingInfoRow(
+          context,
+          label: 'Screen padding (tablet)',
+          value: '24px horizontal',
+          detail: 'More breathing room for wider viewports',
+        ),
+        _spacingInfoRow(
+          context,
+          label: 'Bottom padding',
+          value: '88px above nav / 32px no nav',
+          detail: 'Safe area aware (iOS bottom inset ~34px)',
+        ),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Component Spacing'),
+        _spacingInfoRow(
+          context,
+          label: 'Button gap (inline)',
+          value: '12px horizontal',
+          detail: 'Aligns icon + text, prevents crossing',
+        ),
+        _spacingInfoRow(
+          context,
+          label: 'Form field gap',
+          value: '16px vertical',
+          detail: 'Labels, inputs, helper text keep rhythm',
+        ),
+        _spacingInfoRow(
+          context,
+          label: 'Card padding',
+          value: '16px / 20px / 24px',
+          detail: 'Use tighter padding for dense data, more room for storytelling',
+        ),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Internal ≤ External'),
+        Row(
+          children: [
+            Expanded(
+              child: GOLCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Correct', style: Theme.of(context).textTheme.headlineSmall),
+                    const SizedBox(height: GOLSpacing.space2),
+                    Text(
+                      'Card padding 16px, margin 16px between cards.',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: colors.textSecondary,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(width: GOLSpacing.space3),
+            Expanded(
+              child: GOLCard(
+                variant: GOLCardVariant.standard,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Incorrect', style: Theme.of(context).textTheme.headlineSmall),
+                    const SizedBox(height: GOLSpacing.space2),
+                    Text(
+                      'Padding 24px, spacing 16px (internal > external).',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: colors.stateWarning,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Touch Targets'),
+        _spacingInfoRow(
+          context,
+          label: 'Minimum tap area',
+          value: '48 × 48px',
+          detail: 'Primary CTAs use 56 × 56px (height), icon buttons 48 × 48px.',
+        ),
+        _spacingInfoRow(
+          context,
+          label: 'Floating action',
+          value: '56px circle / 40px mini',
+          detail: 'Positioned 24px from edges when no nav, 88px above bottom nav.',
+        ),
+        const SizedBox(height: GOLSpacing.space6),
+        Text(
+          'Spacing tokens stay grounded on the 8-point grid. Mix inset/stack/inline tokens in your layouts to keep rhythm and clarity.',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: colors.textSecondary,
+              ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildComponentsTab(BuildContext context) {
     final colors = Theme.of(context).extension<GOLSemanticColors>()!;
     return ListView(
@@ -329,6 +459,22 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
         const SizedBox(height: GOLSpacing.space4),
         GOLSearchField(hintText: 'Search projects...'),
         const SizedBox(height: GOLSpacing.space4),
+        GOLDropdown<String>(
+          label: 'Workspace',
+          value: _selectedWorkspace,
+          hint: 'Select workspace',
+          items: const [
+            GOLDropdownItem(value: 'workspace', label: 'Workspace'),
+            GOLDropdownItem(value: 'insights', label: 'Insights', icon: Icon(Iconsax.chart)),
+            GOLDropdownItem(value: 'studio', label: 'Studio', icon: Icon(Iconsax.paintbucket)),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() => _selectedWorkspace = value);
+            }
+          },
+        ),
+        const SizedBox(height: GOLSpacing.space4),
         GOLCheckboxTile(
           value: _checkboxValue,
           onChanged: (value) => setState(() => _checkboxValue = value ?? false),
@@ -392,20 +538,151 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
           child: Column(
             children: [
               GOLListItem(
-                leading: _listIcon(context, Lucide.folder),
+                leading: Icon(
+                  Iconsax.folder,
+                  size: 24,
+                  color: colors.textSecondary,
+                ),
                 title: 'Campaign Assets',
                 subtitle: 'Updated 4 hours ago',
-                trailing: _listIcon(context, Lucide.chevron_right),
+                trailing: Icon(
+                  Iconsax.arrow_right,
+                  size: 20,
+                  color: colors.textSecondary,
+                ),
               ),
               Divider(height: 1, color: colors.borderDefault),
               GOLListItem(
-                leading: _listIcon(context, Lucide.file_text),
+                leading: Icon(
+                  Iconsax.document,
+                  size: 24,
+                  color: colors.textSecondary,
+                ),
                 title: 'Weekly Brief',
                 subtitle: 'Ready for review',
-                trailing: _listIcon(context, Lucide.chevron_right),
+                trailing: Icon(
+                  Iconsax.arrow_right,
+                  size: 20,
+                  color: colors.textSecondary,
+                ),
               ),
             ],
           ),
+        ),
+        const SizedBox(height: GOLSpacing.space5),
+        _sectionHeader(context, 'Dividers'),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                'Navigation',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+            Container(
+              width: 1,
+              height: 48,
+              color: colors.borderDefault,
+            ),
+            Expanded(
+              child: Text(
+                'Actions',
+                textAlign: TextAlign.right,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: GOLSpacing.space4),
+        const GOLDivider(),
+        const SizedBox(height: GOLSpacing.space4),
+        const GOLDivider(label: 'OR'),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Menu'),
+        GOLCard(
+          child: Column(
+            children: [
+            _menuTile(
+              context,
+              icon: Iconsax.menu_board,
+              label: 'Workspace',
+              detail: 'Switch between spaces',
+            ),
+            _menuTile(
+              context,
+              icon: Iconsax.setting_2,
+              label: 'Settings',
+              detail: 'Configure automations',
+            ),
+              _menuTile(
+                context,
+                icon: Iconsax.support,
+                label: 'Help Desk',
+                detail: 'Share feedback or report bugs',
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Iconography'),
+        Wrap(
+          spacing: GOLSpacing.space3,
+          runSpacing: GOLSpacing.space3,
+          children: [
+            _iconSpot(
+              context,
+              label: 'Home',
+              icon: Icon(
+                Iconsax.home_2,
+                size: 32,
+                color: colors.textPrimary,
+              ),
+            ),
+            _iconSpot(
+              context,
+              label: 'Face',
+              icon: Icon(
+                Iconsax.smileys,
+                size: 32,
+                color: colors.interactivePrimary,
+              ),
+            ),
+            _iconSpot(
+              context,
+              label: 'Notifications',
+              icon: Icon(
+                Iconsax.notification_bing,
+                size: 32,
+                color: colors.stateWarning,
+              ),
+            ),
+            _iconSpot(
+              context,
+              label: 'TikTok',
+              icon: SvgPicture.asset(
+                'assets/icons/tiktok.svg',
+                height: 32,
+                width: 32,
+              ),
+            ),
+            _iconSpot(
+              context,
+              label: 'Facebook',
+              icon: SvgPicture.asset(
+                'assets/icons/facebook.svg',
+                height: 32,
+                width: 32,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: GOLSpacing.space2),
+        Text(
+          'Use the provided TikTok and Facebook SVG assets (assets/icons/tiktok.svg & assets/icons/facebook.svg) whenever you need social-brand icons in Grow Out Loud.',
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall
+              ?.copyWith(color: colors.textSecondary),
         ),
         const SizedBox(height: GOLSpacing.space7),
         _sectionHeader(context, 'Progress'),
@@ -445,7 +722,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
         _sectionHeader(context, 'Loading States'),
         Row(
           children: const [
-            GOLCircularProgress(size: 36),
+            GOLGridLoader(size: 48),
             SizedBox(width: GOLSpacing.space4),
             Expanded(child: GOLLinearProgress()),
           ],
@@ -490,6 +767,32 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
           ],
         ),
         const SizedBox(height: GOLSpacing.space7),
+        _sectionHeader(context, 'Toasts'),
+        Column(
+          children: [
+            _toastPreview(
+              context,
+              icon: Iconsax.tick_circle,
+              message: 'Project saved',
+              background: colors.stateSuccess,
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            _toastPreview(
+              context,
+              icon: Iconsax.close_circle,
+              message: 'Failed to sync',
+              background: colors.stateError,
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            _toastPreview(
+              context,
+              icon: Iconsax.info_circle,
+              message: 'New update available',
+              background: colors.stateInfo,
+            ),
+          ],
+        ),
+        const SizedBox(height: GOLSpacing.space7),
         _sectionHeader(context, 'Animations'),
         Row(
           children: [
@@ -529,8 +832,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
         GOLCard(
           child: Row(
             children: [
-              Iconify(Lucide.alert_triangle,
-                  size: 24, color: colors.stateError),
+              Icon(Iconsax.danger, size: 24, color: colors.stateError),
               const SizedBox(width: GOLSpacing.space3),
               Expanded(
                 child: Column(
@@ -591,6 +893,161 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
           ),
           const SizedBox(height: GOLSpacing.space1),
           Text(sample ?? 'Precision in every line.', style: style),
+        ],
+      ),
+    );
+  }
+
+  Widget _spacingScaleRow(BuildContext context, List<_SpacingToken> tokens) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return Wrap(
+      spacing: GOLSpacing.space3,
+      runSpacing: GOLSpacing.space3,
+      children: tokens
+          .map(
+            (token) => Container(
+              width: 128,
+              padding: const EdgeInsets.all(GOLSpacing.space3),
+              decoration: BoxDecoration(
+                color: colors.surfaceRaised,
+                borderRadius: BorderRadius.circular(GOLRadius.sm),
+                border: Border.all(color: colors.borderDefault),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 8,
+                    width: (token.value * 2).clamp(24.0, 160.0),
+                    decoration: BoxDecoration(
+                      color: colors.borderStrong,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                  const SizedBox(height: GOLSpacing.space2),
+                  Text(token.label, style: Theme.of(context).textTheme.bodyMedium),
+                  Text('${token.value.toInt()}px',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: colors.textTertiary)),
+                ],
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _spacingInfoRow(
+    BuildContext context, {
+    required String label,
+    required String value,
+    required String detail,
+  }) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: GOLSpacing.space3),
+      child: GOLCard(
+        variant: GOLCardVariant.standard,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label, style: Theme.of(context).textTheme.headlineSmall),
+            const SizedBox(height: GOLSpacing.space1),
+            Text(
+              value,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: colors.textAccent),
+            ),
+            const SizedBox(height: GOLSpacing.space1),
+            Text(
+              detail,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _menuTile(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String detail,
+  }) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: Icon(icon, color: colors.textAccent, size: 24),
+      title: Text(label, style: Theme.of(context).textTheme.bodyLarge),
+      subtitle: Text(
+        detail,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: colors.textSecondary,
+            ),
+      ),
+      trailing: Icon(Iconsax.arrow_right, color: colors.textSecondary, size: 20),
+    );
+  }
+
+  Widget _iconSpot(BuildContext context, {required String label, required Widget icon}) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return Container(
+      width: 120,
+      padding: const EdgeInsets.all(GOLSpacing.space3),
+      decoration: BoxDecoration(
+        color: colors.surfaceRaised,
+        borderRadius: BorderRadius.circular(GOLRadius.sm),
+        border: Border.all(color: colors.borderDefault),
+      ),
+      child: Column(
+        children: [
+          icon,
+          const SizedBox(height: GOLSpacing.space2),
+          Text(
+            label,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(color: colors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _toastPreview(
+    BuildContext context, {
+    required IconData icon,
+    required String message,
+    required Color background,
+  }) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(GOLSpacing.space3),
+      decoration: BoxDecoration(
+        color: background,
+        borderRadius: BorderRadius.circular(GOLRadius.sm),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white, size: 20),
+          const SizedBox(width: GOLSpacing.space3),
+          Expanded(
+            child: Text(
+              message,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.white),
+            ),
+          ),
         ],
       ),
     );
@@ -702,7 +1159,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
       variant: GOLCardVariant.elevated,
       child: Column(
         children: [
-          Iconify(Lucide.inbox, size: 48, color: colors.textTertiary),
+          Icon(Iconsax.direct_inbox, size: 48, color: colors.textTertiary),
           const SizedBox(height: GOLSpacing.space3),
           Text(
             'No projects yet',
@@ -724,12 +1181,14 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
     );
   }
 
-  Widget _listIcon(BuildContext context, String icon) {
-    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
-    return Iconify(icon, size: 20, color: colors.textSecondary);
-  }
-
   String _hex(Color color) {
     return '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
   }
+}
+
+class _SpacingToken {
+  final String label;
+  final double value;
+
+  const _SpacingToken(this.label, this.value);
 }

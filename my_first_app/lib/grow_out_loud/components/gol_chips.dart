@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/lucide.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../foundation/gol_colors.dart';
 import '../foundation/gol_radius.dart';
@@ -49,7 +48,7 @@ class GOLChip extends StatelessWidget {
             const SizedBox(width: GOLSpacing.space2),
             GestureDetector(
               onTap: onDeleted,
-              child: Iconify(Lucide.x, size: 16, color: scheme.textColor),
+              child: Icon(Iconsax.close_circle, size: 16, color: scheme.textColor),
             ),
           ],
         ],

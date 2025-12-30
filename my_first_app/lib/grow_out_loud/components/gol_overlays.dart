@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/lucide.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../foundation/gol_colors.dart';
 import '../foundation/gol_spacing.dart';
@@ -90,13 +89,13 @@ void showGOLToast(BuildContext context, String message) {
   final colors = Theme.of(context).extension<GOLSemanticColors>()!;
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Row(
-        children: [
-          Iconify(Lucide.info, color: colors.textInverse, size: 20),
-          const SizedBox(width: GOLSpacing.space3),
-          Expanded(child: Text(message)),
-        ],
-      ),
+        content: Row(
+          children: [
+            Icon(Iconsax.info_circle, color: colors.textInverse, size: 20),
+            const SizedBox(width: GOLSpacing.space3),
+            Expanded(child: Text(message)),
+          ],
+        ),
     ),
   );
 }

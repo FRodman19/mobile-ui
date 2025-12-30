@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/lucide.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../foundation/gol_colors.dart';
 import '../foundation/gol_spacing.dart';
@@ -89,17 +88,21 @@ class GOLSearchField extends StatelessWidget {
     return TextField(
       controller: controller,
       onChanged: onChanged,
-      decoration: InputDecoration(
-        hintText: hintText,
-        filled: true,
-        fillColor: colors.backgroundTertiary,
-        prefixIcon: leadingIcon ??
-            Iconify(Lucide.search, color: colors.textTertiary, size: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+        decoration: InputDecoration(
+          hintText: hintText,
+          filled: true,
+          fillColor: colors.backgroundTertiary,
+          prefixIcon: leadingIcon ??
+              Icon(
+                Iconsax.search_normal,
+                color: colors.textTertiary,
+                size: 20,
+              ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
         ),
-      ),
     );
   }
 }

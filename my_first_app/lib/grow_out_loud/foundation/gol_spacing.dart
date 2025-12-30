@@ -14,6 +14,10 @@ class GOLSpacing {
   static const double space10 = 56;
   static const double space11 = 64;
   static const double space12 = 80;
+  static const double insetXs = 4;
+  static const double insetSm = 8;
+  static const double insetMd = 16;
+  static const double insetLg = 24;
 
   // Screen layout.
   static const double screenPaddingHorizontal = 16;
@@ -30,6 +34,17 @@ class GOLSpacing {
   static const double buttonPaddingVerticalMd = 12;
   static const double buttonPaddingVerticalLg = 16;
   static const double buttonPaddingVerticalSm = 8;
+
+  static const double stackXs = 8;
+  static const double stackSm = 12;
+  static const double stackMd = 16;
+  static const double stackLg = 24;
+  static const double stackXl = 32;
+
+  static const double inlineXs = 4;
+  static const double inlineSm = 8;
+  static const double inlineMd = 16;
+  static const double inlineLg = 24;
 
   static const double cardPadding = 16;
   static const double cardPaddingComfortable = 20;

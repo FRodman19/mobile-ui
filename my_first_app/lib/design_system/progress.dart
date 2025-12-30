@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'spacing.dart';
 import 'theme.dart';
@@ -24,111 +23,30 @@ class DSProgressBar extends StatelessWidget {
   }
 }
 
-class DSGridLoader extends StatefulWidget {
-  const DSGridLoader({
-    super.key,
-    this.size = 24,
-    this.color,
-  });
+const _dsGridLoaderSvg = r'''<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="7.33" height="7.33" x="1" y="1" fill="currentColor"><animate id="SVGzjrPLenI" attributeName="x" begin="0;SVGXAURnSRI.end+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="0;SVGXAURnSRI.end+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="0;SVGXAURnSRI.end+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="0;SVGXAURnSRI.end+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="1" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="1" y="8.33" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.1s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="1" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="8.33" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="1" y="15.66" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="1;4;1"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.2s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="8.33" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="8.33" y="15.66" fill="currentColor"><animate attributeName="x" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="8.33;11.33;8.33"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.3s" dur="0.6s" values="7.33;1.33;7.33"/></rect><rect width="7.33" height="7.33" x="15.66" y="15.66" fill="currentColor"><animate id="SVGXAURnSRI" attributeName="x" begin="SVGzjrPLenI.begin+0.4s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="y" begin="SVGzjrPLenI.begin+0.4s" dur="0.6s" values="15.66;18.66;15.66"/><animate attributeName="width" begin="SVGzjrPLenI.begin+0.4s" dur="0.6s" values="7.33;1.33;7.33"/><animate attributeName="height" begin="SVGzjrPLenI.begin+0.4s" dur="0.6s" values="7.33;1.33;7.33"/></rect></svg>''';
 
+class DSGridLoader extends StatelessWidget {
   final double size;
   final Color? color;
 
-  @override
-  State<DSGridLoader> createState() => _DSGridLoaderState();
-}
-
-class _DSGridLoaderState extends State<DSGridLoader>
-    with SingleTickerProviderStateMixin {
-  static const _delays = [
-    0.0,
-    0.1,
-    0.1,
-    0.2,
-    0.2,
-    0.2,
-    0.3,
-    0.3,
-    0.4,
-  ];
-
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  double _phase(double progress) {
-    final normalized = progress * 2;
-    return normalized <= 1 ? normalized : 2 - normalized;
-  }
+  const DSGridLoader({
+    super.key,
+    this.size = 64,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final loaderColor = widget.color ?? Theme.of(context).colorScheme.primary;
-
     return SizedBox(
-      width: widget.size,
-      height: widget.size,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final squareSize = constraints.maxWidth / 3;
-
-          return Stack(
-            children: List.generate(9, (index) {
-              final row = index ~/ 3;
-              final column = index % 3;
-              final delay = _delays[index];
-
-              return Positioned(
-                left: column * squareSize,
-                top: row * squareSize,
-                child: SizedBox(
-                  width: squareSize,
-                  height: squareSize,
-                  child: AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      final progress = (_controller.value + delay) % 1.0;
-                      final wave = _phase(progress);
-                      final scale = lerpDouble(1.0, 0.28, wave)!;
-                      final opacity = lerpDouble(0.6, 1.0, wave)!;
-
-                      return Opacity(
-                        opacity: opacity,
-                        child: Transform.scale(
-                          scale: scale,
-                          alignment: Alignment.center,
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: loaderColor,
-                        borderRadius: BorderRadius.circular(
-                          DSSpacing.componentRadius,
-                        ),
-                      ),
-                      child: const SizedBox.expand(),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          );
-        },
+      height: size,
+      width: size,
+      child: SvgPicture.string(
+        _dsGridLoaderSvg,
+        colorFilter: ColorFilter.mode(
+          color ?? DSColors.teal500,
+          BlendMode.srcIn,
+        ),
+        fit: BoxFit.contain,
       ),
     );
   }

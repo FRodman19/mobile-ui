@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconify_flutter/iconify_flutter.dart';
-import 'package:iconify_flutter/icons/lucide.dart';
+import 'package:iconsax/iconsax.dart';
 
 import '../foundation/gol_colors.dart';
 import '../foundation/gol_radius.dart';
@@ -29,13 +28,13 @@ class GOLBottomNavPreview extends StatelessWidget {
       child: Row(
         children: [
           _NavItem(
-            icon: Lucide.layout_dashboard,
+            icon: Iconsax.home_2,
             label: 'Home',
             active: true,
           ),
-          _NavItem(icon: Lucide.list, label: 'Tasks'),
-          _NavItem(icon: Lucide.bell, label: 'Alerts'),
-          _NavItem(icon: Lucide.user, label: 'Profile'),
+          _NavItem(icon: Iconsax.clipboard_text, label: 'Tasks'),
+          _NavItem(icon: Iconsax.notification, label: 'Alerts'),
+          _NavItem(icon: Iconsax.user, label: 'Profile'),
         ],
       ),
     );
@@ -57,7 +56,7 @@ class GOLAppBarPreview extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Iconify(Lucide.arrow_left, size: 24, color: colors.textPrimary),
+          Icon(Iconsax.arrow_left, size: 24, color: colors.textPrimary),
           const SizedBox(width: GOLSpacing.space3),
           Expanded(
             child: Text(
@@ -65,9 +64,9 @@ class GOLAppBarPreview extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
-          Iconify(Lucide.search, size: 20, color: colors.textSecondary),
+          Icon(Iconsax.search_normal, size: 20, color: colors.textSecondary),
           const SizedBox(width: GOLSpacing.space2),
-          Iconify(Lucide.more_vertical, size: 20, color: colors.textSecondary),
+          Icon(Iconsax.more, size: 20, color: colors.textSecondary),
         ],
       ),
     );
@@ -129,7 +128,7 @@ class GOLTabBarPreview extends StatelessWidget {
 }
 
 class _NavItem extends StatelessWidget {
-  final String icon;
+  final IconData icon;
   final String label;
   final bool active;
 
@@ -147,7 +146,7 @@ class _NavItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Iconify(icon, size: 24, color: color),
+          Icon(icon, size: 24, color: color),
           const SizedBox(height: 4),
           Text(label, style: GOLTypography.micro(color)),
         ],

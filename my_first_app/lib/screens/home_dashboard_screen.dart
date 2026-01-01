@@ -63,46 +63,40 @@ class HomeDashboardScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: GOLSpacing.space4),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  _QuickActionItem(
-                    icon: Iconsax.folder_add,
-                    label: 'New\nProject',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(width: GOLSpacing.space3),
-                  _QuickActionItem(
-                    icon: Iconsax.book,
-                    label: 'New\nSkill',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(width: GOLSpacing.space3),
-                  _QuickActionItem(
-                    icon: Iconsax.document,
-                    label: 'New\nContent',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(width: GOLSpacing.space3),
-                  _QuickActionItem(
-                    icon: Iconsax.chart,
-                    label: 'Daily\nEntry',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                  const SizedBox(width: GOLSpacing.space3),
-                  _QuickActionItem(
-                    icon: Iconsax.cpu,
-                    label: 'Open\nAssist',
-                    colors: colors,
-                    textTheme: textTheme,
-                  ),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _QuickActionItem(
+                  icon: Iconsax.folder_add,
+                  label: 'New\nProject',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                _QuickActionItem(
+                  icon: Iconsax.book,
+                  label: 'New\nSkill',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                _QuickActionItem(
+                  icon: Iconsax.document,
+                  label: 'New\nContent',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                _QuickActionItem(
+                  icon: Iconsax.chart,
+                  label: 'Daily\nEntry',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+                _QuickActionItem(
+                  icon: Iconsax.cpu,
+                  label: 'Open\nAssist',
+                  colors: colors,
+                  textTheme: textTheme,
+                ),
+              ],
             ),
 
             const SizedBox(height: GOLSpacing.betweenSections),
@@ -370,20 +364,28 @@ class _OverviewCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: GOLSpacing.space3),
-          Text(
-            value,
-            style: textTheme.displaySmall?.copyWith(
-              color: highlight ? colors.interactivePrimary : colors.textPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: GOLSpacing.space1),
-          Text(
-            subtitle,
-            style: textTheme.bodySmall?.copyWith(
-              color: colors.textSecondary,
-            ),
+          const SizedBox(height: GOLSpacing.space2),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                value,
+                style: textTheme.displaySmall?.copyWith(
+                  color: highlight ? colors.interactivePrimary : colors.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(width: GOLSpacing.space2),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  subtitle,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

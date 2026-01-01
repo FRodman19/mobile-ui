@@ -59,6 +59,9 @@ class _MainNavigationState extends State<MainNavigation> {
           unselectedFontSize: 11,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
           elevation: 0,
+          enableFeedback: false,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Iconsax.home_2),

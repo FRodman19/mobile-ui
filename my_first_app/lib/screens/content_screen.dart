@@ -85,19 +85,23 @@ class _ContentScreenState extends State<ContentScreen> {
                 _SectionHeader(title: 'IDEAS', count: 3, colors: colors, textTheme: textTheme),
                 const SizedBox(height: GOLSpacing.space3),
                 _ContentCard(
-                  platform: '🎥 YouTube',
+                  platformIcon: Iconsax.video,
+                  platform: 'YouTube',
                   tag: 'Coding Skill',
                   title: 'AI Automation Video',
-                  action: '✏️  Start Outline',
+                  actionIcon: Iconsax.edit,
+                  action: 'Start Outline',
                   colors: colors,
                   textTheme: textTheme,
                 ),
                 const SizedBox(height: GOLSpacing.space3),
                 _ContentCard(
-                  platform: '🎵 TikTok',
+                  platformIcon: Iconsax.music,
+                  platform: 'TikTok',
                   tag: 'Personal Brand',
                   title: 'Day in the life of a dev',
-                  action: '💡  Brainstorm Hooks',
+                  actionIcon: Iconsax.lamp,
+                  action: 'Brainstorm Hooks',
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -105,10 +109,12 @@ class _ContentScreenState extends State<ContentScreen> {
                 _SectionHeader(title: 'SCRIPT', count: 1, colors: colors, textTheme: textTheme),
                 const SizedBox(height: GOLSpacing.space3),
                 _ContentCard(
-                  platform: '📝 Blog',
+                  platformIcon: Iconsax.document_text,
+                  platform: 'Blog',
                   tag: 'Project Alpha',
                   title: 'Q3 Project Update: Lessons Learned',
-                  action: '✅  Finalize Draft',
+                  actionIcon: Iconsax.tick_circle,
+                  action: 'Finalize Draft',
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -116,20 +122,24 @@ class _ContentScreenState extends State<ContentScreen> {
                 _SectionHeader(title: 'EDIT', count: 2, colors: colors, textTheme: textTheme),
                 const SizedBox(height: GOLSpacing.space3),
                 _ContentCard(
-                  platform: '🎥 YouTube',
+                  platformIcon: Iconsax.video,
+                  platform: 'YouTube',
                   tag: 'Coding',
                   title: 'Building a SaaS in 24 Hours',
-                  action: '✂️  Cut A-Roll',
+                  actionIcon: Iconsax.scissor,
+                  action: 'Cut A-Roll',
                   progress: 0.70,
                   colors: colors,
                   textTheme: textTheme,
                 ),
                 const SizedBox(height: GOLSpacing.space3),
                 _ContentCard(
-                  platform: '🔵 Facebook',
+                  platformIcon: Iconsax.video_play,
+                  platform: 'Facebook',
                   tag: 'Community',
                   title: 'Weekly Live Stream Promo',
-                  action: '🎨  Create Thumbnail',
+                  actionIcon: Iconsax.brush_1,
+                  action: 'Create Thumbnail',
                   colors: colors,
                   textTheme: textTheme,
                 ),
@@ -195,18 +205,22 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _ContentCard extends StatelessWidget {
+  final IconData platformIcon;
   final String platform;
   final String tag;
   final String title;
+  final IconData actionIcon;
   final String action;
   final double? progress;
   final GOLSemanticColors colors;
   final TextTheme textTheme;
 
   const _ContentCard({
+    required this.platformIcon,
     required this.platform,
     required this.tag,
     required this.title,
+    required this.actionIcon,
     required this.action,
     this.progress,
     required this.colors,
@@ -229,6 +243,8 @@ class _ContentCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        Icon(platformIcon, size: 16, color: colors.interactivePrimary),
+                        const SizedBox(width: GOLSpacing.space2),
                         Text(
                           platform,
                           style: textTheme.labelMedium?.copyWith(
@@ -281,12 +297,18 @@ class _ContentCard extends StatelessWidget {
             ),
           ],
           const SizedBox(height: GOLSpacing.space3),
-          Text(
-            action,
-            style: textTheme.labelMedium?.copyWith(
-              color: colors.interactivePrimary,
-              fontWeight: FontWeight.w500,
-            ),
+          Row(
+            children: [
+              Icon(actionIcon, size: 16, color: colors.interactivePrimary),
+              const SizedBox(width: GOLSpacing.space2),
+              Text(
+                action,
+                style: textTheme.labelMedium?.copyWith(
+                  color: colors.interactivePrimary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
         ],
       ),

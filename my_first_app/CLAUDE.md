@@ -20,7 +20,193 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **NEVER use arbitrary spacing** - Use `GOLSpacing` constants (8pt grid system)
 3. **NEVER use custom colors** - Use `GOLSemanticColors` from theme
 4. **NEVER use arbitrary font sizes** - Use `textTheme` styles from `GOLTypography`
-5. **If a component doesn't exist** - Create it following GOL patterns and add it to the gallery
+5. **NEVER use emojis** - Always use Iconsax icons (preferably filled variants like `Iconsax.code_15`)
+6. **If a component doesn't exist** - Create it following GOL patterns and add it to the gallery
+
+### UI Design Patterns (CRITICAL)
+
+These patterns ensure consistency and professional appearance across all screens:
+
+#### Card Layouts - Compact & Tight
+**ALWAYS make cards compact by placing icons and text on the same horizontal line:**
+
+```dart
+// ✅ CORRECT - Horizontal layout (clean, compact)
+Row(
+  children: [
+    Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary),
+    const SizedBox(width: GOLSpacing.space3),
+    Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Title', style: textTheme.headlineSmall),
+          Text('Subtitle', style: textTheme.bodySmall),
+        ],
+      ),
+    ),
+    Text('Value', style: textTheme.headlineMedium),
+  ],
+)
+
+// ❌ WRONG - Vertical layout (too tall, wastes space)
+Column(
+  children: [
+    Icon(Iconsax.code, size: 32),
+    SizedBox(height: 8),
+    Text('Title'),
+    Text('Subtitle'),
+  ],
+)
+```
+
+#### Icon Usage Rules
+1. **NEVER use emojis** - They look unprofessional and inconsistent
+2. **ALWAYS use Iconsax icons** - Specifically filled variants (with `5` or `_15` suffix)
+3. **Prefer filled icons** - `Iconsax.global5`, `Iconsax.code_15`, `Iconsax.microphone_25`
+4. **Consistent sizing** - 32px for card icons, 16px for inline icons, 14px for labels
+
+```dart
+// ✅ CORRECT
+Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary)
+
+// ❌ WRONG
+Text('🐍', style: TextStyle(fontSize: 32))  // Never use emojis!
+```
+
+#### Quick Actions Pattern
+**Full-width distribution with even spacing:**
+
+```dart
+// ✅ CORRECT - Fills width evenly
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    _QuickActionItem(icon: Iconsax.folder_add, label: 'New\nProject'),
+    _QuickActionItem(icon: Iconsax.book, label: 'New\nSkill'),
+    _QuickActionItem(icon: Iconsax.document, label: 'New\nContent'),
+    _QuickActionItem(icon: Iconsax.chart, label: 'Daily\nEntry'),
+    _QuickActionItem(icon: Iconsax.cpu, label: 'Open\nAssist'),
+  ],
+)
+
+// ❌ WRONG - Horizontal scroll with empty space on right
+SingleChildScrollView(
+  scrollDirection: Axis.horizontal,
+  child: Row(children: [...]),  // Creates empty space
+)
+```
+
+#### Metric/Overview Cards
+**Number and subtitle on same horizontal line:**
+
+```dart
+// ✅ CORRECT - Horizontal alignment (clean)
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Row(
+      children: [
+        Icon(icon, size: 20),
+        SizedBox(width: GOLSpacing.space2),
+        Text('TITLE', style: textTheme.labelSmall),
+      ],
+    ),
+    SizedBox(height: GOLSpacing.space2),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text('94%', style: textTheme.displaySmall),
+        SizedBox(width: GOLSpacing.space2),
+        Padding(
+          padding: EdgeInsets.only(bottom: 4),
+          child: Text('Weekly score', style: textTheme.bodySmall),
+        ),
+      ],
+    ),
+  ],
+)
+
+// ❌ WRONG - Vertical stack (too tall)
+Column(
+  children: [
+    Icon(icon),
+    Text('TITLE'),
+    Text('94%'),  // Number alone
+    Text('Weekly score'),  // Subtitle below
+  ],
+)
+```
+
+#### Combined Metric Cards
+**Use single card with dividers instead of multiple cards:**
+
+```dart
+// ✅ CORRECT - Single compact card with vertical dividers
+GOLCard(
+  variant: GOLCardVariant.elevated,
+  child: IntrinsicHeight(
+    child: Row(
+      children: [
+        Expanded(child: _MetricSection(title: 'NET PROFIT', value: '\$8,240')),
+        Container(width: 1, color: colors.borderDefault, margin: EdgeInsets.symmetric(horizontal: GOLSpacing.space3)),
+        Expanded(child: _MetricSection(title: 'REVENUE', value: '\$12,400')),
+        Container(width: 1, color: colors.borderDefault, margin: EdgeInsets.symmetric(horizontal: GOLSpacing.space3)),
+        Expanded(child: _MetricSection(title: 'SPEND', value: '\$4,159')),
+      ],
+    ),
+  ),
+)
+
+// ❌ WRONG - Separate cards (too tall, wastes space)
+Row(
+  children: [
+    Expanded(child: GOLCard(child: _MetricSection(...))),
+    SizedBox(width: 8),
+    Expanded(child: GOLCard(child: _MetricSection(...))),
+  ],
+)
+```
+
+#### Navigation Behavior
+**Simple, clean interactions - NO fancy animations:**
+
+```dart
+// ✅ CORRECT
+BottomNavigationBar(
+  enableFeedback: false,  // Disable pop animation
+  onTap: _onItemTapped,
+  // ...
+)
+
+// ❌ WRONG
+BottomNavigationBar(
+  enableFeedback: true,  // Creates distracting pop animation
+  // ...
+)
+```
+
+#### Overflow Prevention
+**Use FittedBox and Flexible for dynamic content:**
+
+```dart
+// ✅ CORRECT - Scales down if needed
+FittedBox(
+  fit: BoxFit.scaleDown,
+  alignment: Alignment.centerLeft,
+  child: Text('\$8,240', style: textTheme.headlineMedium),
+)
+
+// ✅ CORRECT - Wraps text labels
+Flexible(
+  child: Text('REVENUE', style: textTheme.labelSmall),
+)
+
+// ❌ WRONG - Can overflow on small screens
+Text('\$8,240.50', style: textTheme.displayLarge)  // No flex/fitted
+```
+
+See: `lib/grow_out_loud/foundation/DESIGN_PATTERNS.md` for detailed examples
 
 ### Quick Reference
 ```dart
@@ -178,7 +364,8 @@ lib/
 │       ├── gol_radius.dart
 │       ├── gol_theme.dart
 │       ├── SPACING_GUIDE.md
-│       └── TYPOGRAPHY_GUIDE.md
+│       ├── TYPOGRAPHY_GUIDE.md
+│       └── DESIGN_PATTERNS.md   # UI patterns (cards, layouts, icons)
 └── screens/                    # Application screens
     ├── home_screen.dart
     ├── performance_screen.dart

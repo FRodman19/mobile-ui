@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../grow_out_loud/components/gol_badges.dart';
+
 import '../grow_out_loud/components/gol_cards.dart';
 import '../grow_out_loud/components/gol_chips.dart';
 import '../grow_out_loud/components/gol_progress.dart';
 import '../grow_out_loud/foundation/gol_colors.dart';
 import '../grow_out_loud/foundation/gol_spacing.dart';
-
-// Platform colors
-const Color _youtubeRed = Color(0xFFFF0000);
-const Color _tiktokBlack = Color(0xFF000000);
-const Color _blogOrange = Color(0xFFFF6B00);
-const Color _facebookBlue = Color(0xFF1877F2);
 
 class ContentScreen extends StatefulWidget {
   const ContentScreen({super.key});
@@ -21,7 +15,7 @@ class ContentScreen extends StatefulWidget {
 }
 
 class _ContentScreenState extends State<ContentScreen> {
-  int _selectedFilter = 0;
+  String _selectedPlatform = 'All';
 
   @override
   Widget build(BuildContext context) {
@@ -31,170 +25,102 @@ class _ContentScreenState extends State<ContentScreen> {
     return Scaffold(
       backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.backgroundPrimary,
         elevation: 0,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'CONTENT',
-              style: textTheme.bodySmall?.copyWith(
-                letterSpacing: 0.5,
-                color: colors.textSecondary,
-              ),
-            ),
-            Text(
-              'Pipeline',
-              style: textTheme.headlineSmall?.copyWith(
-                color: colors.textPrimary,
-              ),
-            ),
-          ],
+        toolbarHeight: 80,
+        title: Text(
+          'Content',
+          style: textTheme.headlineLarge?.copyWith(
+            color: colors.textPrimary,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Iconsax.search_normal),
-            color: colors.textSecondary,
             onPressed: () {},
+            color: colors.textSecondary,
           ),
           const SizedBox(width: GOLSpacing.space2),
         ],
       ),
       body: Column(
         children: [
-          // Filter tabs
           Container(
-            height: 48,
             padding: const EdgeInsets.symmetric(
               horizontal: GOLSpacing.screenPaddingHorizontal,
+              vertical: GOLSpacing.space3,
             ),
-            child: ListView(
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              children: [
-                GestureDetector(
-                  onTap: () => setState(() => _selectedFilter = 0),
-                  child: GOLChip(
-                    label: 'All',
-                    selected: _selectedFilter == 0,
-                  ),
-                ),
-                const SizedBox(width: GOLSpacing.space2),
-                GestureDetector(
-                  onTap: () => setState(() => _selectedFilter = 1),
-                  child: GOLChip(
-                    label: 'YouTube',
-                    selected: _selectedFilter == 1,
-                  ),
-                ),
-                const SizedBox(width: GOLSpacing.space2),
-                GestureDetector(
-                  onTap: () => setState(() => _selectedFilter = 2),
-                  child: GOLChip(
-                    label: 'TikTok',
-                    selected: _selectedFilter == 2,
-                  ),
-                ),
-                const SizedBox(width: GOLSpacing.space2),
-                GestureDetector(
-                  onTap: () => setState(() => _selectedFilter = 3),
-                  child: GOLChip(
-                    label: 'Blog',
-                    selected: _selectedFilter == 3,
-                  ),
-                ),
-              ],
+              child: Row(
+                children: [
+                  GOLChip(label: 'All', selected: _selectedPlatform == 'All'),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(label: 'YouTube', selected: _selectedPlatform == 'YouTube'),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(label: 'TikTok', selected: _selectedPlatform == 'TikTok'),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(label: 'Blog', selected: _selectedPlatform == 'Blog'),
+                ],
+              ),
             ),
           ),
-
-          const SizedBox(height: GOLSpacing.space6),
-
-          // Content sections
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: GOLSpacing.screenPaddingHorizontal,
-              ),
+              padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
-                // IDEAS Section
-                _buildSectionHeader(context, colors, textTheme, 'IDEAS', 3),
-                const SizedBox(height: GOLSpacing.space4),
-                _buildContentCard(
-                  context,
-                  colors,
-                  textTheme,
-                  platform: 'YouTube',
-                  platformIcon: Iconsax.video,
-                  platformColor: _youtubeRed,
+                _SectionHeader(title: 'IDEAS', count: 3, colors: colors, textTheme: textTheme),
+                const SizedBox(height: GOLSpacing.space3),
+                _ContentCard(
+                  platform: '🎥 YouTube',
                   tag: 'Coding Skill',
                   title: 'AI Automation Video',
-                  action: 'Start Outline',
-                  actionIcon: Iconsax.edit_2,
+                  action: '✏️  Start Outline',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
                 const SizedBox(height: GOLSpacing.space3),
-                _buildContentCard(
-                  context,
-                  colors,
-                  textTheme,
-                  platform: 'TikTok',
-                  platformIcon: Iconsax.music,
-                  platformColor: _tiktokBlack,
+                _ContentCard(
+                  platform: '🎵 TikTok',
                   tag: 'Personal Brand',
                   title: 'Day in the life of a dev',
-                  action: 'Brainstorm Hooks',
-                  actionIcon: Iconsax.lamp_on,
+                  action: '💡  Brainstorm Hooks',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-
-                const SizedBox(height: GOLSpacing.space8),
-
-                // SCRIPT Section
-                _buildSectionHeader(context, colors, textTheme, 'SCRIPT', 1),
-                const SizedBox(height: GOLSpacing.space4),
-                _buildContentCard(
-                  context,
-                  colors,
-                  textTheme,
-                  platform: 'Blog',
-                  platformIcon: Iconsax.document_text,
-                  platformColor: _blogOrange,
+                const SizedBox(height: GOLSpacing.betweenSections),
+                _SectionHeader(title: 'SCRIPT', count: 1, colors: colors, textTheme: textTheme),
+                const SizedBox(height: GOLSpacing.space3),
+                _ContentCard(
+                  platform: '📝 Blog',
                   tag: 'Project Alpha',
                   title: 'Q3 Project Update: Lessons Learned',
-                  action: 'Finalize Draft',
-                  actionIcon: Iconsax.tick_circle,
+                  action: '✅  Finalize Draft',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-
-                const SizedBox(height: GOLSpacing.space8),
-
-                // EDIT Section
-                _buildSectionHeader(context, colors, textTheme, 'EDIT', 2),
-                const SizedBox(height: GOLSpacing.space4),
-                _buildContentCard(
-                  context,
-                  colors,
-                  textTheme,
-                  platform: 'YouTube',
-                  platformIcon: Iconsax.video,
-                  platformColor: _youtubeRed,
+                const SizedBox(height: GOLSpacing.betweenSections),
+                _SectionHeader(title: 'EDIT', count: 2, colors: colors, textTheme: textTheme),
+                const SizedBox(height: GOLSpacing.space3),
+                _ContentCard(
+                  platform: '🎥 YouTube',
                   tag: 'Coding',
                   title: 'Building a SaaS in 24 Hours',
-                  action: 'Cut A-Roll',
-                  actionIcon: Iconsax.scissor,
+                  action: '✂️  Cut A-Roll',
                   progress: 0.70,
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
                 const SizedBox(height: GOLSpacing.space3),
-                _buildContentCard(
-                  context,
-                  colors,
-                  textTheme,
-                  platform: 'Facebook',
-                  platformIcon: Iconsax.message,
-                  platformColor: _facebookBlue,
+                _ContentCard(
+                  platform: '🔵 Facebook',
                   tag: 'Community',
                   title: 'Weekly Live Stream Promo',
-                  action: 'Create Thumbnail',
-                  actionIcon: Iconsax.gallery,
+                  action: '🎨  Create Thumbnail',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-
-                const SizedBox(height: 100),
               ],
             ),
           ),
@@ -207,136 +133,147 @@ class _ContentScreenState extends State<ContentScreen> {
       ),
     );
   }
+}
 
-  Widget _buildSectionHeader(
-    BuildContext context,
-    GOLSemanticColors colors,
-    TextTheme textTheme,
-    String title,
-    int count,
-  ) {
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final int count;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _SectionHeader({
+    required this.title,
+    required this.count,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Text(
           title,
-          style: textTheme.headlineMedium?.copyWith(
-            letterSpacing: 0.5,
+          style: textTheme.titleMedium?.copyWith(
             color: colors.textPrimary,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(width: GOLSpacing.space3),
-        GOLBadge(
-          variant: GOLBadgeVariant.count,
-          count: count.toString(),
+        const SizedBox(width: GOLSpacing.space2),
+        Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: GOLSpacing.space2,
+            vertical: 2,
+          ),
+          decoration: BoxDecoration(
+            color: colors.interactivePrimary,
+            shape: BoxShape.circle,
+          ),
+          child: Text(
+            count.toString(),
+            style: textTheme.labelSmall?.copyWith(
+              color: colors.textInverse,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildContentCard(
-    BuildContext context,
-    GOLSemanticColors colors,
-    TextTheme textTheme, {
-    required String platform,
-    required IconData platformIcon,
-    required Color platformColor,
-    required String tag,
-    required String title,
-    required String action,
-    required IconData actionIcon,
-    double? progress,
-  }) {
+class _ContentCard extends StatelessWidget {
+  final String platform;
+  final String tag;
+  final String title;
+  final String action;
+  final double? progress;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _ContentCard({
+    required this.platform,
+    required this.tag,
+    required this.title,
+    required this.action,
+    this.progress,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GOLCard(
-      child: Row(
+      variant: GOLCardVariant.standard,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      platformIcon,
-                      size: 16,
-                      color: platformColor,
+                    Row(
+                      children: [
+                        Text(
+                          platform,
+                          style: textTheme.labelMedium?.copyWith(
+                            color: colors.textPrimary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: GOLSpacing.space2),
+                        Text(
+                          '•',
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colors.textTertiary,
+                          ),
+                        ),
+                        const SizedBox(width: GOLSpacing.space2),
+                        Text(
+                          tag,
+                          style: textTheme.labelSmall?.copyWith(
+                            color: colors.textSecondary,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: GOLSpacing.space1),
+                    const SizedBox(height: GOLSpacing.space2),
                     Text(
-                      platform,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: platformColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const SizedBox(width: GOLSpacing.space2),
-                    Text(
-                      '•',
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colors.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(width: GOLSpacing.space2),
-                    Text(
-                      tag,
-                      style: textTheme.labelSmall?.copyWith(
-                        color: colors.textSecondary,
+                      title,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: GOLSpacing.space3),
+              ),
+            ],
+          ),
+          if (progress != null) ...[
+            const SizedBox(height: GOLSpacing.space3),
+            Row(
+              children: [
+                Expanded(child: GOLLinearProgress(value: progress!)),
+                const SizedBox(width: GOLSpacing.space2),
                 Text(
-                  title,
-                  style: textTheme.bodyLarge?.copyWith(
-                    color: colors.textPrimary,
+                  '${(progress! * 100).toInt()}%',
+                  style: textTheme.labelSmall?.copyWith(
+                    color: colors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: GOLSpacing.space3),
-                Row(
-                  children: [
-                    Icon(
-                      actionIcon,
-                      size: 14,
-                      color: colors.interactivePrimary,
-                    ),
-                    const SizedBox(width: GOLSpacing.space1),
-                    Text(
-                      action,
-                      style: textTheme.labelMedium?.copyWith(
-                        color: colors.interactivePrimary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    if (progress != null) ...[
-                      const SizedBox(width: GOLSpacing.space3),
-                      Text(
-                        '${(progress * 100).toInt()}%',
-                        style: textTheme.labelMedium?.copyWith(
-                          color: colors.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                if (progress != null) ...[
-                  const SizedBox(height: GOLSpacing.space3),
-                  GOLLinearProgress(value: progress),
-                ],
               ],
             ),
-          ),
-          const SizedBox(width: GOLSpacing.space4),
-          Container(
-            width: 64,
-            height: 64,
-            decoration: BoxDecoration(
-              color: platformColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              platformIcon,
-              size: 28,
-              color: platformColor,
+          ],
+          const SizedBox(height: GOLSpacing.space3),
+          Text(
+            action,
+            style: textTheme.labelMedium?.copyWith(
+              color: colors.interactivePrimary,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

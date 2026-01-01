@@ -1,15 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../grow_out_loud/components/gol_badges.dart';
-import '../grow_out_loud/components/gol_buttons.dart';
 import '../grow_out_loud/components/gol_cards.dart';
-import '../grow_out_loud/components/gol_chips.dart';
-import '../grow_out_loud/components/gol_progress.dart';
 import '../grow_out_loud/foundation/gol_colors.dart';
 import '../grow_out_loud/foundation/gol_spacing.dart';
-import '../grow_out_loud/foundation/gol_radius.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   const HomeDashboardScreen({super.key});
@@ -18,416 +12,381 @@ class HomeDashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).extension<GOLSemanticColors>()!;
     final textTheme = Theme.of(context).textTheme;
+    const dateStr = 'MONDAY, OCT 24';
+
     return Scaffold(
       backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
         backgroundColor: colors.backgroundPrimary,
         elevation: 0,
+        toolbarHeight: 80,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'MONDAY, OCT 24',
-              style: textTheme.bodySmall?.copyWith(
-                letterSpacing: 0.5,
-                color: colors.textSecondary,
+              dateStr,
+              style: textTheme.labelSmall?.copyWith(
+                color: colors.textTertiary,
+                letterSpacing: 1.2,
               ),
             ),
             const SizedBox(height: GOLSpacing.space1),
             Text(
               'Dashboard',
-              style: textTheme.headlineSmall?.copyWith(
+              style: textTheme.headlineLarge?.copyWith(
                 color: colors.textPrimary,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
         actions: [
-          if (kDebugMode)
-            IconButton(
-              icon: const Icon(Iconsax.brush),
-              color: colors.textSecondary,
-              onPressed: () => Navigator.pushNamed(context, '/design-system-v3'),
-            ),
           IconButton(
             icon: const Icon(Iconsax.notification),
-            color: colors.textSecondary,
             onPressed: () {},
+            color: colors.textSecondary,
           ),
+          const SizedBox(width: GOLSpacing.space2),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: GOLSpacing.space4,
-          vertical: GOLSpacing.space5,
-        ),
+        padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _heroBanner(context, colors),
-            const SizedBox(height: GOLSpacing.space6),
-            _statsGrid(context, colors),
-            const SizedBox(height: GOLSpacing.space6),
-            _contentSection(context, colors),
-            const SizedBox(height: GOLSpacing.space6),
-            _aiSection(context, colors),
-            const SizedBox(height: GOLSpacing.space6),
-            _projectsSection(context, colors),
+            // Quick Actions
+            Text(
+              'Quick Actions',
+              style: textTheme.titleLarge?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: GOLSpacing.space4),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _QuickActionItem(
+                    icon: Iconsax.rocket,
+                    label: 'New\nProject',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space3),
+                  _QuickActionItem(
+                    icon: Iconsax.book,
+                    label: 'New\nSkill',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space3),
+                  _QuickActionItem(
+                    icon: Iconsax.document,
+                    label: 'New\nContent',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space3),
+                  _QuickActionItem(
+                    icon: Iconsax.chart,
+                    label: 'Daily\nEntry',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space3),
+                  _QuickActionItem(
+                    icon: Iconsax.cpu,
+                    label: 'Open\nAssist',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: GOLSpacing.betweenSections),
+
+            // Today's Focus
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Today\'s Focus',
+                  style: textTheme.titleLarge?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'View all',
+                    style: textTheme.labelMedium?.copyWith(
+                      color: colors.interactivePrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            _FocusTaskCard(
+              title: 'Complete Project Strategy',
+              subtitle: 'Projects • High Priority',
+              colors: colors,
+              textTheme: textTheme,
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            _FocusTaskCard(
+              title: 'Read "Clean Code" Ch. 4',
+              subtitle: 'Skills • 30 mins',
+              colors: colors,
+              textTheme: textTheme,
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            _FocusTaskCard(
+              title: 'Review Q3 Metrics',
+              subtitle: 'Performance • Weekly',
+              colors: colors,
+              textTheme: textTheme,
+            ),
+
+            const SizedBox(height: GOLSpacing.betweenSections),
+
+            // System Overview
+            Text(
+              'System Overview',
+              style: textTheme.titleLarge?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: GOLSpacing.space4),
+            Row(
+              children: [
+                Expanded(
+                  child: _OverviewCard(
+                    icon: Iconsax.folder,
+                    title: 'PROJECTS',
+                    value: '3',
+                    subtitle: 'Active ventures',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ),
+                const SizedBox(width: GOLSpacing.space3),
+                Expanded(
+                  child: _OverviewCard(
+                    icon: Iconsax.book,
+                    title: 'SKILLS',
+                    value: '2',
+                    subtitle: 'In progress',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: GOLSpacing.space3),
+            Row(
+              children: [
+                Expanded(
+                  child: _OverviewCard(
+                    icon: Iconsax.document,
+                    title: 'CONTENT',
+                    value: '5',
+                    subtitle: 'Drafts pending',
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ),
+                const SizedBox(width: GOLSpacing.space3),
+                Expanded(
+                  child: _OverviewCard(
+                    icon: Iconsax.chart,
+                    title: 'PERF.',
+                    value: '94%',
+                    subtitle: 'Weekly score',
+                    colors: colors,
+                    textTheme: textTheme,
+                    highlight: true,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: GOLSpacing.space8),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget _heroBanner(BuildContext context, GOLSemanticColors colors) {
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.interactivePrimary,
-        borderRadius: BorderRadius.circular(GOLRadius.lg),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x22000000),
-            offset: Offset(0, 8),
-            blurRadius: 24,
+class _QuickActionItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _QuickActionItem({
+    required this.icon,
+    required this.label,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            color: colors.surfaceRaised,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: colors.borderDefault,
+              width: 1.5,
+            ),
           ),
-        ],
-      ),
-      padding: const EdgeInsets.all(GOLSpacing.space5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Grow Out Loud',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: colors.textInverse,
-                ),
+          child: Icon(
+            icon,
+            size: 28,
+            color: colors.interactivePrimary,
           ),
-          const SizedBox(height: GOLSpacing.space2),
-          Text(
-            'Today we have 3 prioritized initiatives. Stay focused, ship cleaner, and keep momentum.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: colors.textInverse.withValues(alpha: 0.9),
-                ),
+        ),
+        const SizedBox(height: GOLSpacing.space2),
+        Text(
+          label,
+          style: textTheme.labelSmall?.copyWith(
+            color: colors.textSecondary,
+            height: 1.3,
           ),
-          const SizedBox(height: GOLSpacing.space4),
-          Row(
-            children: [
-              _heroChip(context, 'Focus Mode', Iconsax.flash_1, colors),
-              const SizedBox(width: GOLSpacing.space3),
-              _heroChip(context, 'Sync Ready', Iconsax.cloud, colors),
-            ],
-          ),
-        ],
-      ),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
+}
 
-  Widget _heroChip(BuildContext context, String label, IconData icon, GOLSemanticColors colors) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: GOLSpacing.space3,
-        vertical: GOLSpacing.space1,
-      ),
-      decoration: BoxDecoration(
-        color: colors.textInverse.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(GOLRadius.full),
-      ),
+class _FocusTaskCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _FocusTaskCard({
+    required this.title,
+    required this.subtitle,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GOLCard(
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: colors.textInverse),
-          const SizedBox(width: GOLSpacing.space1),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: colors.textInverse,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _statsGrid(BuildContext context, GOLSemanticColors colors) {
-    final stats = [
-      {
-        'value': '94%',
-        'label': 'Weekly Score',
-        'icon': Iconsax.graph,
-        'accent': colors.interactivePrimary,
-        'sub': 'On track'
-      },
-      {
-        'value': '12',
-        'label': 'Day Streak',
-        'icon': Iconsax.crown,
-        'accent': colors.textAccent,
-        'sub': 'New best'
-      },
-      {
-        'value': '7',
-        'label': 'Live Tasks',
-        'icon': Iconsax.task,
-        'accent': colors.stateInfo,
-        'sub': 'Minimal distractions'
-      },
-    ];
-
-    return Row(
-      children: stats
-          .map(
-            (stat) => Expanded(
-              child: Container(
-                margin: EdgeInsets.only(
-                  right: stat == stats.last ? 0 : GOLSpacing.space3,
-                ),
-                padding: const EdgeInsets.all(GOLSpacing.space4),
-                decoration: BoxDecoration(
-                  color: colors.surfaceRaised,
-                  borderRadius: BorderRadius.circular(GOLRadius.md),
-                  border: Border.all(color: colors.borderDefault),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(
-                      stat['icon'] as IconData,
-                      color: stat['accent'] as Color,
-                      size: 22,
-                    ),
-                    const SizedBox(height: GOLSpacing.space2),
-                    Text(
-                      stat['value'] as String,
-                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                            color: colors.textPrimary,
-                          ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      stat['label'] as String,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: colors.textSecondary),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      stat['sub'] as String,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: colors.textTertiary),
-                    ),
-                  ],
-                ),
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: colors.borderStrong,
+                width: 2,
               ),
             ),
-          )
-          .toList(),
-    );
-  }
-
-  Widget _contentSection(BuildContext context, GOLSemanticColors colors) {
-    final contents = [
-      {
-        'title': 'Creative Brief',
-        'subtitle': 'Due today • 3 collaborators',
-        'status': 'Draft',
-      },
-      {
-        'title': 'Launch Video',
-        'subtitle': 'Needs review',
-        'status': 'Live',
-      },
-      {
-        'title': 'Weekly Substack',
-        'subtitle': 'Scheduled for Thursday',
-        'status': 'Scheduled',
-      },
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Content',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: colors.textPrimary),
-        ),
-        const SizedBox(height: GOLSpacing.space3),
-        GOLCard(
-          variant: GOLCardVariant.elevated,
-          child: Column(
-            children: contents
-                .map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: GOLSpacing.space3,
-                    ),
-                    child: Row(
-                      children: [
-                        GOLBadge(
-                          variant: GOLBadgeVariant.count,
-                          count: (item['status'] as String).substring(0, 1),
-                        ),
-                        const SizedBox(width: GOLSpacing.space3),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item['title'] as String,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(color: colors.textPrimary),
-                              ),
-                              const SizedBox(height: GOLSpacing.space1),
-                              Text(
-                                item['subtitle'] as String,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: colors.textSecondary),
-                              ),
-                            ],
-                          ),
-                        ),
-                        GOLChip(
-                          label: item['status'] as String,
-                          selected: item['status'] == 'Live',
-                        ),
-                      ],
-                    ),
+          ),
+          const SizedBox(width: GOLSpacing.space3),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: colors.textPrimary,
+                    fontWeight: FontWeight.w500,
                   ),
-                )
-                .toList(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _aiSection(BuildContext context, GOLSemanticColors colors) {
-    return GOLCard(
-      variant: GOLCardVariant.elevated,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'AI Companion',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall
-                ?.copyWith(color: colors.textPrimary),
-          ),
-          const SizedBox(height: GOLSpacing.space2),
-          Text(
-            'Your personal assistant has synthesized the latest notes and recommends 3 actions to unblock content, campaigns, and metrics.',
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall
-                ?.copyWith(color: colors.textSecondary),
-          ),
-          const SizedBox(height: GOLSpacing.space3),
-          Row(
-            children: [
-              GOLButton(
-                label: 'Review Insight',
-                onPressed: () {},
-                variant: GOLButtonVariant.primary,
-              ),
-              const SizedBox(width: GOLSpacing.space3),
-              GOLButton(
-                label: 'Share Insight',
-                onPressed: () {},
-                variant: GOLButtonVariant.tertiary,
-              ),
-            ],
+                ),
+                const SizedBox(height: GOLSpacing.space1),
+                Text(
+                  subtitle,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _projectsSection(BuildContext context, GOLSemanticColors colors) {
-    final projects = [
-      {
-        'title': 'Grow Out Loud Launch',
-        'progress': 0.72,
-        'focus': 'Content sprint',
-      },
-      {
-        'title': 'Community Studio',
-        'progress': 0.36,
-        'focus': 'AI integrations',
-      },
-      {
-        'title': 'Metrics Playbook',
-        'progress': 0.89,
-        'focus': 'Publish',
-      },
-    ];
+class _OverviewCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+  final String subtitle;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+  final bool highlight;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Projects',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall
-              ?.copyWith(color: colors.textPrimary),
-        ),
-        const SizedBox(height: GOLSpacing.space3),
-        Column(
-          children: projects
-              .map(
-                (project) => Padding(
-                  padding: const EdgeInsets.only(bottom: GOLSpacing.space3),
-                  child: GOLCard(
-                    variant: GOLCardVariant.interactive,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              project['title'] as String,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge
-                                  ?.copyWith(color: colors.textPrimary),
-                            ),
-                            Text(
-                              '${((project['progress'] as double) * 100).round()}%',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(color: colors.textSecondary),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: GOLSpacing.space2),
-                        GOLLinearProgress(value: project['progress'] as double),
-                        const SizedBox(height: GOLSpacing.space2),
-                        Text(
-                          project['focus'] as String,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: colors.textSecondary),
-                        ),
-                      ],
-                    ),
-                  ),
+  const _OverviewCard({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+    required this.colors,
+    required this.textTheme,
+    this.highlight = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GOLCard(
+      variant: highlight ? GOLCardVariant.elevated : GOLCardVariant.standard,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                icon,
+                size: 20,
+                color: highlight ? colors.interactivePrimary : colors.textSecondary,
+              ),
+              const SizedBox(width: GOLSpacing.space2),
+              Text(
+                title,
+                style: textTheme.labelSmall?.copyWith(
+                  color: colors.textTertiary,
+                  letterSpacing: 1.0,
                 ),
-              )
-              .toList(),
-        ),
-      ],
+              ),
+            ],
+          ),
+          const SizedBox(height: GOLSpacing.space3),
+          Text(
+            value,
+            style: textTheme.displaySmall?.copyWith(
+              color: highlight ? colors.interactivePrimary : colors.textPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: GOLSpacing.space1),
+          Text(
+            subtitle,
+            style: textTheme.bodySmall?.copyWith(
+              color: colors.textSecondary,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../grow_out_loud/foundation/gol_colors.dart';
 import 'home_dashboard_screen.dart';
 import 'projects_screen.dart';
 import 'skills_screen.dart';
@@ -17,18 +19,16 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
 
-    final List<Widget> _screens = [
-      const HomeDashboardScreen(),
-    const ProjectsScreen(),
-    const SkillsScreen(),
-    const ContentScreen(),
-    const PerformanceScreen(),
+  final List<Widget> _screens = const [
+    HomeDashboardScreen(),
+    ProjectsScreen(),
+    SkillsScreen(),
+    ContentScreen(),
+    PerformanceScreen(),
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
   }
 
   void _openAssistant() {
@@ -40,55 +40,44 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
 
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              color: isDark ? const Color(0xFF282828) : const Color(0xFFE0E0E0),
-              width: 1,
-            ),
-          ),
+          border: Border(top: BorderSide(color: colors.borderDefault)),
         ),
         child: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: isDark ? Colors.black : Colors.white,
-          selectedItemColor: const Color(0xFF1DB954),
-          unselectedItemColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          backgroundColor: colors.backgroundPrimary,
+          selectedItemColor: colors.interactivePrimary,
+          unselectedItemColor: colors.textSecondary,
           selectedFontSize: 11,
           unselectedFontSize: 11,
-          selectedLabelStyle: GoogleFonts.inter(fontWeight: FontWeight.w600),
-          unselectedLabelStyle: GoogleFonts.inter(),
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
           elevation: 0,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, size: 24),
-              activeIcon: Icon(Icons.home, size: 24),
+              icon: Icon(Iconsax.home_2),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.folder_outlined, size: 24),
-              activeIcon: Icon(Icons.folder, size: 24),
+              icon: Icon(Iconsax.folder),
               label: 'Projects',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.school_outlined, size: 24),
-              activeIcon: Icon(Icons.school, size: 24),
+              icon: Icon(Iconsax.book),
               label: 'Skills',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.description_outlined, size: 24),
-              activeIcon: Icon(Icons.description, size: 24),
+              icon: Icon(Iconsax.document),
               label: 'Content',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_outlined, size: 24),
-              activeIcon: Icon(Icons.bar_chart, size: 24),
+              icon: Icon(Iconsax.chart),
               label: 'Performance',
             ),
           ],
@@ -96,10 +85,11 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _openAssistant,
-        backgroundColor: const Color(0xFF1DB954),
+        backgroundColor: colors.interactivePrimary,
         elevation: 4,
-        child: const Icon(Icons.smart_toy, color: Colors.black, size: 26),
+        child: Icon(Iconsax.cpu, color: colors.textInverse, size: 24),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

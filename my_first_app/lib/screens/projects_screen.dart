@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../grow_out_loud/components/gol_cards.dart';
+import '../grow_out_loud/components/gol_chips.dart';
+import '../grow_out_loud/components/gol_progress.dart';
+import '../grow_out_loud/foundation/gol_colors.dart';
+import '../grow_out_loud/foundation/gol_spacing.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
@@ -10,90 +15,124 @@ class ProjectsScreen extends StatefulWidget {
 }
 
 class _ProjectsScreenState extends State<ProjectsScreen> {
-  int _selectedFilter = 0;
+  String _selectedFilter = 'Active';
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.backgroundPrimary,
         elevation: 0,
+        toolbarHeight: 80,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Projects',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: textTheme.headlineLarge?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: GOLSpacing.space1),
             Text(
               'Manage your ventures',
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              style: textTheme.bodySmall?.copyWith(
+                color: colors.textSecondary,
               ),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, size: 24),
+            icon: const Icon(Iconsax.add_circle),
             onPressed: () {},
+            color: colors.interactivePrimary,
+            iconSize: 28,
           ),
+          const SizedBox(width: GOLSpacing.space2),
         ],
       ),
       body: Column(
         children: [
-          // Filter tabs
+          // Filter Tabs
           Container(
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: GOLSpacing.screenPaddingHorizontal,
+              vertical: GOLSpacing.space3,
+            ),
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              children: [
-                _buildFilterChip('Active', 0),
-                _buildFilterChip('All Projects', 1),
-                _buildFilterChip('Preparing', 2),
-              ],
+              child: Row(
+                children: [
+                  _FilterChip(
+                    label: 'Active',
+                    selected: _selectedFilter == 'Active',
+                    onTap: () => setState(() => _selectedFilter = 'Active'),
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space2),
+                  _FilterChip(
+                    label: 'All Projects',
+                    selected: _selectedFilter == 'All Projects',
+                    onTap: () => setState(() => _selectedFilter = 'All Projects'),
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                  const SizedBox(width: GOLSpacing.space2),
+                  _FilterChip(
+                    label: 'Preparing',
+                    selected: _selectedFilter == 'Preparing',
+                    onTap: () => setState(() => _selectedFilter = 'Preparing'),
+                    colors: colors,
+                    textTheme: textTheme,
+                  ),
+                ],
+              ),
             ),
           ),
 
-          const SizedBox(height: 16),
-
-          // Project cards
+          // Projects List
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
-                _buildProjectCard(
-                  icon: Icons.rocket_launch,
+                _ProjectCard(
+                  icon: Iconsax.rocket,
                   name: 'NeoMarket App',
                   status: 'Preparing',
-                  statusColor: Colors.blue,
+                  statusColor: GOLPrimitives.info500,
                   progress: 0.85,
                   message: 'Market analysis complete. Pending budget approval for Q4 launch sequence.',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-                const SizedBox(height: 12),
-                _buildProjectCard(
-                  icon: Icons.shopping_bag_outlined,
+                const SizedBox(height: GOLSpacing.betweenCards),
+                _ProjectCard(
+                  icon: Iconsax.shop,
                   name: 'EcoStore',
                   status: 'Launched',
-                  statusColor: const Color(0xFF1DB954),
+                  statusColor: GOLPrimitives.success500,
                   progress: 1.0,
                   message: 'User growth +15% this week. Retention metrics exceeding baseline.',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-                const SizedBox(height: 12),
-                _buildProjectCard(
-                  icon: Icons.brush_outlined,
+                const SizedBox(height: GOLSpacing.betweenCards),
+                _ProjectCard(
+                  icon: Iconsax.brush_2,
                   name: 'Brand Redesign',
                   status: 'Paused',
-                  statusColor: Colors.orange,
+                  statusColor: GOLPrimitives.warning500,
                   progress: 0.45,
                   message: 'Waiting for new creative direction assets from agency.',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
               ],
             ),
@@ -102,71 +141,77 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
       ),
     );
   }
+}
 
-  Widget _buildFilterChip(String label, int index) {
-    final isSelected = _selectedFilter == index;
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      child: ChoiceChip(
-        label: Text(label),
-        selected: isSelected,
-        onSelected: (selected) {
-          setState(() {
-            _selectedFilter = index;
-          });
-        },
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedColor: const Color(0xFF1DB954),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: isSelected ? Colors.black : Theme.of(context).colorScheme.onSurface,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        side: BorderSide.none,
-      ),
+class _FilterChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _FilterChip({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GOLChip(
+      label: label,
+      selected: selected,
+      onTap: onTap,
     );
   }
+}
 
-  Widget _buildProjectCard({
-    required IconData icon,
-    required String name,
-    required String status,
-    required Color statusColor,
-    required double progress,
-    required String message,
-  }) {
-    return AppCard(
-      padding: const EdgeInsets.all(16),
+class _ProjectCard extends StatelessWidget {
+  final IconData icon;
+  final String name;
+  final String status;
+  final Color statusColor;
+  final double progress;
+  final String message;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
+
+  const _ProjectCard({
+    required this.icon,
+    required this.name,
+    required this.status,
+    required this.statusColor,
+    required this.progress,
+    required this.message,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GOLCard(
+      variant: GOLCardVariant.elevated,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1DB954).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: const Color(0xFF1DB954), size: 24),
-              ),
-              const SizedBox(width: 12),
+              Icon(icon, size: 32, color: colors.interactivePrimary),
+              const SizedBox(width: GOLSpacing.space3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       name,
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: GOLSpacing.space1),
                     Row(
                       children: [
                         Container(
@@ -177,12 +222,11 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                             shape: BoxShape.circle,
                           ),
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: GOLSpacing.space2),
                         Text(
                           status,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: textTheme.labelMedium?.copyWith(
+                            color: colors.textSecondary,
                           ),
                         ),
                       ],
@@ -195,63 +239,40 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 children: [
                   Text(
                     '${(progress * 100).toInt()}%',
-                    style: GoogleFonts.inter(
-                      fontSize: 20,
+                    style: textTheme.headlineMedium?.copyWith(
+                      color: colors.textPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1DB954).withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      'READY',
-                      style: GoogleFonts.inter(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFF1DB954),
-                      ),
+                  Text(
+                    'READY',
+                    style: textTheme.labelSmall?.copyWith(
+                      color: colors.interactivePrimary,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-
-          const SizedBox(height: 12),
-
-          // Progress bar
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 6,
-              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF1DB954)),
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          // Status message
+          const SizedBox(height: GOLSpacing.space4),
+          GOLLinearProgress(value: progress),
+          const SizedBox(height: GOLSpacing.space4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
-                Icons.info_outline,
+                status == 'Paused' ? Iconsax.pause : Iconsax.info_circle,
                 size: 16,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                color: colors.textTertiary,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: GOLSpacing.space2),
               Expanded(
                 child: Text(
                   message,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    height: 1.4,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                    height: 1.5,
                   ),
                 ),
               ),

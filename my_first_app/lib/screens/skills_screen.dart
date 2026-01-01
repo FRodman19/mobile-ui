@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+
+import '../grow_out_loud/components/gol_cards.dart';
+import '../grow_out_loud/components/gol_chips.dart';
+import '../grow_out_loud/components/gol_progress.dart';
+import '../grow_out_loud/foundation/gol_colors.dart';
+import '../grow_out_loud/foundation/gol_spacing.dart';
 
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen({super.key});
@@ -10,103 +15,135 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class _SkillsScreenState extends State<SkillsScreen> {
-  int _selectedFilter = 0;
+  String _selectedFilter = 'Active';
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
+      backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.backgroundPrimary,
         elevation: 0,
+        toolbarHeight: 80,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Skills',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: textTheme.headlineLarge?.copyWith(
+                color: colors.textPrimary,
+                fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: GOLSpacing.space1),
             Text(
               'My learning path',
-              style: GoogleFonts.inter(
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              style: textTheme.bodySmall?.copyWith(
+                color: colors.textSecondary,
               ),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search, size: 24),
+            icon: const Icon(Iconsax.search_normal),
             onPressed: () {},
+            color: colors.textSecondary,
           ),
           IconButton(
-            icon: const Icon(Icons.person_outline, size: 24),
+            icon: const Icon(Iconsax.user),
             onPressed: () {},
+            color: colors.textSecondary,
           ),
+          const SizedBox(width: GOLSpacing.space2),
         ],
       ),
       body: Column(
         children: [
-          // Filter tabs
+          // Filter Tabs
           Container(
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ListView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: GOLSpacing.screenPaddingHorizontal,
+              vertical: GOLSpacing.space3,
+            ),
+            child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              children: [
-                _buildFilterChip('Active', 0),
-                _buildFilterChip('All', 1),
-                _buildFilterChip('Paused', 2),
-                _buildFilterChip('Completed', 3),
-              ],
+              child: Row(
+                children: [
+                  GOLChip(
+                    label: 'Active',
+                    selected: _selectedFilter == 'Active',
+                  ),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(
+                    label: 'All',
+                    selected: _selectedFilter == 'All',
+                  ),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(
+                    label: 'Paused',
+                    selected: _selectedFilter == 'Paused',
+                  ),
+                  const SizedBox(width: GOLSpacing.space2),
+                  GOLChip(
+                    label: 'Completed',
+                    selected: _selectedFilter == 'Completed',
+                  ),
+                ],
+              ),
             ),
           ),
 
-          const SizedBox(height: 16),
-
-          // Skill cards
+          // Skills List
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
-                _buildSkillCard(
-                  icon: '🐍',
+                _SkillCard(
+                  emoji: '🐍',
                   name: 'Python for Data Science',
                   milestone: 'Pandas Library Basics',
                   progress: 0.65,
                   timeThisWeek: '4.5h this week',
                   nextSession: 'Today @ 18:00',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-                const SizedBox(height: 12),
-                _buildSkillCard(
-                  icon: '🎤',
+                const SizedBox(height: GOLSpacing.betweenCards),
+                _SkillCard(
+                  emoji: '🎤',
                   name: 'Public Speaking',
                   milestone: 'Impromptu Speech Drills',
                   progress: 0.30,
                   timeThisWeek: '1h 20m this week',
                   nextSession: 'Tomorrow @ 09:00',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-                const SizedBox(height: 12),
-                _buildSkillCard(
-                  icon: '🌮',
+                const SizedBox(height: GOLSpacing.betweenCards),
+                _SkillCard(
+                  emoji: '🌮',
                   name: 'Spanish Language',
                   milestone: 'Conversational Fluency',
                   progress: 0.80,
                   timeThisWeek: '3h this week',
                   nextSession: 'Fri @ 12:00',
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
-                const SizedBox(height: 12),
-                _buildSkillCard(
-                  icon: '🎹',
+                const SizedBox(height: GOLSpacing.betweenCards),
+                _SkillCard(
+                  emoji: '🎹',
                   name: 'Jazz Piano',
                   milestone: 'Major Scales',
                   progress: 0.0,
                   timeThisWeek: '0h this week',
-                  nextSession: 'Schedule',
-                  isUnstarted: true,
+                  nextSession: null,
+                  colors: colors,
+                  textTheme: textTheme,
                 ),
               ],
             ),
@@ -115,81 +152,73 @@ class _SkillsScreenState extends State<SkillsScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: const Color(0xFF1DB954),
-        child: const Icon(Icons.add, color: Colors.black),
+        backgroundColor: colors.interactivePrimary,
+        child: Icon(Iconsax.add, color: colors.textInverse),
       ),
     );
   }
+}
 
-  Widget _buildFilterChip(String label, int index) {
-    final isSelected = _selectedFilter == index;
-    return Container(
-      margin: const EdgeInsets.only(right: 8),
-      child: ChoiceChip(
-        label: Text(label),
-        selected: isSelected,
-        onSelected: (selected) {
-          setState(() {
-            _selectedFilter = index;
-          });
-        },
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        selectedColor: const Color(0xFF1DB954),
-        labelStyle: GoogleFonts.inter(
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: isSelected ? Colors.black : Theme.of(context).colorScheme.onSurface,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        side: BorderSide.none,
-      ),
-    );
-  }
+class _SkillCard extends StatelessWidget {
+  final String emoji;
+  final String name;
+  final String milestone;
+  final double progress;
+  final String timeThisWeek;
+  final String? nextSession;
+  final GOLSemanticColors colors;
+  final TextTheme textTheme;
 
-  Widget _buildSkillCard({
-    required String icon,
-    required String name,
-    required String milestone,
-    required double progress,
-    required String timeThisWeek,
-    required String nextSession,
-    bool isUnstarted = false,
-  }) {
-    return AppCard(
-      padding: const EdgeInsets.all(16),
+  const _SkillCard({
+    required this.emoji,
+    required this.name,
+    required this.milestone,
+    required this.progress,
+    required this.timeThisWeek,
+    this.nextSession,
+    required this.colors,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GOLCard(
+      variant: GOLCardVariant.elevated,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Icon and title on same line
           Row(
             children: [
               Text(
-                icon,
+                emoji,
                 style: const TextStyle(fontSize: 32),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: GOLSpacing.space3),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       name,
-                      style: GoogleFonts.inter(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: colors.textPrimary,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: GOLSpacing.space1),
                     Row(
                       children: [
-                        const Icon(Icons.flag_outlined, size: 14),
-                        const SizedBox(width: 4),
+                        Icon(
+                          Iconsax.flag,
+                          size: 14,
+                          color: colors.textTertiary,
+                        ),
+                        const SizedBox(width: GOLSpacing.space1),
                         Text(
                           milestone,
-                          style: GoogleFonts.inter(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colors.textSecondary,
                           ),
                         ),
                       ],
@@ -199,60 +228,37 @@ class _SkillsScreenState extends State<SkillsScreen> {
               ),
               Text(
                 '${(progress * 100).toInt()}%',
-                style: GoogleFonts.inter(
-                  fontSize: 18,
+                style: textTheme.headlineMedium?.copyWith(
+                  color: progress > 0 ? colors.interactivePrimary : colors.textTertiary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-
-          const SizedBox(height: 12),
-
-          // Progress bar
-          ClipRRect(
-            borderRadius: BorderRadius.circular(3),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 5,
-              backgroundColor: Theme.of(context).colorScheme.onSurface.withOpacity(0.1),
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isUnstarted ? Colors.grey : const Color(0xFF1DB954),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          // Time and next session
+          const SizedBox(height: GOLSpacing.space4),
+          GOLLinearProgress(value: progress),
+          const SizedBox(height: GOLSpacing.space4),
           Row(
             children: [
-              Icon(
-                Icons.access_time,
-                size: 14,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-              const SizedBox(width: 4),
+              Icon(Iconsax.clock, size: 16, color: colors.textTertiary),
+              const SizedBox(width: GOLSpacing.space2),
               Text(
                 timeThisWeek,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                style: textTheme.bodySmall?.copyWith(
+                  color: colors.textSecondary,
                 ),
               ),
               const Spacer(),
               Icon(
-                isUnstarted ? Icons.schedule : Icons.calendar_today_outlined,
-                size: 14,
-                color: isUnstarted ? const Color(0xFF1DB954) : Theme.of(context).colorScheme.onSurfaceVariant,
+                nextSession != null ? Iconsax.calendar : Iconsax.alarm,
+                size: 16,
+                color: colors.textTertiary,
               ),
-              const SizedBox(width: 4),
+              const SizedBox(width: GOLSpacing.space2),
               Text(
-                nextSession,
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: isUnstarted ? const Color(0xFF1DB954) : Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontWeight: isUnstarted ? FontWeight.w600 : FontWeight.normal,
+                nextSession ?? 'Schedule',
+                style: textTheme.bodySmall?.copyWith(
+                  color: nextSession != null ? colors.textSecondary : colors.interactivePrimary,
                 ),
               ),
             ],

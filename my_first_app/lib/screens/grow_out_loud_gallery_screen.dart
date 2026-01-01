@@ -383,11 +383,46 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
       padding: const EdgeInsets.all(GOLSpacing.space6),
       children: [
         _sectionHeader(context, 'Buttons'),
+        Text(
+          '8PT GRID SYSTEM: All button heights follow multiples of 8 (or 4 for very small spacing)',
+          style: GOLTypography.overline(colors.textTertiary),
+        ),
+        const SizedBox(height: GOLSpacing.space3),
+        _usageNote(
+          context,
+          'Large: 48px height (8×6), 12px vertical padding (4×3)',
+        ),
+        _usageNote(
+          context,
+          'Medium: 40px height (8×5), 8px vertical padding (8×1)',
+        ),
+        _usageNote(
+          context,
+          'Small: 32px height (8×4), 4px vertical padding (4×1)',
+        ),
+        const SizedBox(height: GOLSpacing.space4),
         Wrap(
           spacing: GOLSpacing.space3,
           runSpacing: GOLSpacing.space3,
           children: [
-            GOLButton(label: 'Primary', onPressed: () {}),
+            GOLButton(
+              label: 'Large Primary',
+              size: GOLButtonSize.large,
+              onPressed: () {},
+            ),
+            GOLButton(label: 'Medium Primary', onPressed: () {}),
+            GOLButton(
+              label: 'Small Primary',
+              size: GOLButtonSize.small,
+              onPressed: () {},
+            ),
+          ],
+        ),
+        const SizedBox(height: GOLSpacing.space3),
+        Wrap(
+          spacing: GOLSpacing.space3,
+          runSpacing: GOLSpacing.space3,
+          children: [
             GOLButton(
               label: 'Secondary',
               variant: GOLButtonVariant.secondary,
@@ -404,6 +439,11 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
               onPressed: () {},
             ),
           ],
+        ),
+        const SizedBox(height: GOLSpacing.space4),
+        _usageNote(
+          context,
+          'Use Primary for main actions, Secondary for alternatives, Tertiary for low-priority actions, and Destructive for dangerous operations.',
         ),
         const SizedBox(height: GOLSpacing.space7),
         _sectionHeader(context, 'Cards'),
@@ -1183,6 +1223,28 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
 
   String _hex(Color color) {
     return '#${color.value.toRadixString(16).padLeft(8, '0').substring(2).toUpperCase()}';
+  }
+
+  Widget _usageNote(BuildContext context, String text) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: GOLSpacing.space2),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Iconsax.info_circle, size: 16, color: colors.textAccent),
+          const SizedBox(width: GOLSpacing.space2),
+          Expanded(
+            child: Text(
+              text,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: colors.textSecondary,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

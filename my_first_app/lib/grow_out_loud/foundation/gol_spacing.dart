@@ -31,9 +31,9 @@ class GOLSpacing {
   static const double buttonPaddingHorizontalMd = 16;
   static const double buttonPaddingHorizontalLg = 24;
   static const double buttonPaddingHorizontalSm = 12;
-  static const double buttonPaddingVerticalMd = 12;
-  static const double buttonPaddingVerticalLg = 16;
-  static const double buttonPaddingVerticalSm = 8;
+  static const double buttonPaddingVerticalMd = 8;
+  static const double buttonPaddingVerticalLg = 12;
+  static const double buttonPaddingVerticalSm = 4;
 
   static const double stackXs = 8;
   static const double stackSm = 12;

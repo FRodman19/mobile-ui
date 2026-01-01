@@ -192,7 +192,7 @@ _ButtonSizeConfig _sizeConfig(GOLButtonSize size) {
   switch (size) {
     case GOLButtonSize.large:
       return const _ButtonSizeConfig(
-        height: 56,
+        height: 48,
         padding: EdgeInsets.symmetric(
           horizontal: GOLSpacing.buttonPaddingHorizontalLg,
           vertical: GOLSpacing.buttonPaddingVerticalLg,
@@ -204,9 +204,9 @@ _ButtonSizeConfig _sizeConfig(GOLButtonSize size) {
       );
     case GOLButtonSize.medium:
       return const _ButtonSizeConfig(
-        height: 48,
+        height: 40,
         padding: EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: GOLSpacing.buttonPaddingHorizontalMd,
           vertical: GOLSpacing.buttonPaddingVerticalMd,
         ),
         fontSize: 14,
@@ -216,7 +216,7 @@ _ButtonSizeConfig _sizeConfig(GOLButtonSize size) {
       );
     case GOLButtonSize.small:
       return const _ButtonSizeConfig(
-        height: 36,
+        height: 32,
         padding: EdgeInsets.symmetric(
           horizontal: GOLSpacing.buttonPaddingHorizontalSm,
           vertical: GOLSpacing.buttonPaddingVerticalSm,

@@ -4,7 +4,74 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Grow Out Loud** - A Flutter mobile application with an execution system focus. The app features a green-themed design with both light and dark mode support.
+**Grow Out Loud** - A Flutter mobile application with an execution system focus. The app features a clean, modern design with both light and dark mode support.
+
+## ⚠️ CRITICAL: Design System First Approach
+
+**ALWAYS use the Grow Out Loud (GOL) design system** when building any UI component or feature:
+
+### Design System Location
+- **Components**: `lib/grow_out_loud/components/`
+- **Foundation**: `lib/grow_out_loud/foundation/`
+- **Gallery/Reference**: `lib/screens/grow_out_loud_gallery_screen.dart` (Run in debug mode: `/design-system-v3`)
+
+### Mandatory Rules
+1. **NEVER create custom UI components** - Always use existing GOL components first
+2. **NEVER use arbitrary spacing** - Use `GOLSpacing` constants (8pt grid system)
+3. **NEVER use custom colors** - Use `GOLSemanticColors` from theme
+4. **NEVER use arbitrary font sizes** - Use `textTheme` styles from `GOLTypography`
+5. **If a component doesn't exist** - Create it following GOL patterns and add it to the gallery
+
+### Quick Reference
+```dart
+// ✅ CORRECT - Use design system
+GOLButton(label: 'Save', onPressed: () {})
+SizedBox(height: GOLSpacing.space4)  // 16px, follows 8pt grid
+Text('Title', style: Theme.of(context).textTheme.headlineSmall)
+color: colors.textPrimary
+
+// ❌ WRONG - Custom implementation
+ElevatedButton(child: Text('Save'), onPressed: () {})
+SizedBox(height: 15)  // Arbitrary spacing breaks grid
+Text('Title', style: TextStyle(fontSize: 17))  // Arbitrary size
+color: Color(0xFF123456)  // Hardcoded color
+```
+
+### Available Components
+- Buttons: `GOLButton` (primary, secondary, tertiary, destructive)
+- Cards: `GOLCard` (standard, elevated)
+- Inputs: `GOLTextField`, `GOLSearchField`, `GOLDropdown`
+- Lists: `GOLListItem`, `GOLCheckboxTile`, `GOLRadioTile`, `GOLSwitchTile`
+- Progress: `GOLLinearProgress`, `GOLCircularProgress`, `GOLGridLoader`
+- Navigation: `GOLAppBar`, `GOLTabBar`, `GOLBottomNav`
+- Feedback: `GOLChip`, `GOLBadge`, `GOLDivider`, `GOLSkeleton`
+- Overlays: `showGOLDialog`, `showGOLBottomSheet`, `showGOLToast`
+
+### 8-Point Grid System
+All spacing MUST follow multiples of 8px (or 4px for very small spacing):
+- `GOLSpacing.space1` = 4px (small exception)
+- `GOLSpacing.space2` = 8px ✓
+- `GOLSpacing.space4` = 16px ✓ (default)
+- `GOLSpacing.space6` = 24px ✓
+- `GOLSpacing.space7` = 32px ✓ (sections)
+
+See: `lib/grow_out_loud/foundation/SPACING_GUIDE.md`
+
+### Typography Scale
+Use semantic text styles from theme:
+- Headlines: `displayLarge/Medium/Small`, `headlineLarge/Medium/Small`
+- Body: `bodyLarge/Medium/Small` (bodyMedium is default)
+- UI: `labelLarge/Medium/Small` (for buttons, tabs)
+- Special: `GOLTypography.caption/overline/micro/mono`
+
+See: `lib/grow_out_loud/foundation/TYPOGRAPHY_GUIDE.md`
+
+### When Building New Features
+1. Check `grow_out_loud_gallery_screen.dart` for existing components
+2. Use GOL components exclusively
+3. If component missing: Create it in `components/` following existing patterns
+4. Add new component to gallery with usage example
+5. Maintain 8pt grid and typography scale
 
 ## Development Commands
 
@@ -97,13 +164,27 @@ flutter clean && flutter pub get
 
 ```
 lib/
-├── main.dart              # App entry point, theme configuration
-└── screens/               # All screen widgets
-    ├── splash_screen.dart
-    ├── welcome_screen.dart
-    ├── feature_carousel_screen.dart
-    ├── auth_choice_screen.dart
-    └── create_account_screen.dart
+├── main.dart                    # App entry point, theme configuration
+├── grow_out_loud/              # Design system (GOL)
+│   ├── components/             # Reusable UI components
+│   │   ├── gol_buttons.dart
+│   │   ├── gol_cards.dart
+│   │   ├── gol_inputs.dart
+│   │   └── ... (all components)
+│   └── foundation/             # Design tokens
+│       ├── gol_colors.dart
+│       ├── gol_spacing.dart
+│       ├── gol_typography.dart
+│       ├── gol_radius.dart
+│       ├── gol_theme.dart
+│       ├── SPACING_GUIDE.md
+│       └── TYPOGRAPHY_GUIDE.md
+└── screens/                    # Application screens
+    ├── home_screen.dart
+    ├── performance_screen.dart
+    ├── content_screen.dart
+    ├── assistant_screen.dart
+    └── grow_out_loud_gallery_screen.dart  # Design system gallery
 ```
 
 ## Device Setup

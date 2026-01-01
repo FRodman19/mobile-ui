@@ -68,7 +68,7 @@ class HomeDashboardScreen extends StatelessWidget {
               child: Row(
                 children: [
                   _QuickActionItem(
-                    icon: Iconsax.rocket,
+                    icon: Iconsax.folder_add,
                     label: 'New\nProject',
                     colors: colors,
                     textTheme: textTheme,

@@ -69,28 +69,28 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _FilterChip(
-                    label: 'Active',
-                    selected: _selectedFilter == 'Active',
+                  GestureDetector(
                     onTap: () => setState(() => _selectedFilter = 'Active'),
-                    colors: colors,
-                    textTheme: textTheme,
+                    child: GOLChip(
+                      label: 'Active',
+                      selected: _selectedFilter == 'Active',
+                    ),
                   ),
                   const SizedBox(width: GOLSpacing.space2),
-                  _FilterChip(
-                    label: 'All Projects',
-                    selected: _selectedFilter == 'All Projects',
+                  GestureDetector(
                     onTap: () => setState(() => _selectedFilter = 'All Projects'),
-                    colors: colors,
-                    textTheme: textTheme,
+                    child: GOLChip(
+                      label: 'All Projects',
+                      selected: _selectedFilter == 'All Projects',
+                    ),
                   ),
                   const SizedBox(width: GOLSpacing.space2),
-                  _FilterChip(
-                    label: 'Preparing',
-                    selected: _selectedFilter == 'Preparing',
+                  GestureDetector(
                     onTap: () => setState(() => _selectedFilter = 'Preparing'),
-                    colors: colors,
-                    textTheme: textTheme,
+                    child: GOLChip(
+                      label: 'Preparing',
+                      selected: _selectedFilter == 'Preparing',
+                    ),
                   ),
                 ],
               ),
@@ -103,7 +103,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
                 _ProjectCard(
-                  icon: Iconsax.rocket,
+                  icon: Iconsax.mobile,
                   name: 'NeoMarket App',
                   status: 'Preparing',
                   statusColor: GOLPrimitives.info500,
@@ -143,30 +143,6 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   }
 }
 
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-  final GOLSemanticColors colors;
-  final TextTheme textTheme;
-
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    required this.colors,
-    required this.textTheme,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GOLChip(
-      label: label,
-      selected: selected,
-      onTap: onTap,
-    );
-  }
-}
 
 class _ProjectCard extends StatelessWidget {
   final IconData icon;

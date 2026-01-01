@@ -55,13 +55,25 @@ class _ContentScreenState extends State<ContentScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  GOLChip(label: 'All', selected: _selectedPlatform == 'All'),
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedPlatform = 'All'),
+                    child: GOLChip(label: 'All', selected: _selectedPlatform == 'All'),
+                  ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(label: 'YouTube', selected: _selectedPlatform == 'YouTube'),
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedPlatform = 'YouTube'),
+                    child: GOLChip(label: 'YouTube', selected: _selectedPlatform == 'YouTube'),
+                  ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(label: 'TikTok', selected: _selectedPlatform == 'TikTok'),
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedPlatform = 'TikTok'),
+                    child: GOLChip(label: 'TikTok', selected: _selectedPlatform == 'TikTok'),
+                  ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(label: 'Blog', selected: _selectedPlatform == 'Blog'),
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedPlatform = 'Blog'),
+                    child: GOLChip(label: 'Blog', selected: _selectedPlatform == 'Blog'),
+                  ),
                 ],
               ),
             ),

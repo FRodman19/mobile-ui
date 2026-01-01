@@ -73,24 +73,36 @@ class _SkillsScreenState extends State<SkillsScreen> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  GOLChip(
-                    label: 'Active',
-                    selected: _selectedFilter == 'Active',
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedFilter = 'Active'),
+                    child: GOLChip(
+                      label: 'Active',
+                      selected: _selectedFilter == 'Active',
+                    ),
                   ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(
-                    label: 'All',
-                    selected: _selectedFilter == 'All',
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedFilter = 'All'),
+                    child: GOLChip(
+                      label: 'All',
+                      selected: _selectedFilter == 'All',
+                    ),
                   ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(
-                    label: 'Paused',
-                    selected: _selectedFilter == 'Paused',
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedFilter = 'Paused'),
+                    child: GOLChip(
+                      label: 'Paused',
+                      selected: _selectedFilter == 'Paused',
+                    ),
                   ),
                   const SizedBox(width: GOLSpacing.space2),
-                  GOLChip(
-                    label: 'Completed',
-                    selected: _selectedFilter == 'Completed',
+                  GestureDetector(
+                    onTap: () => setState(() => _selectedFilter = 'Completed'),
+                    child: GOLChip(
+                      label: 'Completed',
+                      selected: _selectedFilter == 'Completed',
+                    ),
                   ),
                 ],
               ),

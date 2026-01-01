@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/home_screen.dart';
+import 'screens/main_navigation.dart';
 import 'screens/design_system_gallery_screen.dart';
 import 'screens/grow_out_loud_gallery_screen.dart';
 import 'grow_out_loud/foundation/gol_theme.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Grow Out Loud',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const MainNavigation(),
         if (kDebugMode)
           '/design-system': (context) => const DesignSystemGalleryScreen(),
         if (kDebugMode)

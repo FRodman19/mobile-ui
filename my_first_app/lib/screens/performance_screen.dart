@@ -69,139 +69,151 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
               children: [
                 GOLCard(
                   variant: GOLCardVariant.elevated,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Iconsax.chart_21, size: 16, color: colors.textTertiary),
-                                const SizedBox(width: GOLSpacing.space2),
-                                Text(
-                                  'NET PROFIT',
-                                  style: textTheme.labelMedium?.copyWith(
-                                    color: colors.textSecondary,
-                                    fontWeight: FontWeight.w600,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Iconsax.chart_21, size: 14, color: colors.textTertiary),
+                                  const SizedBox(width: GOLSpacing.space1),
+                                  Flexible(
+                                    child: Text(
+                                      'NET PROFIT',
+                                      style: textTheme.labelSmall?.copyWith(
+                                        color: colors.textSecondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: GOLSpacing.space2),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  '\$8,240',
-                                  style: textTheme.headlineLarge?.copyWith(
-                                    color: colors.textPrimary,
-                                    fontWeight: FontWeight.bold,
+                                ],
+                              ),
+                              const SizedBox(height: GOLSpacing.space2),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      '\$8,240',
+                                      style: textTheme.headlineMedium?.copyWith(
+                                        color: colors.textPrimary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: GOLSpacing.space2),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: GOLSpacing.space2,
-                                    vertical: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: GOLPrimitives.success500.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Row(
+                                  const SizedBox(height: 2),
+                                  Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(
                                         Iconsax.arrow_up_3,
-                                        size: 12,
+                                        size: 10,
                                         color: GOLPrimitives.success600,
                                       ),
-                                      const SizedBox(width: 4),
+                                      const SizedBox(width: 2),
                                       Text(
-                                        '12.5%',
+                                        '+12%',
                                         style: textTheme.labelSmall?.copyWith(
                                           color: GOLPrimitives.success600,
                                           fontWeight: FontWeight.w600,
+                                          fontSize: 10,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 48,
-                        color: colors.borderDefault,
-                        margin: const EdgeInsets.symmetric(horizontal: GOLSpacing.space4),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Iconsax.wallet_3, size: 16, color: colors.textTertiary),
-                                const SizedBox(width: GOLSpacing.space2),
-                                Text(
-                                  'REVENUE',
-                                  style: textTheme.labelMedium?.copyWith(
-                                    color: colors.textSecondary,
-                                    fontWeight: FontWeight.w600,
+                        Container(
+                          width: 1,
+                          color: colors.borderDefault,
+                          margin: const EdgeInsets.symmetric(horizontal: GOLSpacing.space3),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Iconsax.wallet_3, size: 14, color: colors.textTertiary),
+                                  const SizedBox(width: GOLSpacing.space1),
+                                  Flexible(
+                                    child: Text(
+                                      'REVENUE',
+                                      style: textTheme.labelSmall?.copyWith(
+                                        color: colors.textSecondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: GOLSpacing.space2),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '\$12,400',
+                                  style: textTheme.headlineMedium?.copyWith(
+                                    color: colors.textPrimary,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: GOLSpacing.space2),
-                            Text(
-                              '\$12,400',
-                              style: textTheme.headlineLarge?.copyWith(
-                                color: colors.textPrimary,
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: 1,
-                        height: 48,
-                        color: colors.borderDefault,
-                        margin: const EdgeInsets.symmetric(horizontal: GOLSpacing.space4),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Iconsax.card, size: 16, color: colors.textTertiary),
-                                const SizedBox(width: GOLSpacing.space2),
-                                Text(
-                                  'SPEND',
-                                  style: textTheme.labelMedium?.copyWith(
-                                    color: colors.textSecondary,
-                                    fontWeight: FontWeight.w600,
+                        Container(
+                          width: 1,
+                          color: colors.borderDefault,
+                          margin: const EdgeInsets.symmetric(horizontal: GOLSpacing.space3),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Iconsax.card, size: 14, color: colors.textTertiary),
+                                  const SizedBox(width: GOLSpacing.space1),
+                                  Flexible(
+                                    child: Text(
+                                      'SPEND',
+                                      style: textTheme.labelSmall?.copyWith(
+                                        color: colors.textSecondary,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: GOLSpacing.space2),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  '\$4,159',
+                                  style: textTheme.headlineMedium?.copyWith(
+                                    color: colors.textPrimary,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: GOLSpacing.space2),
-                            Text(
-                              '\$4,159',
-                              style: textTheme.headlineLarge?.copyWith(
-                                color: colors.textPrimary,
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: GOLSpacing.betweenSections),

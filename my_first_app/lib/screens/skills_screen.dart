@@ -115,7 +115,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
               padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
                 _SkillCard(
-                  emoji: '🐍',
+                  icon: Iconsax.code_15,
                   name: 'Python for Data Science',
                   milestone: 'Pandas Library Basics',
                   progress: 0.65,
@@ -126,7 +126,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 ),
                 const SizedBox(height: GOLSpacing.betweenCards),
                 _SkillCard(
-                  emoji: '🎤',
+                  icon: Iconsax.microphone_25,
                   name: 'Public Speaking',
                   milestone: 'Impromptu Speech Drills',
                   progress: 0.30,
@@ -137,7 +137,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 ),
                 const SizedBox(height: GOLSpacing.betweenCards),
                 _SkillCard(
-                  emoji: '🌮',
+                  icon: Iconsax.global5,
                   name: 'Spanish Language',
                   milestone: 'Conversational Fluency',
                   progress: 0.80,
@@ -148,7 +148,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 ),
                 const SizedBox(height: GOLSpacing.betweenCards),
                 _SkillCard(
-                  emoji: '🎹',
+                  icon: Iconsax.music5,
                   name: 'Jazz Piano',
                   milestone: 'Major Scales',
                   progress: 0.0,
@@ -172,7 +172,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
 }
 
 class _SkillCard extends StatelessWidget {
-  final String emoji;
+  final IconData icon;
   final String name;
   final String milestone;
   final double progress;
@@ -182,7 +182,7 @@ class _SkillCard extends StatelessWidget {
   final TextTheme textTheme;
 
   const _SkillCard({
-    required this.emoji,
+    required this.icon,
     required this.name,
     required this.milestone,
     required this.progress,
@@ -202,10 +202,7 @@ class _SkillCard extends StatelessWidget {
           // Icon and title on same line
           Row(
             children: [
-              Text(
-                emoji,
-                style: const TextStyle(fontSize: 32),
-              ),
+              Icon(icon, size: 32, color: colors.interactivePrimary),
               const SizedBox(width: GOLSpacing.space3),
               Expanded(
                 child: Column(

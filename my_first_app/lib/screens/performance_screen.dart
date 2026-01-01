@@ -1,407 +1,261 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import '../design_system/badges.dart';
-import '../design_system/buttons.dart';
-import '../design_system/cards.dart';
-import '../design_system/chips.dart';
-import '../design_system/icon_container.dart';
-import '../design_system/spacing.dart';
-import '../design_system/theme.dart';
 
-class PerformanceScreen extends StatefulWidget {
+import '../grow_out_loud/components/gol_cards.dart';
+import '../grow_out_loud/components/gol_lists.dart';
+import '../grow_out_loud/components/gol_progress.dart';
+import '../grow_out_loud/foundation/gol_colors.dart';
+import '../grow_out_loud/foundation/gol_spacing.dart';
+import '../grow_out_loud/foundation/gol_radius.dart';
+
+class PerformanceScreen extends StatelessWidget {
   const PerformanceScreen({super.key});
 
   @override
-  State<PerformanceScreen> createState() => _PerformanceScreenState();
-}
-
-class _PerformanceScreenState extends State<PerformanceScreen> {
-  int _selectedFilter = 2;
-
-  @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      backgroundColor: isDark ? DSColors.darkBackground : DSColors.white,
+      backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: colors.backgroundPrimary,
         elevation: 0,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'PERFORMANCE',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    letterSpacing: 0.5,
-                    color: isDark
-                        ? DSColors.neutral300
-                        : DSColors.neutral500,
-                  ),
+              style: textTheme.bodySmall?.copyWith(
+                letterSpacing: 0.5,
+                color: colors.textSecondary,
+              ),
             ),
+            const SizedBox(height: GOLSpacing.space1),
             Text(
               'Analytics',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: textTheme.headlineSmall?.copyWith(
+                color: colors.textPrimary,
+              ),
             ),
           ],
         ),
         actions: [
           IconButton(
             icon: const Icon(Iconsax.setting_2),
+            color: colors.textSecondary,
             onPressed: () {},
           ),
-          const SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(
+          horizontal: GOLSpacing.space4,
+          vertical: GOLSpacing.space5,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Time filter tabs
-            Container(
-              height: 48,
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  DSChip(
-                    label: 'Today',
-                    isSelected: _selectedFilter == 0,
-                    onTap: () => setState(() => _selectedFilter = 0),
-                  ),
-                  DSChip(
-                    label: 'This Week',
-                    isSelected: _selectedFilter == 1,
-                    onTap: () => setState(() => _selectedFilter = 1),
-                  ),
-                  DSChip(
-                    label: 'This Month',
-                    isSelected: _selectedFilter == 2,
-                    onTap: () => setState(() => _selectedFilter = 2),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.lg),
-
-            // Net Profit Card
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: DSCard(
-                tone: DSCardTone.elevated,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'NET PROFIT',
-                                style: Theme.of(context).textTheme.labelSmall
-                                    ?.copyWith(
-                                      letterSpacing: 0.5,
-                                      color: isDark
-                                          ? DSColors.neutral300
-                                          : DSColors.neutral500,
-                                    ),
-                              ),
-                              const SizedBox(width: 6),
-                              Icon(
-                                Iconsax.info_circle,
-                                size: 16,
-                                color: isDark
-                                    ? DSColors.neutral500
-                                    : DSColors.neutral500,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: DSSpacing.sm),
-                          Text(
-                            '\$8,240.50',
-                            style: Theme.of(context).textTheme.displaySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const DSBadge(
-                      label: '+12.5%',
-                      variant: DSBadgeVariant.success,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.md),
-
-            // Revenue & Spend
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: DSCard(
-                      tone: DSCardTone.elevated,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Iconsax.wallet_money,
-                            size: 28,
-                            color: DSColors.teal500,
-                          ),
-                          const SizedBox(height: DSSpacing.sm),
-                          Text(
-                            'Revenue',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                  color: isDark
-                                      ? DSColors.neutral300
-                                      : DSColors.neutral500,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '\$12,400',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: DSSpacing.md),
-                  Expanded(
-                    child: DSCard(
-                      tone: DSCardTone.elevated,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Icon(
-                            Iconsax.card,
-                            size: 28,
-                            color: DSColors.orange500,
-                          ),
-                          const SizedBox(height: DSSpacing.sm),
-                          Text(
-                            'Spend',
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                  color: isDark
-                                      ? DSColors.neutral300
-                                      : DSColors.neutral500,
-                                ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '\$4,159',
-                            style: Theme.of(context).textTheme.headlineSmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.lg),
-
-            // Quick Actions
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: Text(
-                'Quick Actions',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.sm),
-
-            SizedBox(
-              height: 60,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: DSSpacing.horizontalPadding,
-                ),
-                children: [
-                  _buildQuickActionButton(Iconsax.add, 'Add Entry', false),
-                  _buildQuickActionButton(
-                    Iconsax.flash,
-                    'Create Project',
-                    true,
-                  ),
-                  _buildQuickActionButton(Iconsax.chart, 'View Report', false),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.lg),
-
-            // Top Projects
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Top Projects',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  Text(
-                    'View All',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelLarge?.copyWith(color: DSColors.teal500),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.sm),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: Column(
-                children: [
-                  _buildProjectCard(
-                    Iconsax.flash,
-                    'NeoLaunch',
-                    'SaaS Platform',
-                    '+\$3,240',
-                    true,
-                  ),
-                  const SizedBox(height: DSSpacing.sm),
-                  _buildProjectCard(
-                    Iconsax.microphone,
-                    'Podcast Pro',
-                    'Media',
-                    '+\$1,850',
-                    true,
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.lg),
-
-            // Worst Projects
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    'Worst Projects',
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  const SizedBox(width: 8),
-                  const DSBadge(
-                    label: 'Low ROI',
-                    variant: DSBadgeVariant.error,
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.sm),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: DSSpacing.horizontalPadding,
-              ),
-              child: _buildProjectCard(
-                Iconsax.box,
-                'DropStore X',
-                'E-commerce',
-                '-\$420',
-                false,
-              ),
-            ),
-
-            const SizedBox(height: DSSpacing.xl),
+            _performancePulse(context, colors, textTheme),
+            const SizedBox(height: GOLSpacing.space6),
+            _financeRow(context, colors, textTheme),
+            const SizedBox(height: GOLSpacing.space6),
+            _signalsList(colors, textTheme),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildQuickActionButton(IconData icon, String label, bool isPrimary) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 12),
-      child: DSButton(
-        label: label,
-        icon: icon,
-        variant: isPrimary
-            ? DSButtonVariant.primary
-            : DSButtonVariant.secondary,
-        onPressed: () {},
-        size: DSButtonSize.small,
-      ),
-    );
-  }
-
-  Widget _buildProjectCard(
-    IconData icon,
-    String name,
-    String category,
-    String amount,
-    bool isPositive,
-  ) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final accentColor = isPositive ? DSColors.teal500 : DSColors.premiumRed;
-
-    return DSCard(
+  Widget _performancePulse(BuildContext context, GOLSemanticColors colors, TextTheme textTheme) {
+    return GOLCard(
+      variant: GOLCardVariant.elevated,
       child: Row(
         children: [
-          DSIconContainer(
-            icon: icon,
-            color: accentColor,
-          ),
-          const SizedBox(width: DSSpacing.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  'Net Profit',
+                  style: textTheme.labelMedium?.copyWith(
+                    color: colors.textSecondary,
+                    letterSpacing: 0.5,
+                  ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: GOLSpacing.space2),
                 Text(
-                  category,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: isDark
-                            ? DSColors.neutral300
-                            : DSColors.neutral500,
-                      ),
+                  '\$8,240',
+                  style: textTheme.headlineSmall?.copyWith(
+                    color: colors.textPrimary,
+                  ),
+                ),
+                const SizedBox(height: GOLSpacing.space3),
+                Row(
+                  children: [
+                    _statusPill('+12.5%', colors.stateSuccess),
+                    const SizedBox(width: GOLSpacing.space2),
+                    _statusPill('Monthly', colors.textAccent),
+                  ],
                 ),
               ],
             ),
           ),
-          Text(
-            amount,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: isPositive
-                      ? DSColors.premiumGreen
-                      : DSColors.premiumRed,
-                ),
-          ),
+          const SizedBox(width: GOLSpacing.space4),
+          GOLCircularProgress(value: 0.72, size: 88),
         ],
+      ),
+    );
+  }
+
+  Widget _financeRow(BuildContext context, GOLSemanticColors colors, TextTheme textTheme) {
+    final metrics = [
+      {
+        'label': 'Revenue',
+        'value': '\$12,400',
+        'icon': Iconsax.wallet,
+        'color': colors.interactivePrimary,
+      },
+      {
+        'label': 'Spend',
+        'value': '\$6,120',
+        'icon': Iconsax.card,
+        'color': colors.stateWarning,
+      },
+      {
+        'label': 'Margin',
+        'value': '52%',
+        'icon': Iconsax.chart,
+        'color': colors.stateSuccess,
+      },
+    ];
+
+    return Row(
+      children: metrics
+          .map(
+            (metric) => Expanded(
+              child: Container(
+                margin: EdgeInsets.only(
+                  right: metric == metrics.last ? 0 : GOLSpacing.space3,
+                ),
+                padding: const EdgeInsets.all(GOLSpacing.space4),
+                decoration: BoxDecoration(
+                  color: colors.surfaceRaised,
+                  borderRadius: BorderRadius.circular(GOLRadius.md),
+                  border: Border.all(color: colors.borderDefault),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(
+                      metric['icon'] as IconData,
+                      color: metric['color'] as Color,
+                      size: 24,
+                    ),
+                    const SizedBox(height: GOLSpacing.space2),
+                    Text(
+                      metric['value'] as String,
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: colors.textPrimary,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      metric['label'] as String,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  Widget _signalsList(GOLSemanticColors colors, TextTheme textTheme) {
+    final signals = [
+      {
+        'title': 'Engagement up +18%',
+        'detail': 'Creator Q3 series',
+        'type': 'Signal',
+      },
+      {
+        'title': 'Review workflow blocks',
+        'detail': 'AI flagged risk of delay',
+        'type': 'Alert',
+      },
+      {
+        'title': 'Campaign ready to ship',
+        'detail': 'Client approval pending',
+        'type': 'Action',
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Signals',
+          style: textTheme.headlineSmall?.copyWith(color: colors.textPrimary),
+        ),
+        const SizedBox(height: GOLSpacing.space3),
+        GOLCard(
+          variant: GOLCardVariant.standard,
+          child: Column(
+            children: signals
+                .map(
+                  (signal) => Column(
+                    children: [
+                      GOLListItem(
+                        title: signal['title'] as String,
+                        subtitle: signal['detail'] as String,
+                        leading: Icon(
+                          Iconsax.activity,
+                          color: colors.interactivePrimary,
+                          size: 24,
+                        ),
+                        trailing: Text(
+                          signal['type'] as String,
+                          style: textTheme.bodySmall?.copyWith(color: colors.textSecondary),
+                        ),
+                      ),
+                      if (signals.indexOf(signal) != signals.length - 1)
+                        const Divider(height: 1),
+                    ],
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+        const SizedBox(height: GOLSpacing.space4),
+        Text(
+          'Smooth trends with the 8-point grid and keep your metrics within the golden accent band.',
+          style: textTheme.bodySmall?.copyWith(color: colors.textSecondary),
+        ),
+      ],
+    );
+  }
+
+  Widget _statusPill(String label, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: GOLSpacing.space3,
+        vertical: GOLSpacing.space1,
+      ),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(GOLRadius.full),
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }

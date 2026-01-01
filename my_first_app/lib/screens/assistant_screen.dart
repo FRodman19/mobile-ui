@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_card.dart';
+import 'package:iconsax/iconsax.dart';
+import '../grow_out_loud/components/gol_buttons.dart';
+import '../grow_out_loud/components/gol_cards.dart';
+import '../grow_out_loud/components/gol_inputs.dart';
+import '../grow_out_loud/foundation/gol_colors.dart';
+import '../grow_out_loud/foundation/gol_spacing.dart';
+import '../grow_out_loud/foundation/gol_radius.dart';
 
 class AssistantScreen extends StatefulWidget {
   const AssistantScreen({super.key});
@@ -14,9 +19,11 @@ class _AssistantScreenState extends State<AssistantScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: colors.backgroundPrimary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -25,24 +32,24 @@ class _AssistantScreenState extends State<AssistantScreen> {
             Container(
               width: 8,
               height: 8,
-              decoration: const BoxDecoration(
-                color: Color(0xFF1DB954),
+              decoration: BoxDecoration(
+                color: colors.stateSuccess,
                 shape: BoxShape.circle,
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: GOLSpacing.space2),
             Text(
               'AI Assistant',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: textTheme.headlineSmall?.copyWith(
+                color: colors.textPrimary,
               ),
             ),
           ],
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, size: 24),
+            icon: const Icon(Iconsax.more),
+            color: colors.textSecondary,
             onPressed: () {},
           ),
         ],
@@ -52,40 +59,64 @@ class _AssistantScreenState extends State<AssistantScreen> {
           // Chat messages
           Expanded(
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.all(GOLSpacing.screenPaddingHorizontal),
               children: [
                 _buildSystemMessage(
+                  colors,
+                  textTheme,
                   'Hi! I\'m your AI assistant. I can help you with:\n• Creating content (@mention projects)\n• Tracking skills (#mention skills)\n• Analyzing performance\n• Managing tasks',
                 ),
-                const SizedBox(height: 16),
-                _buildUserMessage('Help me write a YouTube script for @NeoLaunch'),
-                const SizedBox(height: 16),
-                _buildSystemMessage('I\'ll help you create a YouTube script for NeoLaunch. Let me draft something for you.'),
-                const SizedBox(height: 16),
-                _buildContentCard(
-                  title: 'YouTube Script Draft',
-                  platform: 'YouTube',
-                  content: 'Hook: "What if I told you that you could validate your SaaS idea in 48 hours?"\n\nIntro: Today I\'m breaking down the exact framework we used to...',
-                  project: 'NeoLaunch',
+                const SizedBox(height: GOLSpacing.space4),
+                _buildUserMessage(
+                  colors,
+                  textTheme,
+                  'Help me write a YouTube script for @NeoLaunch',
                 ),
-                const SizedBox(height: 16),
-                _buildUserMessage('Can you update my progress on #Python for Data Science?'),
-                const SizedBox(height: 16),
-                _buildSystemMessage('Sure! I see you\'ve completed "Pandas Library Basics". Would you like me to mark this milestone as complete and suggest the next one?'),
-                const SizedBox(height: 16),
-                _buildSystemMessage('Your next milestone would be "Data Visualization with Matplotlib". Ready to start?'),
+                const SizedBox(height: GOLSpacing.space4),
+                _buildSystemMessage(
+                  colors,
+                  textTheme,
+                  'I\'ll help you create a YouTube script for NeoLaunch. Let me draft something for you.',
+                ),
+                const SizedBox(height: GOLSpacing.space4),
+                _buildContentCard(
+                  colors,
+                  textTheme,
+                  'YouTube Script Draft',
+                  'YouTube',
+                  'Hook: "What if I told you that you could validate your SaaS idea in 48 hours?"\n\nIntro: Today I\'m breaking down the exact framework we used to...',
+                  'NeoLaunch',
+                ),
+                const SizedBox(height: GOLSpacing.space4),
+                _buildUserMessage(
+                  colors,
+                  textTheme,
+                  'Can you update my progress on #Python for Data Science?',
+                ),
+                const SizedBox(height: GOLSpacing.space4),
+                _buildSystemMessage(
+                  colors,
+                  textTheme,
+                  'Sure! I see you\'ve completed "Pandas Library Basics". Would you like me to mark this milestone as complete and suggest the next one?',
+                ),
+                const SizedBox(height: GOLSpacing.space4),
+                _buildSystemMessage(
+                  colors,
+                  textTheme,
+                  'Your next milestone would be "Data Visualization with Matplotlib". Ready to start?',
+                ),
               ],
             ),
           ),
 
           // Input bar
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(GOLSpacing.space4),
             decoration: BoxDecoration(
-              color: isDark ? Colors.black : Colors.white,
+              color: colors.backgroundPrimary,
               border: Border(
                 top: BorderSide(
-                  color: isDark ? const Color(0xFF282828) : const Color(0xFFE0E0E0),
+                  color: colors.borderDefault,
                   width: 1,
                 ),
               ),
@@ -94,42 +125,31 @@ class _AssistantScreenState extends State<AssistantScreen> {
               child: Row(
                 children: [
                   // @ button
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(Icons.alternate_email, size: 18),
-                  ),
-                  const SizedBox(width: 8),
+                  _buildIconButton(colors, Iconsax.direct),
+                  const SizedBox(width: GOLSpacing.space2),
                   // # button
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Icon(Icons.tag, size: 18),
-                  ),
-                  const SizedBox(width: 12),
+                  _buildIconButton(colors, Iconsax.tag),
+                  const SizedBox(width: GOLSpacing.space3),
                   // Input field
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: GOLSpacing.space4,
+                        vertical: GOLSpacing.space2,
+                      ),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
-                        borderRadius: BorderRadius.circular(20),
+                        color: colors.surfaceDefault,
+                        borderRadius: BorderRadius.circular(GOLRadius.full),
                       ),
                       child: TextField(
                         controller: _messageController,
-                        style: GoogleFonts.inter(fontSize: 14),
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: colors.textPrimary,
+                        ),
                         decoration: InputDecoration(
                           hintText: 'Ask me anything...',
-                          hintStyle: GoogleFonts.inter(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          hintStyle: textTheme.bodyMedium?.copyWith(
+                            color: colors.textTertiary,
                           ),
                           border: InputBorder.none,
                           isDense: true,
@@ -138,16 +158,20 @@ class _AssistantScreenState extends State<AssistantScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: GOLSpacing.space3),
                   // Voice button
                   Container(
                     width: 40,
                     height: 40,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF1DB954),
+                    decoration: BoxDecoration(
+                      color: colors.interactivePrimary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.mic, color: Colors.black, size: 20),
+                    child: Icon(
+                      Iconsax.microphone,
+                      color: colors.textInverse,
+                      size: 20,
+                    ),
                   ),
                 ],
               ),
@@ -158,8 +182,27 @@ class _AssistantScreenState extends State<AssistantScreen> {
     );
   }
 
-  Widget _buildSystemMessage(String message) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+  Widget _buildIconButton(GOLSemanticColors colors, IconData icon) {
+    return Container(
+      width: 36,
+      height: 36,
+      decoration: BoxDecoration(
+        color: colors.surfaceDefault,
+        borderRadius: BorderRadius.circular(GOLRadius.sm),
+      ),
+      child: Icon(
+        icon,
+        size: 18,
+        color: colors.textSecondary,
+      ),
+    );
+  }
+
+  Widget _buildSystemMessage(
+    GOLSemanticColors colors,
+    TextTheme textTheme,
+    String message,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,23 +210,27 @@ class _AssistantScreenState extends State<AssistantScreen> {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: const Color(0xFF1DB954).withOpacity(0.1),
+            color: colors.interactivePrimary.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.smart_toy, color: Color(0xFF1DB954), size: 18),
+          child: Icon(
+            Iconsax.cpu,
+            color: colors.interactivePrimary,
+            size: 18,
+          ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: GOLSpacing.space3),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(GOLSpacing.space3),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF121212) : const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(12),
+              color: colors.surfaceDefault,
+              borderRadius: BorderRadius.circular(GOLRadius.md),
             ),
             child: Text(
               message,
-              style: GoogleFonts.inter(
-                fontSize: 14,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colors.textPrimary,
                 height: 1.5,
               ),
             ),
@@ -194,48 +241,57 @@ class _AssistantScreenState extends State<AssistantScreen> {
     );
   }
 
-  Widget _buildUserMessage(String message) {
+  Widget _buildUserMessage(
+    GOLSemanticColors colors,
+    TextTheme textTheme,
+    String message,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(width: 44),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(GOLSpacing.space3),
             decoration: BoxDecoration(
-              color: const Color(0xFF1DB954),
-              borderRadius: BorderRadius.circular(12),
+              color: colors.interactivePrimary,
+              borderRadius: BorderRadius.circular(GOLRadius.md),
             ),
             child: Text(
               message,
-              style: GoogleFonts.inter(
-                fontSize: 14,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colors.textInverse,
                 height: 1.5,
-                color: Colors.black,
               ),
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: GOLSpacing.space3),
         Container(
           width: 32,
           height: 32,
-          decoration: const BoxDecoration(
-            color: Color(0xFF1DB954),
+          decoration: BoxDecoration(
+            color: colors.interactivePrimary,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.person, color: Colors.black, size: 18),
+          child: Icon(
+            Iconsax.user,
+            color: colors.textInverse,
+            size: 18,
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildContentCard({
-    required String title,
-    required String platform,
-    required String content,
-    required String project,
-  }) {
+  Widget _buildContentCard(
+    GOLSemanticColors colors,
+    TextTheme textTheme,
+    String title,
+    String platform,
+    String content,
+    String project,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -243,111 +299,86 @@ class _AssistantScreenState extends State<AssistantScreen> {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: const Color(0xFF1DB954).withOpacity(0.1),
+            color: colors.interactivePrimary.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.smart_toy, color: Color(0xFF1DB954), size: 18),
+          child: Icon(
+            Iconsax.cpu,
+            color: colors.interactivePrimary,
+            size: 18,
+          ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: GOLSpacing.space3),
         Expanded(
-          child: AppCard(
-            padding: const EdgeInsets.all(16),
+          child: GOLCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.play_circle_outline, size: 16, color: Color(0xFF1DB954)),
-                    const SizedBox(width: 6),
+                    Icon(
+                      Iconsax.video,
+                      size: 16,
+                      color: colors.interactivePrimary,
+                    ),
+                    const SizedBox(width: GOLSpacing.space1),
                     Text(
                       platform,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
+                      style: textTheme.labelSmall?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF1DB954),
+                        color: colors.interactivePrimary,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: GOLSpacing.space2),
                     Text(
                       '•',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      style: textTheme.bodySmall?.copyWith(
+                        color: colors.textSecondary,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: GOLSpacing.space2),
                     Text(
                       project,
-                      style: GoogleFonts.inter(
-                        fontSize: 12,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colors.textSecondary,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: GOLSpacing.space3),
                 Text(
                   title,
-                  style: GoogleFonts.inter(
-                    fontSize: 16,
+                  style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
+                    color: colors.textPrimary,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: GOLSpacing.space3),
                 Text(
                   content,
-                  style: GoogleFonts.inter(
-                    fontSize: 13,
+                  style: textTheme.bodySmall?.copyWith(
                     height: 1.5,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: colors.textSecondary,
                   ),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: GOLSpacing.space4),
                 Row(
                   children: [
                     Expanded(
-                      child: OutlinedButton(
+                      child: GOLButton(
+                        label: 'Edit Draft',
+                        variant: GOLButtonVariant.secondary,
                         onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.2),
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                        ),
-                        child: Text(
-                          'Edit Draft',
-                          style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: GOLSpacing.space2),
                     Expanded(
-                      child: ElevatedButton(
+                      child: GOLButton(
+                        label: 'Apply to Content',
+                        variant: GOLButtonVariant.primary,
                         onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF1DB954),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          elevation: 0,
-                        ),
-                        child: Text(
-                          'Apply to Content',
-                          style: GoogleFonts.inter(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                          ),
-                        ),
                       ),
                     ),
                   ],

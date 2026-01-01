@@ -6,7 +6,7 @@ This guide documents the proven UI patterns used throughout the Grow Out Loud ap
 
 1. **Compact & Tight** - Cards should be as short as possible while remaining readable
 2. **Horizontal Alignment** - Icons and text on the same line, not stacked vertically
-3. **No Emojis** - Always use Iconsax icons (preferably filled variants)
+3. **No Emojis** - Always use Iconsax icons (prefer outline variants by default)
 4. **Even Distribution** - UI elements should fill available space naturally
 5. **Simple Interactions** - No fancy animations or distracting feedback
 
@@ -27,7 +27,7 @@ GOLCard(
       // Icon and content on SAME horizontal line
       Row(
         children: [
-          Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary),
+          Icon(Iconsax.code, size: 32, color: colors.interactivePrimary),
           const SizedBox(width: GOLSpacing.space3),
           Expanded(
             child: Column(
@@ -420,16 +420,21 @@ GOLCard(
 
 ## Icon Selection Guide
 
-### Filled vs Outline
+### Outline vs Filled
 
-**ALWAYS prefer filled icons** for a modern, professional look:
+**Prefer outline icons by default** for a clean, consistent look:
 
-| Category | Filled Icon | Outline (Avoid) |
-|----------|-------------|-----------------|
-| Code | `Iconsax.code_15` | ~~`Iconsax.code`~~ |
-| Speaking | `Iconsax.microphone_25` | ~~`Iconsax.microphone`~~ |
-| Language | `Iconsax.global5` | ~~`Iconsax.global`~~ |
-| Music | `Iconsax.music5` | ~~`Iconsax.music`~~ |
+| Category | Outline (Default) | Filled (Use Sparingly) |
+|----------|-------------------|------------------------|
+| Code | `Iconsax.code` ✓ | `Iconsax.code_15` |
+| Speaking | `Iconsax.microphone` ✓ | `Iconsax.microphone_25` |
+| Language | `Iconsax.global` ✓ | `Iconsax.global5` |
+| Music | `Iconsax.music` ✓ | `Iconsax.music5` |
+
+**When to use filled icons:**
+- Specific design requirements
+- To emphasize selected/active states
+- When explicitly designed for a particular screen
 
 ### Common Icons
 
@@ -533,7 +538,7 @@ Column(
 // DO THIS INSTEAD
 Row(
   children: [
-    Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary),
+    Icon(Iconsax.code, size: 32, color: colors.interactivePrimary),
     SizedBox(width: GOLSpacing.space3),
     Text('Python', style: textTheme.headlineSmall),
   ],
@@ -547,11 +552,14 @@ Text('🎤', style: TextStyle(fontSize: 32))
 Text('📱', style: TextStyle(fontSize: 28))
 ```
 
-### ✅ Using Iconsax Icons
+### ✅ Using Iconsax Icons (Outline by Default)
 ```dart
-// DO THIS INSTEAD
-Icon(Iconsax.microphone_25, size: 32, color: colors.interactivePrimary)
+// DO THIS - Outline icons (default)
+Icon(Iconsax.microphone, size: 32, color: colors.interactivePrimary)
 Icon(Iconsax.mobile, size: 28, color: colors.interactivePrimary)
+
+// USE SPARINGLY - Filled icons (only when needed)
+Icon(Iconsax.microphone_25, size: 32, color: colors.interactivePrimary)
 ```
 
 ### ❌ Multiple Separate Cards

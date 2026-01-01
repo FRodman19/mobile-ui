@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 2. **NEVER use arbitrary spacing** - Use `GOLSpacing` constants (8pt grid system)
 3. **NEVER use custom colors** - Use `GOLSemanticColors` from theme
 4. **NEVER use arbitrary font sizes** - Use `textTheme` styles from `GOLTypography`
-5. **NEVER use emojis** - Always use Iconsax icons (preferably filled variants like `Iconsax.code_15`)
+5. **NEVER use emojis** - Always use Iconsax icons (prefer outline variants by default)
 6. **If a component doesn't exist** - Create it following GOL patterns and add it to the gallery
 
 ### UI Design Patterns (CRITICAL)
@@ -34,7 +34,7 @@ These patterns ensure consistency and professional appearance across all screens
 // ✅ CORRECT - Horizontal layout (clean, compact)
 Row(
   children: [
-    Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary),
+    Icon(Iconsax.code, size: 32, color: colors.interactivePrimary),
     const SizedBox(width: GOLSpacing.space3),
     Expanded(
       child: Column(
@@ -62,12 +62,17 @@ Column(
 
 #### Icon Usage Rules
 1. **NEVER use emojis** - They look unprofessional and inconsistent
-2. **ALWAYS use Iconsax icons** - Specifically filled variants (with `5` or `_15` suffix)
-3. **Prefer filled icons** - `Iconsax.global5`, `Iconsax.code_15`, `Iconsax.microphone_25`
-4. **Consistent sizing** - 32px for card icons, 16px for inline icons, 14px for labels
+2. **ALWAYS use Iconsax icons** - Prefer outline variants by default
+3. **Outline by default** - `Iconsax.code`, `Iconsax.global`, `Iconsax.microphone`
+4. **Filled when needed** - Use filled variants only for specific design requirements
+5. **Consistent sizing** - 32px for card icons, 16px for inline icons, 14px for labels
 
 ```dart
-// ✅ CORRECT
+// ✅ CORRECT - Outline icons (default)
+Icon(Iconsax.code, size: 32, color: colors.interactivePrimary)
+Icon(Iconsax.global, size: 32, color: colors.interactivePrimary)
+
+// ⚠️ USE SPARINGLY - Filled icons (only when specifically needed)
 Icon(Iconsax.code_15, size: 32, color: colors.interactivePrimary)
 
 // ❌ WRONG

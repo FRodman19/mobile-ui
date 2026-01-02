@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/main_navigation.dart';
-import 'screens/design_system_gallery_screen.dart';
+import 'screens/design_system_home.dart';
 import 'screens/grow_out_loud_gallery_screen.dart';
 import 'grow_out_loud/foundation/gol_theme.dart';
 
@@ -16,14 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Grow Out Loud',
+      title: 'Grow Out Loud Design System',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/': (context) => const MainNavigation(),
+        '/': (context) => const DesignSystemHome(),
         if (kDebugMode)
-          '/design-system': (context) => const DesignSystemGalleryScreen(),
-        if (kDebugMode)
-          '/design-system-v3': (context) => const GrowOutLoudGalleryScreen(),
+          '/gallery': (context) => const GrowOutLoudGalleryScreen(),
       },
       theme: GOLThemeData.light(),
       darkTheme: GOLThemeData.dark(),

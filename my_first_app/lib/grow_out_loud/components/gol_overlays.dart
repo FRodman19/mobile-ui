@@ -5,6 +5,8 @@ import '../foundation/gol_colors.dart';
 import '../foundation/gol_spacing.dart';
 import 'gol_buttons.dart';
 
+enum GOLToastType { success, error, info }
+
 Future<void> showGOLDialog(BuildContext context) {
   final colors = Theme.of(context).extension<GOLSemanticColors>()!;
   return showDialog<void>(
@@ -85,17 +87,46 @@ Future<void> showGOLBottomSheet(BuildContext context) {
   );
 }
 
-void showGOLToast(BuildContext context, String message) {
+void showGOLToast(
+  BuildContext context,
+  String message, {
+  GOLToastType type = GOLToastType.info,
+}) {
   final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+  final iconColor = switch (type) {
+    GOLToastType.success => colors.stateSuccess,
+    GOLToastType.error => colors.stateError,
+    GOLToastType.info => colors.textSecondary,
+  };
+  final iconData = switch (type) {
+    GOLToastType.success => Iconsax.tick_circle,
+    GOLToastType.error => Iconsax.close_circle,
+    GOLToastType.info => Iconsax.info_circle,
+  };
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-        content: Row(
-          children: [
-            Icon(Iconsax.info_circle, color: colors.textInverse, size: 20),
-            const SizedBox(width: GOLSpacing.space3),
-            Expanded(child: Text(message)),
-          ],
-        ),
+      behavior: SnackBarBehavior.floating,
+      elevation: 0,
+      backgroundColor: colors.backgroundInverse,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: colors.borderStrong),
+      ),
+      content: Row(
+        children: [
+          Icon(iconData, color: iconColor, size: 20),
+          const SizedBox(width: GOLSpacing.space3),
+          Expanded(
+            child: Text(
+              message,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: colors.textInverse),
+            ),
+          ),
+        ],
+      ),
     ),
   );
 }

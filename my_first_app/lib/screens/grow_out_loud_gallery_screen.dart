@@ -802,7 +802,11 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
             GOLButton(
               label: 'Toast',
               variant: GOLButtonVariant.tertiary,
-              onPressed: () => showGOLToast(context, 'Saved to timeline.'),
+              onPressed: () => showGOLToast(
+                context,
+                'Saved to timeline.',
+                type: GOLToastType.success,
+              ),
             ),
           ],
         ),
@@ -812,23 +816,20 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
           children: [
             _toastPreview(
               context,
-              icon: Iconsax.tick_circle,
+              type: GOLToastType.success,
               message: 'Project saved',
-              background: colors.stateSuccess,
             ),
             const SizedBox(height: GOLSpacing.space3),
             _toastPreview(
               context,
-              icon: Iconsax.close_circle,
+              type: GOLToastType.error,
               message: 'Failed to sync',
-              background: colors.stateError,
             ),
             const SizedBox(height: GOLSpacing.space3),
             _toastPreview(
               context,
-              icon: Iconsax.info_circle,
+              type: GOLToastType.info,
               message: 'New update available',
-              background: colors.stateInfo,
             ),
           ],
         ),
@@ -1064,20 +1065,31 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
 
   Widget _toastPreview(
     BuildContext context, {
-    required IconData icon,
+    required GOLToastType type,
     required String message,
-    required Color background,
   }) {
+    final colors = Theme.of(context).extension<GOLSemanticColors>()!;
+    final iconColor = switch (type) {
+      GOLToastType.success => colors.stateSuccess,
+      GOLToastType.error => colors.stateError,
+      GOLToastType.info => colors.textSecondary,
+    };
+    final iconData = switch (type) {
+      GOLToastType.success => Iconsax.tick_circle,
+      GOLToastType.error => Iconsax.close_circle,
+      GOLToastType.info => Iconsax.info_circle,
+    };
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(GOLSpacing.space3),
       decoration: BoxDecoration(
-        color: background,
+        color: colors.backgroundInverse,
         borderRadius: BorderRadius.circular(GOLRadius.sm),
+        border: Border.all(color: colors.borderStrong),
       ),
       child: Row(
         children: [
-          Icon(icon, color: Colors.white, size: 20),
+          Icon(iconData, color: iconColor, size: 20),
           const SizedBox(width: GOLSpacing.space3),
           Expanded(
             child: Text(
@@ -1085,7 +1097,7 @@ class _GrowOutLoudGalleryScreenState extends State<GrowOutLoudGalleryScreen>
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(color: Colors.white),
+                  ?.copyWith(color: colors.textInverse),
             ),
           ),
         ],

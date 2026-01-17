@@ -34,16 +34,16 @@ class GOLPrimitives {
   static const Color dark1000 = Color(0xFFFFFFFF);
 
   // Accent.
-  static const Color accent50 = Color(0xFFFFF6E0);
-  static const Color accent100 = Color(0xFFFFECB9);
-  static const Color accent200 = Color(0xFFFFE08E);
-  static const Color accent300 = Color(0xFFFFD35F);
-  static const Color accent400 = Color(0xFFFFC12B);
-  static const Color accent500 = Color(0xFFFFAB00);
-  static const Color accent600 = Color(0xFFE69400);
-  static const Color accent700 = Color(0xFFC07F00);
-  static const Color accent800 = Color(0xFF9D6500);
-  static const Color accent900 = Color(0xFF7B4C00);
+  static const Color accent50 = Color(0xFFFEF9E7);
+  static const Color accent100 = Color(0xFFFEF0C4);
+  static const Color accent200 = Color(0xFFFDE69D);
+  static const Color accent300 = Color(0xFFFCDC76);
+  static const Color accent400 = Color(0xFFFBD458);
+  static const Color accent500 = Color(0xFFF9C10B);
+  static const Color accent600 = Color(0xFFE0AD0A);
+  static const Color accent700 = Color(0xFFC59509);
+  static const Color accent800 = Color(0xFFAA7E07);
+  static const Color accent900 = Color(0xFF8F6806);
 
   // Semantic.
   static const Color success50 = Color(0xFFF0FDF4);
@@ -274,15 +274,31 @@ class GOLSemanticColors extends ThemeExtension<GOLSemanticColors> {
     }
 
     return GOLSemanticColors(
-      backgroundPrimary: Color.lerp(backgroundPrimary, other.backgroundPrimary, t)!,
-      backgroundSecondary:
-          Color.lerp(backgroundSecondary, other.backgroundSecondary, t)!,
-      backgroundTertiary:
-          Color.lerp(backgroundTertiary, other.backgroundTertiary, t)!,
-      backgroundElevated:
-          Color.lerp(backgroundElevated, other.backgroundElevated, t)!,
-      backgroundInverse:
-          Color.lerp(backgroundInverse, other.backgroundInverse, t)!,
+      backgroundPrimary: Color.lerp(
+        backgroundPrimary,
+        other.backgroundPrimary,
+        t,
+      )!,
+      backgroundSecondary: Color.lerp(
+        backgroundSecondary,
+        other.backgroundSecondary,
+        t,
+      )!,
+      backgroundTertiary: Color.lerp(
+        backgroundTertiary,
+        other.backgroundTertiary,
+        t,
+      )!,
+      backgroundElevated: Color.lerp(
+        backgroundElevated,
+        other.backgroundElevated,
+        t,
+      )!,
+      backgroundInverse: Color.lerp(
+        backgroundInverse,
+        other.backgroundInverse,
+        t,
+      )!,
       surfaceDefault: Color.lerp(surfaceDefault, other.surfaceDefault, t)!,
       surfaceRaised: Color.lerp(surfaceRaised, other.surfaceRaised, t)!,
       surfaceOverlay: Color.lerp(surfaceOverlay, other.surfaceOverlay, t)!,
@@ -295,21 +311,42 @@ class GOLSemanticColors extends ThemeExtension<GOLSemanticColors> {
       borderDefault: Color.lerp(borderDefault, other.borderDefault, t)!,
       borderStrong: Color.lerp(borderStrong, other.borderStrong, t)!,
       borderFocus: Color.lerp(borderFocus, other.borderFocus, t)!,
-      interactivePrimary:
-          Color.lerp(interactivePrimary, other.interactivePrimary, t)!,
-      interactivePrimaryHover:
-          Color.lerp(interactivePrimaryHover, other.interactivePrimaryHover, t)!,
-      interactivePrimaryPressed:
-          Color.lerp(interactivePrimaryPressed, other.interactivePrimaryPressed, t)!,
-      interactivePrimaryDisabled:
-          Color.lerp(interactivePrimaryDisabled, other.interactivePrimaryDisabled, t)!,
-      interactiveSecondary:
-          Color.lerp(interactiveSecondary, other.interactiveSecondary, t)!,
-      interactiveSecondaryHover:
-          Color.lerp(interactiveSecondaryHover, other.interactiveSecondaryHover, t)!,
+      interactivePrimary: Color.lerp(
+        interactivePrimary,
+        other.interactivePrimary,
+        t,
+      )!,
+      interactivePrimaryHover: Color.lerp(
+        interactivePrimaryHover,
+        other.interactivePrimaryHover,
+        t,
+      )!,
+      interactivePrimaryPressed: Color.lerp(
+        interactivePrimaryPressed,
+        other.interactivePrimaryPressed,
+        t,
+      )!,
+      interactivePrimaryDisabled: Color.lerp(
+        interactivePrimaryDisabled,
+        other.interactivePrimaryDisabled,
+        t,
+      )!,
+      interactiveSecondary: Color.lerp(
+        interactiveSecondary,
+        other.interactiveSecondary,
+        t,
+      )!,
+      interactiveSecondaryHover: Color.lerp(
+        interactiveSecondaryHover,
+        other.interactiveSecondaryHover,
+        t,
+      )!,
       accentSubtle: Color.lerp(accentSubtle, other.accentSubtle, t)!,
-      accentSubtleHover:
-          Color.lerp(accentSubtleHover, other.accentSubtleHover, t)!,
+      accentSubtleHover: Color.lerp(
+        accentSubtleHover,
+        other.accentSubtleHover,
+        t,
+      )!,
       stateSuccess: Color.lerp(stateSuccess, other.stateSuccess, t)!,
       stateWarning: Color.lerp(stateWarning, other.stateWarning, t)!,
       stateError: Color.lerp(stateError, other.stateError, t)!,

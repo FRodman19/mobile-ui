@@ -1,0 +1,84 @@
+<h2>Architecture Approach</h2>
+<p class="subtitle">How should PIN lock + privacy masking integrate into the app?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Router-Level Lock + Global State</h3>
+      <p><strong>Recommended</strong></p>
+      <p>Lock screen injected via GoRouter redirect logic. Privacy masking as a global Riverpod provider that all amount widgets read from.</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Follows existing patterns (GoRouter redirects already handle auth)</li>
+            <li>Lock screen is a route — clean back-button handling</li>
+            <li>Single privacy provider — all screens react automatically</li>
+            <li>PIN stored in flutter_secure_storage (encrypted)</li>
+            <li>Biometrics via local_auth package</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Router redirect logic gets more complex</li>
+            <li>Need to ensure lock screen can't be skipped via deep links</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Overlay-Based Lock + Widget Wrapper</h3>
+      <p>Lock screen as a full-screen overlay above the MaterialApp. Each amount widget wrapped in a MaskedAmount widget that checks privacy state.</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Lock is independent of routing — no redirect logic changes</li>
+            <li>Overlay can't be bypassed by any route</li>
+            <li>MaskedAmount widget is explicit — clear what's masked</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>Overlay management is tricky (lifecycle, state restoration)</li>
+            <li>Doesn't follow existing patterns in the app</li>
+            <li>Wrapper widgets add verbosity to every amount display</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Hybrid — Router Lock + CurrencyFormatter Masking</h3>
+      <p>Lock screen via GoRouter (like A). But instead of wrapper widgets, masking is built directly into CurrencyFormatter — when privacy mode is on, <code>format()</code> returns <code>****</code>. Zero changes to existing screens.</p>
+      <div class="pros-cons" style="margin-top: 12px;">
+        <div class="pros">
+          <h4>Pros</h4>
+          <ul>
+            <li>Lock screen follows existing router patterns</li>
+            <li><strong>Masking is automatic</strong> — every amount already goes through CurrencyFormatter</li>
+            <li>No wrapper widgets, no screen-by-screen changes</li>
+            <li>Smallest code footprint by far</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Cons</h4>
+          <ul>
+            <li>CurrencyFormatter becomes context-aware (needs access to provider state)</li>
+            <li>Some amounts might not go through the formatter (edge cases)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

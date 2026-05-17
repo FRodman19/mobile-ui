@@ -8,7 +8,8 @@
       "Bash(xargs cat:*)",
       "Bash(flutter gen-l10n:*)",
       "Bash(flutter analyze:*)",
-      "mcp__supabase__list_tables"
+      "mcp__supabase__list_tables",
+      "WebFetch(domain:9to5mac.com)"
     ],
     "deny": [],
     "ask": []
